@@ -1,0 +1,442 @@
+<div class="layui-card">
+  <div class="layui-card-header">
+    <h2 class="header-title">销售合同信息</h2>
+    <span class="layui-breadcrumb pull-right">
+      <a href="#!console">首页</a>
+      <a><cite>销售合同信息</cite></a>
+    </span>
+  </div>
+  <div class="layui-card-body">
+    <div class="layui-form toolbar">
+      <form id="sale_search_form" class="layui-form">
+        <div class="layui-form-item">
+          <div class="layui-inline">
+            <label class="layui-form-mid">项目名称</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <input
+                type="text"
+                id="projectNameSearch"
+                name="projectName"
+                class="layui-input search-input"
+                placeholder="项目名称"
+              />
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid">项目性质</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <select
+                name="projectNature"
+                id="projectNatureSearch"
+                class="layui-input search-input"
+              ></select>
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid">付款条件</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <select
+                name="termPayment"
+                id="termPaymentSearch"
+                class="layui-input search-input"
+              ></select>
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid">销售类别</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <select
+                name="saleType"
+                id="saleTypeSearch"
+                class="layui-input search-input"
+              ></select>
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid">合同类别</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <select
+                name="contractType"
+                id="contractTypeSearch"
+                class="layui-input search-input"
+              ></select>
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid">运输方式</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <select
+                name="mentType"
+                id="mentTypeSearch"
+                class="layui-input search-input"
+              ></select>
+            </div>
+          </div>
+          <!-- 第二行 -->
+          <div class="layui-inline">
+            <label class="layui-form-mid">发货情况</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <select
+                name="mentSituation"
+                id="mentSituationSearch"
+                class="layui-input search-input"
+              ></select>
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid">执行状态</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <select
+                name="executionState"
+                id="executionStateSearch"
+                class="layui-input search-input"
+              ></select>
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid">签订时间</label>
+            <div class="layui-input-inline" style="width: 320px;">
+              <input
+                type="text"
+                name="signingStratTime"
+                id="signingStratTimeSearch"
+                class="layui-input search-input"
+                placeholder="签约时间开始"
+              />
+              -
+              <input
+                type="text"
+                name="signingEndTime"
+                id="signingEndTimeSearch"
+                class="layui-input search-input"
+                placeholder="签约时间结束"
+              />
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid">签订时间</label>
+            <div class="layui-input-inline" style="width: 320px;">
+              <input
+                type="text"
+                name="conAmountMin"
+                class="layui-input search-input"
+                placeholder="最小签约金额"
+              />
+              -
+              <input
+                type="text"
+                name="conAmountMax"
+                class="layui-input search-input"
+                placeholder="最大签约金额"
+              />
+            </div>
+          </div>
+          <div class="layui-inline">
+            <button
+              id="sale_btn_search"
+              class="layui-btn icon-btn"
+              type="button"
+              lay-submit
+            >
+              <i class="layui-icon">&#xe615;</i>搜索
+            </button>
+            <button
+              id="sale_btn_reset"
+              class="layui-btn layui-btn-warm icon-btn"
+              type="reset"
+            >
+              <i class="layui-icon">&#xe9aa;</i>重置
+            </button>
+            <button id="sale-btn-add" class="layui-btn icon-btn">
+              <i class="layui-icon">&#xe654;</i>添加
+            </button>
+          </div>
+
+          <!-- <input
+            type="text"
+            id="projectNameSearch"
+            name="projectName"
+            class="layui-input search-input"
+            placeholder="项目名称"
+          />&emsp; 项目性质
+          <select
+            name="projectNature"
+            id="projectNatureSearch"
+            class="layui-input search-input"
+          ></select
+          >&emsp; 付款条件
+          <select
+            name="termPayment"
+            id="termPaymentSearch"
+            class="layui-input search-input"
+          ></select
+          >&emsp; 销售类别
+          <select
+            name="saleType"
+            id="saleTypeSearch"
+            class="layui-input search-input"
+          ></select
+          >&emsp; 合同类别
+          <select
+            name="contractType"
+            id="contractTypeSearch"
+            class="layui-input search-input"
+          ></select
+          >&emsp; 运输方式
+          <select
+            name="mentType"
+            id="mentTypeSearch"
+            class="layui-input search-input"
+          ></select
+          >&emsp;
+        </div>
+        <div class="layui-form-item">
+          发货情况
+          <select
+            name="mentSituation"
+            id="mentSituationSearch"
+            class="layui-input search-input"
+          ></select
+          >&emsp; 执行状态
+          <select
+            name="executionState"
+            id="executionStateSearch"
+            class="layui-input search-input"
+          ></select
+          >&emsp; 签约时间
+          <input
+            type="text"
+            name="signingStratTime"
+            id="signingStratTimeSearch"
+            class="layui-input search-input"
+            placeholder="签约时间开始"
+          />&emsp; -
+          <input
+            type="text"
+            name="signingEndTime"
+            id="signingEndTimeSearch"
+            class="layui-input search-input"
+            placeholder="签约时间结束"
+          />&emsp; 签约金额
+          <input
+            type="text"
+            name="conAmountMin"
+            class="layui-input search-input"
+            placeholder="最小签约金额"
+          />&emsp; -
+          <input
+            type="text"
+            name="conAmountMax"
+            class="layui-input search-input"
+            placeholder="最大签约金额"
+          />&emsp; -->
+        </div>
+      </form>
+    </div>
+    <div class="content">
+      <table
+        class="layui-table"
+        id="sale-table"
+        lay-filter="sale-table"
+      ></table>
+    </div>
+  </div>
+</div>
+<!-- 表格操作列 -->
+<script type="text/html" id="sale-table-bar">
+  <a class="layui-btn  layui-btn-xs" lay-event="look">查看</a>
+  <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">编辑</a>
+     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+  layui.use(
+    ["form", "table", "util", "config", "admin", "laydate"],
+    function() {
+      var form = layui.form;
+      var table = layui.table;
+      var config = layui.config;
+      var layer = layui.layer;
+      var util = layui.util;
+      var admin = layui.admin,
+        laydate = layui.laydate;
+      // 渲染表格
+      table.render({
+        elem: "#sale-table",
+        url: config.base_server + "/contract/salesContract/pageList",
+        method: "GET",
+        where: { isChange: "001" },
+        headers: {
+          access_token: config.getToken()
+        },
+        page: true,
+        cols: [
+          [
+            { type: "numbers", title: "排序" },
+            { type: "checkbox", sort: true },
+            { field: "year", title: "年度" },
+            { field: "projectName", sort: true, title: "项目名称" },
+            { field: "projectNatureName", sort: true, title: "项目性质" },
+            { field: "contractNumber", sort: true, title: "合同编号" },
+            { field: "signatory", sort: true, title: "签约人" },
+            { field: "signingTime", sort: true, title: "签约时间" },
+            { field: "conAmount", sort: true, title: "合同金额" },
+            { field: "saleTypeName", sort: true, title: "销售类别" },
+            { field: "contractTypeName", sort: true, title: "合同类别" },
+            { field: "mentDate", sort: true, title: "发货日期" },
+            { field: "executionStateName", sort: true, title: "执行状态" },
+            {
+              width: 180,
+              fixed: "right",
+              align: "center",
+              toolbar: "#sale-table-bar",
+              title: "操作"
+            }
+          ]
+        ]
+      });
+
+      // laydate startTime
+      laydate.render({
+        elem: "#signingStratTime" //指定元素
+      });
+
+      // laydate endTime
+      laydate.render({
+        elem: "#signingEndTime" //指定元素
+      });
+
+      //selectsInit
+      function initSelect() {
+        //付款条件
+        dropDown("term_payment", "termPaymentSearch");
+        //运输方式
+        dropDown("ment_type", "mentTypeSearch");
+        //项目性质
+        dropDown("project_nature", "projectNatureSearch");
+        //销售类别
+        dropDown("sale_type", "saleTypeSearch");
+        //合同类别
+        dropDown("contract_type", "contractTypeSearch");
+        //发货情况
+        dropDown("ment_situation", "mentSituationSearch");
+        //执行状态
+        dropDown("execution_state", "executionStateSearch");
+      }
+
+      //selectsData
+      function dropDown(code, selectName) {
+        admin.req(
+          "/sys/dictData/list/" + code,
+          {},
+          function(data) {
+            // 渲染下拉框
+            var electData = "<option value=''>请选择</option>";
+            for (var i in data) {
+              electData +=
+                "<option value='" +
+                data[i].dictValue +
+                "'>" +
+                data[i].dictLabel +
+                "</option>";
+            }
+            console.log(selectName);
+            $("#" + selectName + "").html(electData);
+
+            form.render("select");
+          },
+          "GET"
+        );
+      }
+      initSelect();
+
+      // 搜索按钮点击事件
+      $("#sale_btn_search").click(function() {
+        table.reload("sale-table", {
+          where: $("#sale_search_form").serializeJSON(),
+          page: { curr: 1 } //重新从第 1 页开始
+        });
+      });
+
+      //重置按钮点击事件
+      $("#sale_btn_reset").click(function() {
+        //重置表单
+        $("#sale_search_form")[0].reset();
+        table.reload("sale-table", {
+          where: $("#sale_search_form").serializeJSON(),
+          page: { curr: 1 } //重新从第 1 页开始
+        });
+      });
+
+      // 添加按钮点击事件
+      $("#sale-btn-add").click(function() {
+        showEditModel();
+      });
+
+      // 工具条点击事件
+      table.on("tool(sale-table)", function(obj) {
+        var data = obj.data;
+        var layEvent = obj.event;
+        if (layEvent === "look") {
+          // 查看
+          showLookModel(data);
+        } else if (layEvent === "edit") {
+          // 修改
+          showEditModel(data);
+        } else if (obj.event === "del") {
+          //删除
+          doDelete(obj);
+        }
+      });
+
+      //添加和修改表单弹窗
+      var showEditModel = function(data) {
+        admin.putTempData("t_sale", data);
+        var title = data ? "修改销售合同" : "添加销售合同";
+        var areas = ["1156px", "535px"];
+        admin.popupCenter({
+          title: title,
+          area: areas,
+          offset: "auto",
+          path: "components/contract/sales_add.html",
+          finish: function() {
+            table.reload("sale-table", {});
+          }
+        });
+      };
+
+      //查看表单数据
+      var showLookModel = function(data) {
+        admin.putTempData("t_sale", data);
+        var title = "查看销售合同";
+        var areas = ["1140px", "535px"];
+        admin.popupCenter({
+          title: title,
+          area: areas,
+          offset: "auto",
+          path: "components/contract/sales_look.html",
+          finish: function() {
+            table.reload("sale-table", {});
+          }
+        });
+      };
+
+      // 删除
+      var doDelete = function(obj) {
+        layer.confirm("确定要删除吗？", function(i) {
+          layer.close(i);
+          layer.load(2);
+          admin.req(
+            "/contract/salesContract/remove/" + obj.data.id,
+            {},
+            function(data) {
+              layer.closeAll("loading");
+              layer.msg("删除成功", { icon: 1 });
+              obj.del();
+            },
+            "DELETE"
+          );
+        });
+      };
+    }
+  );
+</script>

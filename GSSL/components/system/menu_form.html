@@ -1,0 +1,188 @@
+
+
+<!-- 菜单弹窗 -->
+<form id="menu-form" lay-filter="menu-form" class="layui-form model-form">
+    <input name="id" type="hidden"/>
+    <input name="visible" type="hidden"/>
+
+<!--    以前的写法[淘汰]-->
+<!--        <div class="layui-form-item">-->
+<!--            <label class="layui-form-label">上级菜单</label>-->
+<!--            <div class="layui-input-block">-->
+<!--                <select name="parentId">-->
+<!--                </select>-->
+<!--            </div>-->
+<!--        </div>-->
+
+    <!-- 上级菜单(需要渲染) -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">上级菜单</label>
+        <div class="layui-input-block" id="menuSelectTpl">
+            <!-- 最后由tpl渲染呈现 -->
+        </div>
+    </div>
+
+    <!-- 菜单名称 -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单名称</label>
+        <div class="layui-input-block">
+            <input name="menuName" placeholder="请输入菜单名称" type="text" class="layui-input" maxlength="50"
+                   lay-verType="tips" lay-verify="required" required/>
+        </div>
+    </div>
+
+    <!-- 路由地址 -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">路由地址</label>
+        <div class="layui-input-block">
+            <input name="url" placeholder="请输入路由地址" type="text" class="layui-input"/>
+        </div>
+    </div>
+
+    <!-- 页面位置 -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">页面位置</label>
+        <div class="layui-input-block">
+            <input name="path" placeholder="请输入页面位置" type="text" class="layui-input"/>
+        </div>
+    </div>
+
+    <!-- 菜单类型 -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">类型</label>
+        <div class="layui-input-block">
+            <input name="menuType" type="radio" value="M" title="目录"/>
+            <input name="menuType" type="radio" value="C" title="菜单" checked/>
+            <input name="menuType" type="radio" value="F" title="按钮"/>
+        </div>
+    </div>
+
+    <!-- 对应访问权限 -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">访问权限</label>
+        <div class="layui-input-block">
+            <input name="perms" placeholder="请输入权限字符串" type="text" class="layui-input"/>
+        </div>
+    </div>
+
+    <!-- 菜单图标 -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单图标</label>
+        <div class="layui-input-block">
+            <input name="icon" placeholder="请输入菜单图标" type="text" class="layui-input"/>
+        </div>
+    </div>
+
+    <!-- 显示顺序 -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序号</label>
+        <div class="layui-input-block">
+            <input name="orderNum" placeholder="请输入排序号" type="number" class="layui-input" min="0" max="1000"
+                   lay-verType="tips" lay-verify="required|number" required/>
+        </div>
+    </div>
+
+    <!-- 表单按钮 -->
+    <div class="layui-form-item model-form-footer">
+        <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+        <button class="layui-btn" lay-filter="menu-form-submit" lay-submit>保存</button>
+    </div>
+</form>
+
+
+<!-- 需要tpl渲染的部分 -->
+<script type="text/html" id="menu_form_tpl">
+
+    <select name="parentId" class="layui-input" lay-verType="tips" required>
+        <option value="0">顶级</option>
+        {{# layui.each(d, function(index, item) { }}
+        <option value="{{item.value}}" {{item.checked?'selected':''}} {{item.disabled?'disabled':''}}>{{item.name}}</option>
+        {{# });}}
+    </select>
+
+</script>
+
+
+<!-- 执行脚本部分 -->
+<script type="text/javascript">
+    
+    layui.use(['layer', 'admin', 'form', 'authtree', 'laytpl'], function () {
+
+        // 加载模块插件
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var admin = layui.admin;
+        var form = layui.form;
+        var authtree = layui.authtree;
+        var laytpl = layui.laytpl;
+
+        // 初始化
+        admin.req("/sys/menu/availableList",{},function(data){
+
+            // 先把原始数据转换成 标准树
+            var trees = authtree.listConvert(data, {
+                primaryKey: 'id'
+                ,startPid: 0
+                ,parentKey: 'pid'
+                ,nameKey: 'menuName'
+                ,valueKey: 'id'
+            });
+
+            // 树转换成单选树
+            var selectList = authtree.treeConvertSelect(trees, {
+                childKey: 'list',
+            });
+
+            // 渲染select的tpl模版
+            var getTpl = menu_form_tpl.innerHTML;
+            var view = document.getElementById('menuSelectTpl');
+            laytpl(getTpl).render(selectList, function(html){
+                view.innerHTML = html;
+            });
+
+            // 添加？/编辑？
+            $('#menu-form').attr('method', 'POST'); // 默认是添加
+            var menu = admin.getTempData('t_menu');
+            var isAdd = admin.getTempData('t_menu_addSub');
+
+            if (menu) {
+
+                // 编辑
+                $('#menu-form').attr('method', 'PUT');
+
+                // 添加下级菜单
+                if (isAdd) {
+                    $('#menu-form').attr('method', 'POST');
+                    // 下拉菜单不可编辑
+                    $('select[name="parentId"]').attr('disabled', "disabled");
+                    // 把当前菜单设置成腹肌菜单
+                    var id = menu.id;
+                    menu = {}; // 重置为空
+                    menu.parentId = id; // 只放一个parentId
+                }
+
+                form.val('menu-form', menu);
+            }
+
+            // 渲染两个特殊的 select 和 radio
+            form.render('select');
+            form.render('radio');
+
+        },"GET");
+
+        // 监听form的button
+        form.on('submit(menu-form-submit)', function (data) {
+            layer.load(2);//等待
+            admin.req("/sys/menu",data.field,function(res){//发送请求
+                layer.closeAll('loading');
+                layer.msg(menu ? "修改成功" : "添加成功", {icon: 1});
+                admin.finishPopupCenter();
+            },$('#menu-form').attr('method'));
+
+            // 阻止自动提交
+            return false;
+        });
+
+    });
+
+</script>

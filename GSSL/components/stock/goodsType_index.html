@@ -1,0 +1,337 @@
+    <style>
+    /*清除浮动*/
+    .clearfix:after {
+        content: '';
+        height: 0;
+        display: block;
+        clear: both;
+    }
+
+    .clearfix {
+        zoom: 1;
+    }
+
+    #goodTreeList {
+        background: #F2F2F2;
+        padding: 10px 0;
+        padding-bottom: 0;
+    }
+
+    #goodTreeList .dHead {
+        height: 85px;
+        width: 100%;
+        position: fixed;
+        z-index: 5;
+        top: 0;
+        overflow-x: auto;
+        padding: 10px;
+    }
+
+    #goodTreeList .layui-btn-xstree {
+        height: 35px;
+        line-height: 35px;
+        padding: 0px 5px;
+        font-size: 12px;
+    }
+
+    .layui-card {
+        margin-bottom: 15px;
+        border-radius: 2px;
+        background-color: #fff;
+        box-shadow: none;
+    }
+
+    /*左树*/
+    #goodTreeList .goods_tree {
+        float: left;
+        width: 22%;
+        height: 600px;
+        overflow-y: auto;
+        background: #fff;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+    }
+
+    #goodTreeList .left_tree label {
+        width: 64px;
+        padding: 9px 0;
+        text-align: left;
+    }
+
+    #goodTreeList .left_tree .layui-input-block {
+        margin-left: 64px;
+    }
+
+    #goodTreeList .layui-form-checkbox[lay-skin=primary] span {
+        padding-left: 15px;
+    }
+
+    .left_tree .layui-form-checked[lay-skin=primary] i {
+        border-color: #5FB878;
+        background-color: #fff;
+        color: #5FB878;
+    }
+
+    .layui-form-checkbox[lay-skin=primary] i {
+        width: 12px;
+        height: 12px;
+        line-height: 12px;
+        text-align: center;
+        margin-top: 2px;
+        border: 1px solid #000;
+        background-color: #fff;
+        font-size: 12px;
+    }
+
+    /*#goodTreeList .left_tree .layui-icon {
+        font-size: 20px;
+        }*/
+    #goodTreeList .left_tree .layui-form-checkbox[lay-skin=primary] span {
+        padding-right: 15px;
+    }
+
+    /*右表*/
+    #goodTreeList .goods_list {
+        float: right;
+        width: 77%;
+        height: 600px;
+        background: #fff;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+    }
+
+    #goodTreeList .goods_list .model-form {
+        padding: 0 20px;
+    }
+
+    #goodTreeList .tables_list .layui-table-body {
+        height: 498px !important;
+    }
+
+    #goodTreeList .tables_list .tables_list {
+        height: 552px;
+        overflow: hidden;
+    }
+
+    #goodTreeList .layui-table-view .layui-table {
+        width: 100%;
+        border-left: 1px solid #E6E6E6;
+    }
+
+    #goodTreeList .but_head {
+        margin: 10px 0;
+    }
+
+    #goodTreeList .layui-border-box {
+        height: 540px !important;
+        border: none;
+    }
+
+    #goodTreeList .layui-table-header {
+        border-width: 0;
+    }
+
+    #goodTreeList .layui-table-view .layui-table td, #goodTreeList .layui-table-view .layui-table th {
+        padding: 5px 0;
+        border-top: 1px solid #e6e6e6;
+    }
+</style>
+
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">货品类型</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>货品类型</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body clearfix" id="goodTreeList" style="">
+        <div class="content clearfix">
+            <!--左树-->
+            <div class="goods_tree">
+                <div class="layui-form toolbar">
+                    <div class="layui-form-item">
+                        <!-- LAY-auth-tree-index容器需要包含在form-item中-->
+                        <div class="left_tree">
+                            <div id="goodsType_Tree"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--右表-->
+            <div class="goods_list">
+
+                <div class="layui-form toolbar">
+                    <div class="layui-inline">
+                        <button id="btnGoodsAdd" class="layui-btn icon-btn">添加一行</button>
+                        <button id="btnGoodsSave" class="layui-btn">保存</button>
+                    </div>
+                    <div class="tables_list">
+                        <form id="goodsType_form" lay-filter="goodsTypes_form" class="layui-form model-form">
+                            <table class="layui-hidden" id="treeTable" lay-filter="treeTable"></table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- 表格操作列 -->
+<script type="text/html" id="goods-table-bar">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script>
+    var editObj = null, ptable = null, treeGrid = null, tableId = 'treeTable', layer = null, removeCache = [];
+    layui.use(['form', 'table', 'util', 'config', 'admin', 'formSelects', 'authtree', 'jquery', 'treeGrid', 'layer'], function () {
+        var $ = layui.jquery;
+        treeGrid = layui.treeGrid;//很重要
+        layer = layui.layer;
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var util = layui.util;
+        var admin = layui.admin;
+        var formSelects = layui.formSelects;
+        var authtree = layui.authtree;
+
+        ptable = treeGrid.render({
+            id: tableId
+            , elem: '#' + tableId
+            , url: config.base_server + '/stocks/stockGoodsType/listNoPage'
+            , headers: {
+                "access_token": config.getToken()
+            }
+            , idField: 'id'//必須字段
+            , treeId: 'id'//树形id字段名称
+            , treeUpId: 'typeParentsKey'//树形父id字段名称
+            , treeShowName: 'typeName'//以树形式显示的字段
+            , heightRemove: [".dHead", 10]//不计算的高度,表格设定的是固定高度，此项不生效
+            , height: '500px'
+            , isFilter: false
+            , iconOpen: false//是否显示图标【默认显示】
+            , isOpenDefault: true//节点默认是展开还是折叠【默认展开】
+            , loading: true
+            , method: 'GET'
+            , isPage: false
+            , cols: [[
+                {type: 'numbers', title: '排序'}
+                , {field: 'typeCode', title: '类型代码', edit: 'text', sort: true}
+                , {field: 'typeName', title: '类型名称', edit: 'text', sort: true}
+                , {
+                    width: 200, title: '操作', align: 'center'/*toolbar: '#barDemo'*/
+                    , templet: function (d) {
+                        var html = '';
+                        var delBtn = '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
+                        return delBtn;
+                    }
+                }
+            ]]
+            , parseData: function (res) {//数据加载后回调
+                return res;
+            }
+        });
+
+
+        //渲染树
+        var renderTree = function (nodes) {
+            admin.req('/stocks/stockGoodsType/tree', {}, function (data) {
+                admin.putTempData('t_goodsType_parentKey', data.checkedIds[0]);
+                if (nodes == undefined) {
+                    checkIds = data.checkedIds;
+                } else {
+                    checkIds = nodes;
+                }
+                var trees = authtree.listConvert(data.list, {
+                    primaryKey: 'id'
+                    , startPid: '-1'
+                    , parentKey: 'typeParentsKey'
+                    , nameKey: 'typeName'
+                    , valueKey: 'id'
+                    , checkedKey: checkIds
+                });
+
+                authtree.render('#goodsType_Tree', trees, {
+                    inputname: 'typeParentsKey[]'
+                    , layfilter: 'lay-check-auth'
+                    , autowidth: true
+                    , openchecked: true
+                    , openall: false
+                    , checkType: 'radio'
+                    , prefixChildStr: "✐"
+                });
+            }, 'GET');
+        }
+        renderTree();
+        $('.auth-status>span').css('display', 'none');
+        //绑定选中事件
+        authtree.on('change(lay-check-auth)', function (data) {
+            var checked = authtree.getChecked('#goodsType_Tree');
+            treeGrid.query(tableId, {
+                where: {
+                    typeParentsKey: checked[0]
+                }
+            });
+        });
+
+        //添加按钮事件
+        $('#btnGoodsAdd').click(function (obj) {
+            var checked = authtree.getChecked('#goodsType_Tree');
+            var pdata = obj ? obj.data : null;
+            var param = {};
+            param.typeCode = '';
+            param.typeName = '';
+            param.typeParentsKey = checked[0];
+            param.id = '';
+            treeGrid.addRow(tableId, pdata ? pdata[treeGrid.config.indexName] + 1 : 0, param);
+        });
+
+
+        //行内删除按钮
+        treeGrid.on('tool(' + tableId + ')', function (obj) {
+            if (obj.event === 'del') {//删除行
+                del(obj);
+            }
+        });
+
+
+        function del(obj) {
+            layer.confirm("确认删除数据吗？此操作不能撤销！", {icon: 2, title: '提示'},
+                function (index) {//确定回调
+                    admin.req("/stocks/stockGoodsType/remove", {'typeParentsKey': obj.data.id}, function (data) {
+                        var checked = authtree.getChecked('#goodsType_Tree');
+                        renderTree(checked);
+                        treeGrid.reload(tableId, {where: {typeParentsKey:checked[0]}});
+                        obj.del();
+                    }, 'DELETE');
+                    layer.close(index);
+                }, function (index) {//取消回调
+                    layer.close(index);
+                })
+        }
+
+        //保存按钮事件
+        $('#btnGoodsSave').click(function (obj) {
+            var res = JSON.stringify(treeGrid.cache[tableId].data.list);
+            admin.ajax({
+                url: config.base_server + '/stocks/stockGoodsType/saveOrUpdate',
+                data: res,
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader(config.tokenName, config.getToken());
+                },
+                success: function (data) {
+                    layer.closeAll('loading');
+                    var checked = authtree.getChecked('#goodsType_Tree');
+                    renderTree(checked);
+                    treeGrid.reload(tableId, {where: {typeParentsKey: checked[0]}});
+                }
+            });
+        });
+
+    })
+    ;
+
+</script>

@@ -1,0 +1,198 @@
+<!--查看表单弹窗 -->
+<link rel="stylesheet" type="text/css" href="/assets/css/custom/common.css"/>
+<style type="text/css">
+    .layui-form-label {
+        width: 100px;
+    }
+    .layui-input-block {
+        margin-left: 130px;
+    }
+    textarea {
+        width: 96.8%;
+    }
+    .borrow_add_tit{
+        font-size: 15px;
+        color: #444;
+        font-weight: bold;
+        padding-bottom: 10px;
+    }
+    .input_gray{
+        background: #f5f5f5;
+    }
+</style>
+<form id="borrow-form" lay-filter="borrow-form" class="layui-form model-form">
+    <input type="hidden" name="id"/>
+    <div class="borrow_add_tit">合同信息</div>
+    <div class="layui-form-item">
+        <!--contractId-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同编号：</label>
+            <div class="layui-input-block">
+                <input id="contractId" type="text" placeholder="请输入合同编号" name="contractId"  class="layui-input input_gray" readonly="readonly" lay-verify="required" >
+            </div>
+        </div>
+        <!--year-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同年份：</label>
+            <div class="layui-input-block">
+                <input id="year" type="text" placeholder="请输入合同年份" name="year" class="layui-input input_gray" readonly="readonly" lay-verify="required" >
+            </div>
+        </div>
+        <!--month-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同月份：</label>
+            <div class="layui-input-block">
+                <input id="month" type="text" placeholder="请输入合同月份" name="month" class="layui-input input_gray" readonly="readonly" lay-verify="required" >
+            </div>
+        </div>
+
+    </div>
+    <div class="layui-form-item">
+        <!--signatory-->
+        <div class="layui-inline">
+            <label class="layui-form-label">签约人：</label>
+            <div class="layui-input-block">
+                <input id="signatory" type="text" placeholder="请输入签约人" name="signatory" class="layui-input input_gray" readonly="readonly" lay-verify="required" >
+            </div>
+        </div>
+        <!--signingDate-->
+        <div class="layui-inline">
+            <label class="layui-form-label">签约时间：</label>
+            <div class="layui-input-block">
+                <input id="signingTime" type="text" placeholder="请输入签约时间" name="signingDate" class="layui-input input_gray" readonly="readonly" lay-verify="required" >
+            </div>
+        </div>
+        <!--conAmount-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同金额：</label>
+            <div class="layui-input-block">
+                <input id="conAmount" type="text" placeholder="请输入合同金额" name="conAmount" class="layui-input input_gray" readonly="readonly" lay-verify="required|number" >
+            </div>
+        </div>
+
+    </div>
+    <div class="layui-form-item">
+        <!--product-->
+        <div class="layui-block">
+            <label class="layui-form-label">主要产品：</label>
+            <div class="layui-input-block" style="width: 786px;">
+                <textarea id="product" name="product" placeholder="请输入主要产品" class="layui-textarea" lay-verify="required" readonly="readonly"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="borrow_add_tit">申请信息</div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">借阅人：</label>
+            <div class="layui-input-block">
+                <input id="borrowUserId" name="borrowUserId" type="hidden" />
+                <input id="borrowUserName" type="text" placeholder="请输入借阅人姓名" name="user" class="layui-input input_gray" readonly="readonly" lay-verify="required" >
+            </div>
+        </div>
+        <!--borrowBeginTime-->
+        <div class="layui-inline">
+            <label class="layui-form-label">借阅开始时间：</label>
+            <div class="layui-input-block">
+                <input id="borrowBeginTime" type="text" name="borrowBeginTime" class="layui-input" lay-verify="required" lay-verify="required|date" readonly="readonly"/>
+            </div>
+        </div>
+        <!--borrowEndTime-->
+        <div class="layui-inline">
+            <label class="layui-form-label">借阅结束时间：</label>
+            <div class="layui-input-block">
+                <input id="borrowEndTime" type="text" name="borrowEndTime" class="layui-input" lay-verify="required" lay-verify="required|date" readonly="readonly"/>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <!--borrowDescription-->
+        <div class="layui-block">
+            <label class="layui-form-label">借阅用途：</label>
+            <div class="layui-input-block" style="width: 786px;">
+                <textarea name="borrowDescription" placeholder="请输入借阅用途" class="layui-textarea" lay-verify="required" readonly="readonly"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="borrow_add_tit">审核信息</div>
+    <div class="layui-form-item">
+        <!--checkState-->
+        <div class="layui-inline">
+            <label class="layui-form-label">审核结果：</label>
+            <div class="layui-input-block">
+                <input id="checkState" type="text" name="checkState" class="layui-input input_gray" readonly="readonly"  lay-verify="required">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <!--变更内容-->
+        <div class="layui-block">
+            <label class="layui-form-label">审核意见：</label>
+            <div class="layui-input-block"   style="width: 786px;">
+                <textarea name="checkResult" id="checkResult" class="layui-textarea" placeholder="请输入审核意见！"  lay-verify="required" readonly="readonly"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item model-form-footer" >
+        <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">关闭</button>
+    </div>
+</form>
+
+<script>
+    layui.use(['layer', 'admin','table','config', 'form', 'formSelects','laydate'], function() {
+        var layer = layui.layer;
+        var admin = layui.admin;
+        var config = layui.config;
+        var form = layui.form;
+        var table = layui.table;
+        var formSelects = layui.formSelects;
+        var laydate = layui.laydate;
+
+        //获取当前登录用户昵称
+        $('#borrowUserId').val(config.getUser().id);
+        $('#borrowUserName').val(config.getUser().nickName);
+
+        // 回显user数据
+        var borrow = admin.getTempData('t_borrow');
+        $('#borrow-form').attr('method', 'POST'); // 没数据是POST
+        console.log(borrow.checkState);
+        if (borrow) {
+            form.val('borrow-form', borrow);
+            $('#borrow-form').attr('method', 'PUT'); // 有数据是PUT
+            var jsonParam={contractNumber:borrow.contractId};
+            if ('001' == borrow.contractType ) {
+                htxx("/contract/salesContract/getDetail",jsonParam);
+            }else {
+                htxx("/contract/purchaseContract/getDetail",jsonParam);
+            }
+        };
+        //审核状态判断
+        if ('002' == borrow.checkState){
+            $('#checkState').val('审核通过');
+        } else if ('003' == borrow.checkState) {
+            $('#checkState').val('审核不通过');
+        } else {
+            $('#checkState').val('待审核');
+        }
+
+        form.render('radio');
+
+        function htxx(url,param){
+            admin.req(url,param,function (data) {
+                layer.closeAll('loading');
+                console.log(data);
+                if (data != null) {
+                    $('#contractId').val(data.contractNumber);
+                    $('#year').val(data.year);
+                    $('#month').val(data.month);
+                    $('#signatory').val(data.signatory);
+                    $('#signingTime').val(data.signingTime);
+                    $('#conAmount').val(data.conAmount);
+                    $('#product').val(data.product);
+                }else{
+                    layer.msg("没有对应的合同！", {icon: 2});
+                }
+            },'GET');
+            return false;
+        }
+    });
+</script>        

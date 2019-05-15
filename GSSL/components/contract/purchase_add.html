@@ -1,0 +1,468 @@
+
+<link rel="stylesheet" type="text/css" href="/assets/css/custom/common.css"/>
+<link rel="stylesheet" type="text/css" href="/assets/css/custom/editTable.css"/>
+<style type="text/css">
+
+	.layui-form-label {
+		width: 109px;
+	}
+	.layui-input-block {
+		margin-left: 140px;
+	}
+	textarea {
+		width: 96.2%;
+	}
+	.mingxi {
+		margin: 0 12px;
+	}
+</style>
+<form id="purch-form" lay-filter="purch-form" class="layui-form model-form">
+	<!--id-->
+	<input name="id" id="id" type="hidden" />
+	<div class="layui-form-item">
+		<!--contractNumber-->
+		<div class="layui-inline">
+			<label class="layui-form-label">合同编号</label>
+			<div class="layui-input-block">
+				<input name="contractNumber" id="contractNumber" placeholder="请输入合同编号" type="text" class="layui-input" maxlength="30" lay-verify="required" />
+			</div>
+		</div>
+		<!--signatory-->
+		<div class="layui-inline">
+			<label class="layui-form-label">签约人</label>
+			<div class="layui-input-block">
+				<input name="signatory" placeholder="请输入签约人" type="text" class="layui-input" lay-verify="required" />
+			</div>
+		</div>
+		<!--signingDate-->
+		<div class="layui-inline">
+			<label class="layui-form-label">签约时间</label>
+			<div class="layui-input-block">
+				<input name="signingDate" id="signingDate" placeholder="请选择签约时间" type="text" class="layui-input time_item" maxlength="20" lay-verify="required" />
+			</div>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<!--conAmount-->
+		<div class="layui-inline">
+			<label class="layui-form-label">合同金额(元)</label>
+			<div class="layui-input-block">
+				<input name="conAmount" placeholder="请输入合同金额" type="text" class="layui-input" maxlength="20" lay-verify="required" />
+			</div>
+		</div>
+		<!--termPayment-->
+		<div class="layui-inline">
+			<label class="layui-form-label">付款条件</label>
+			<div class="layui-input-block">
+				<select name="termPayment" id="termPayment" class="layui-select"></select>
+			</div>
+		</div>
+		<!--mentType-->
+		<div class="layui-inline">
+			<label class="layui-form-label">运输方式</label>
+			<div class="layui-input-block">
+				<select name="mentType" id="mentType" class="layui-select" lay-verify="required"></select>
+			</div>
+		</div>
+		
+	</div>
+	<div class="layui-form-item">
+		<!--product-->
+		<div class="layui-inline">
+			<label class="layui-form-label">主要产品</label>
+			<div class="layui-input-block" style="width: 487px;">
+				<input name="product" placeholder="请输入主要产品" type="text" class="layui-input" maxlength="20" lay-verify="required" />
+			</div>
+		</div>
+		<!--arrivalDate-->
+		<div class="layui-inline">
+			<label class="layui-form-label">到货时间</label>
+			<div class="layui-input-block">
+				<input name="arrivalDate" id="arrivalDate" placeholder="请选择到货时间" type="text" class="layui-input time_item" maxlength="20" lay-verify="required" />
+			</div>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<!--arrivalPlace-->
+		<div class="layui-inline">
+			<label class="layui-form-label">到货地点</label>
+			<div class="layui-input-block">
+				<input name="arrivalPlace" placeholder="请输入到货地点" type="text" class="layui-input" maxlength="20" lay-verify="required" />
+			</div>
+		</div>
+		<!--supplierId-->
+		<div class="layui-inline">
+			<label class="layui-form-label">供应商</label>
+			<div class="layui-input-block" style="width: 487px;">
+				<select name="supplierId" id="supplierId" lay-filter="supplierId" class="layui-select" lay-verify=""></select>
+			</div>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<!--name-->
+		<div class="layui-inline">
+			<label class="layui-form-label">供应商联系人</label>
+			<div class="layui-input-block">
+				<input id="name" placeholder="请选择供应商" readonly="readonly" type="text" class="layui-input" maxlength="20" lay-verify="" />
+			</div>
+		</div>
+		<!--clientTel-->
+		<div class="layui-inline">
+			<label class="layui-form-label">供应商电话</label>
+			<div class="layui-input-block">
+				<input name="clientTel" id="clientTel" placeholder="请选择供应商" type="text" readonly="readonly" class="layui-input" maxlength="20" lay-verify="" />
+			</div>
+		</div>
+		<!--clientFax-->
+		<div class="layui-inline">
+			<label class="layui-form-label">供应商传真</label>
+			<div class="layui-input-block">
+				<input name="clientFax" id="clientFax" placeholder="请选择供应商" type="text" readonly="readonly" class="layui-input" maxlength="20" lay-verify="" />
+			</div>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<!--remark-->
+		<div class="layui-block">
+			<label class="layui-form-label">备注</label>
+			<div class="layui-input-block">
+				<textarea name="remark" rows="2" cols="" placeholder="请输入备注"></textarea>
+			</div>
+		</div>
+	</div>
+	<!--采购合同明细开始-->
+	<div class="mingxi">
+		<div class="ht_table" style="width: 100%;">
+			<div class="tit clearfix" id="tit" style="text-align: right">
+				<span style="float: left;">采购明细</span>
+				<button style="margin-left: 8px" id="mxb-form-download" class="layui-btn layui-btn-primary layui-btn-xs"  type="button">模板下载</button>
+				<button style="margin-left: 8px" id="mxb-form-add" class="layui-btn  layui-btn-xs"  type="button">导入数据</button>
+				<button style="margin-left: 8px" id="addBtn" class="layui-btn layui-btn-normal layui-btn-xs"  type="button">添加一行</button>
+			</div>
+			<div id="mx-form" >
+				<table class="edtitable" style="width: 100%;">
+					<tbody>
+						<tr>
+							<th>序号</th>
+							<th>名称</th>
+							<th>型号</th>
+							<th>单位</th>
+							<th>单价</th>
+							<th>数量</th>
+							<th>总价</th>
+							<th>备注</th>
+							<th>操作</th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<!--采购合同明细结束-->
+	<div class="layui-form-item model-form-footer" style="text-align: center;margin: 40px 0;">
+		<button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+		<button class="layui-btn" lay-filter="purch-form-submit" lay-submit>保存</button>
+	</div>
+</form>
+
+
+<script src="/assets/libs/json.js"></script>
+<script>
+	layui.use(['layer', 'admin','table','config', 'form', 'formSelects','laydate','upload'], function () {
+		var $ = layui.jquery;
+		var layer = layui.layer;
+		var admin = layui.admin;
+		var config = layui.config;
+		var form = layui.form;
+		var table = layui.table;
+		var formSelects = layui.formSelects;
+		var laydate = layui.laydate;
+		var upload = layui.upload;
+
+		var uploadInst = upload.render({
+			elem: '#mxb-form-add',
+			headers: {
+				"access_token":config.getToken()
+			},
+
+			accept: 'file',
+			exts: 'xlsx'|'xls',
+			url: config.base_server + '/contract/purchaseDetail/uploadExcel', //上传接口
+			done: function(data){
+				if("200" == data.code){
+					var res = data.data;
+					var html = "";
+					for (var i in res) {
+						html += "<tr class='detail'>";
+						html += "<td hidden='hidden'><input type='text' value='" + res[i].id+ "'/></td>";
+						html += "<td><input class='edit'lay-verify='required|number' type='text' value='" + res[i].orderNum + "'/></td>";
+						html += "<td><input class='edit'lay-verify='required' type='text' value='" + res[i].name + "'/></td>";
+						html += "<td><input class='edit'lay-verify='required' type='text' value='" + res[i].mode + "'/></td>";
+						html += "<td><input class='edit'lay-verify='required' type='text' value='" + res[i].unit + "'/></td>";
+						html += "<td><input class='edit'lay-verify='required|number' id='price' type='text' value='" + res[i].price + "'/></td>";
+						html += "<td><input class='edit'lay-verify='required|number' id='sum'   type='text' value='" + res[i].sum + "'/></td>";
+						html += "<td><input class='edit' type='text' id='totalPrice' value='" + res[i].totalPrice + "'/></td>";
+						html += "<td><input class='edit'lay-verify='required' type='text' value='" + res[i].remark + "'/></td>";
+						html += "<td hidden='hidden'><input type='text' id='flag' value='" + res[i].flag + "'/></td>";
+						html += "<td class='del-col'><a href='javascript:void(0);' class='delBtn'>删除</a></td>";
+						html += "</tr>";
+					}
+					$(".edtitable").append(html);
+				}
+				delTr();
+			}
+		});
+
+		//日期选择器
+		  lay('.time_item').each(function(){
+		    laydate.render({
+		      elem: this
+		      ,trigger: 'click'
+		      ,value: new Date()
+			  ,done: function(value, date){}
+		    });
+		  });
+
+		// 回显数据
+		var purch = admin.getTempData('t_purch');
+		$('#purch-form').attr('method', 'POST');// 没数据是POST
+		if (purch) {
+			form.val('purch-form', purch);
+			$('#purch-form').attr('method', 'PUT'); // 有数据是PUT
+			//付款条件
+			payTerms('/sys/dictData/list/term_payment','termPayment',purch.termPayment);
+			//运输方式
+			payTerms('/sys/dictData/list/ment_type','mentType',purch.mentType);
+			//客户下拉
+			customerAttr();
+			//采购明细列表渲染
+			purchDetail(purch.id);
+		}else{
+			//付款条件
+			payTerms('/sys/dictData/list/term_payment','termPayment');
+			//运输方式
+			payTerms('/sys/dictData/list/ment_type','mentType');
+			//客户下拉
+			customer();
+		}
+
+		function payTerms(url,id,parameter) {
+			//付款条件
+			admin.req(url, {}, function (data) {
+				layer.closeAll('loading');
+				// 渲染下拉框
+				var electData = "<option value=''>请选择</option>";
+				for (var i in data) {
+					electData += "<option value='" + data[i].dictValue + "'>" + data[i].dictLabel + "</option>";
+				}
+				$('#'+id+'').html(electData);
+				for (var i in data) {
+					if (purch) {
+						if (data[i].dictValue == parameter){}
+						//选择器添加ID否则会导致多个下拉框被改变
+						$("#"+id+" option[value='"+ data[i].dictValue+"']").attr("selected","selected");
+					}
+				}
+				form.render('select');
+			}, 'GET');
+		}
+
+		//客户信息下拉渲染
+		function customer() {
+			admin.req("/user/clientInfo/clientList", {}, function (data) {
+				layer.closeAll('loading');
+				// 渲染下拉框
+				var electData = "<option value=''>请选择</option>";
+				for (var i in data) {
+					electData += "<option value='" + data[i].id + "'>" + data[i].clientName + "</option>";
+				}
+				$('#supplierId').html(electData);
+				form.render('select');
+			}, 'GET');
+		}
+
+		//客户信息下拉框渲染选中
+		function customerAttr() {
+			admin.req("/user/clientInfo/clientList", {}, function (data) {
+				layer.closeAll('loading');
+				// 渲染下拉框
+				var electData = "<option value=''>请选择</option>";
+				for (var i in data) {
+					electData += "<option value='" + data[i].id + "'>" + data[i].clientName + "</option>";
+				}
+				$('#supplierId').html(electData);
+				for (var i in data) {
+					if (data[i].id == purch.supplierId) {
+						$("option[value=" + data[i].id + "]").attr("selected", "selected");
+						//供应商
+						client(purch.supplierId);
+					}
+				}
+				form.render('select');
+			}, 'GET');
+		}
+
+		//监听客户下拉框，值改变时把相关的信息渲染在页面上
+		form.on("select(supplierId)", function () {
+			client($("#supplierId").val());
+		})
+
+		//客户信息，名称，电话，传真在页面渲染
+		function client(id) {
+			if(null == id || "" == id || undefined == id){
+				$("#name").val("");
+				$("#clientTel").val("");
+				$("#clientFax").val("");
+			}else{
+				admin.req("/user/clientInfo/getById/" + id, {}, function (data) {
+					layer.closeAll('loading');
+					// 渲染下拉框
+					if(data != undefined && data != null && data != ''){
+						$("#name").val(data.name);
+						$("#clientTel").val(data.clientTel);
+						$("#clientFax").val(data.clientFax);
+					}
+				}, 'GET');
+			}
+		}
+
+		//采购合同明细
+		function purchDetail(purchaseId) {
+			admin.req("/contract/purchaseDetail/list/" + purchaseId, {}, function (data) {
+				layer.closeAll('loading');
+				var html = "";
+				for (var i in data) {
+					html += "<tr class='detail'>";
+					html += "<td hidden='hidden'><input type='text' value='" + data[i].id+ "'/></td>";
+					html += "<td><input class='edit'lay-verify='required|number' type='text' value='" + data[i].orderNum + "'/></td>";
+					html += "<td><input class='edit' lay-verify='required' onfocus='chan()' type='text' value='" + data[i].name + "'/></td>";
+					html += "<td><input class='edit' lay-verify='required' type='text' value='" + data[i].mode + "'/></td>";
+					html += "<td><input class='edit' lay-verify='required' type='text' value='" + data[i].unit + "'/></td>";
+					html += "<td><input class='edit' id='price' lay-verify='required|number' type='text' value='" + data[i].price + "'/></td>";
+					html += "<td><input class='edit' id='sum'   lay-verify='required|number' type='text' value='" + data[i].sum + "'/></td>";
+					html += "<td><input class='edit' type='text' id='totalPrice' readonly='readonly' value='" + data[i].totalPrice + "'/></td>";
+					html += "<td><input class='edit' lay-verify='required' type='text' value='" + data[i].remark + "'/></td>";
+					html += "<td hidden='hidden'><input type='text' id='flag' value='" + data[i].flag + "'/></td>";
+					html += "<td class='del-col'><a href='javascript:void(0);' class='delBtn'>删除</a></td>";
+					html += "</tr>";
+				}
+				$(".edtitable").append(html);
+				delTr();
+			}, 'GET');
+		}
+
+		//监听采购明细数据库已存在的值如果有改变就把状态改为 修改:edit
+		$("body").on("change",".edit",function () {
+			var flag = $(this).parent().siblings().children("#flag").val();
+			if ('noOpe' === flag)
+				$(this).parent().siblings().children("#flag").val("edit");
+		});
+
+		//计算采购明细的总价 当前文本框内容改变的时候去判断另一个文本框有没有内容，有就把价格计算出来
+		$("body").on("change","#price",function () {
+			var price = $(this).val();
+			var sum = $(this).parent().next().children("#sum").val();
+			   if('' != sum && null != sum && undefined != sum)
+				$(this).parent().siblings().children("#totalPrice").val(sum * price);
+		});
+
+		//计算采购明细的总价 当前文本框内容改变的时候去判断另一个文本框有没有内容，有就把价格计算出来
+		$("body").on("change","#sum",function () {
+			var sum = $(this).val();
+			var price = $(this).parent().prev().children("#price").val();
+
+			if('' != price && null != price && undefined != price)
+				$(this).parent().siblings().children("#totalPrice").val(sum * price);
+		});
+
+		/*下明细表添加行*/
+		$("#addBtn").bind("click", function(){
+			var html ="<tr class='detail'>"+
+					"<td hidden='hidden' ><input type='text'/></td>"+
+					"<td><input type='text' lay-verify='required|number'/></td>" +
+					"<td><input type='text' lay-verify='required'/></td>" +
+					"<td><input type='text' lay-verify='required'/></td>" +
+					"<td><input type='text' lay-verify='required'/></td>" +
+					"<td><input type='text' id='price' lay-verify='required|number'/></td>" +
+					"<td><input type='text' id='sum'  lay-verify='required|number'/></td>" +
+					"<td><input type='text' readonly='readonly' id='totalPrice' lay-verify='required'/></td>"+
+					"<td><input type='text' lay-verify='required'/></td>"+
+					"<td hidden='hidden' ><input type='text' id='flag' value='add'/></td>"+
+					"<td class='del-col'><a href='javascript:void(0);' class='delBtn'>删除</a></td>"+
+					"</tr>";
+			$(".edtitable").append(html);
+			delTr();
+			$("tbody tr td").css("background-color","#fff");
+		});
+		delTr();
+
+		//明细表删除行
+		function delTr(){
+			$(".delBtn").click(function(){
+				if("add" === $(this).parent().siblings().children("#flag").val())
+					$(this).parent().parent().remove();
+				else {
+					$(this).parent().parent().attr("hidden","hidden");
+					$(this).parent().siblings().children("#flag").val("del");
+				}
+			});
+		}
+
+		//模板下载
+        $("#mxb-form-download").click(function(){
+			document.location.href=config.base_server + "/contract/purchaseDetail/downloadExcel";
+        });
+
+
+		//表单采购明细页面数据分装
+		function jsonDetailArr(){
+			var arr = new Array();
+			var trArr = new Array();
+			var trLength = $('.detail').length;
+			var tdLength = $('.detail').eq(0).children().length;   //同一表格的tr的子集td个数一样，所以直接获取第一行tr的td个数
+			var trList = $(".detail");
+			for (var i = 0; i < trLength; i++) {
+				var tdArr = trList.eq(i).find("td");
+				var id = tdArr.eq(0).find("input").val();
+				var orderNum = tdArr.eq(1).find("input").val();
+				var name = tdArr.eq(2).find("input").val();
+				var mode = tdArr.eq(3).find("input").val();
+				var unit = tdArr.eq(4).find("input").val();
+				var price = tdArr.eq(5).find("input").val();
+				var sum = tdArr.eq(6).find("input").val();
+				var remark = tdArr.eq(8).find("input").val();
+				var flag = tdArr.eq(9).find("input").val();
+				arr.push({'id':id,'orderNum':orderNum,'name':name,'mode':mode,'unit':unit,'price':price,
+					'sum':sum,'remark':remark,'flag':flag});
+			}
+			return arr;
+		}
+
+		// 表单提交事件
+		form.on('submit(purch-form-submit)', function (data) {
+			layer.load(2);
+			//表单数据组装，分两块采购合同信息和采购明细
+			var arr = {};
+			var detailArr = jsonDetailArr();
+			arr=data.field;
+			arr.detailsVO=detailArr;
+			admin.ajax({
+				url: config.base_server + '/contract/purchaseContract/edit',
+				data: JSON.stringify(arr),
+				contentType : "application/json",
+				type: "POST",
+				dataType: 'json',
+				beforeSend: function (XMLHttpRequest) {
+					XMLHttpRequest.setRequestHeader(config.tokenName, config.getToken());
+				},
+				success: function(data){
+					layer.closeAll('loading');
+					layer.msg("保存成功", {icon: 1});
+					admin.finishPopupCenter();
+				}
+			});
+			return false;
+		});
+	});
+
+</script>

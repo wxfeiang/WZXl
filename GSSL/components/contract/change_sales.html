@@ -1,0 +1,278 @@
+<!--重新复制原编辑页面作为销售合同变更页面-->
+<link rel="stylesheet" type="text/css" href="/assets/css/custom/common.css"/>
+<style type="text/css">
+    .layui-form-label {
+        width: 70px;
+    }
+
+    .layui-input-block {
+        margin-left: 100px;
+    }
+
+    textarea {
+        width: 96.8%;
+    }
+</style>
+<form id="sale_change_form" lay-filter="sale_change_form" class="layui-form model-form">
+    <!--id-->
+    <input name="id" type="hidden"/>
+    <div class="layui-form-item">
+        <!--projectName-->
+        <div class="layui-inline">
+            <label class="layui-form-label">项目名称</label>
+            <div class="layui-input-block">
+                <input name="projectName" placeholder="请输入项目名称" type="text" class="layui-input" lay-verify="required"/>
+            </div>
+        </div>
+        <!--projectNature-->
+        <div class="layui-inline">
+            <label class="layui-form-label">项目性质</label>
+            <div class="layui-input-block">
+                <select name="projectNature" id="projectNature" class="layui-select" lay-verify="required"></select>
+            </div>
+        </div>
+        <!--termPayment-->
+        <div class="layui-inline">
+            <label class="layui-form-label">付款条件</label>
+            <div class="layui-input-block">
+                <select name="termPayment" id="termPayment" class="layui-select" lay-verify="required"></select>
+            </div>
+        </div>
+        <!--saleType-->
+        <div class="layui-inline">
+            <label class="layui-form-label">销售类别</label>
+            <div class="layui-input-block">
+                <select name="saleType" id="saleType" class="layui-select" lay-verify="required"></select>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <!--contractNumber-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同编号</label>
+            <div class="layui-input-block">
+                <input name="contractNumber" placeholder="请输入合同编号" type="text" class="layui-input" readonly="readonly"
+                       lay-verify="required"/>
+            </div>
+        </div>
+        <!--signatory-->
+        <div class="layui-inline">
+            <label class="layui-form-label">签约人</label>
+            <div class="layui-input-block">
+                <input name="signatory" placeholder="请输入签约人" type="text" class="layui-input" lay-verify="required"/>
+            </div>
+        </div>
+        <!--sigingTime-->
+        <div class="layui-inline">
+            <label class="layui-form-label">签约时间</label>
+            <div class="layui-input-block">
+                <input name="signingTime" placeholder="请输入签约时间" type="text" class="layui-input time_item" maxlength="20"
+                       lay-verify="required|date"/>
+            </div>
+        </div>
+        <!--conAmount-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同金额</label>
+            <div class="layui-input-block">
+                <input name="conAmount" placeholder="请输入合同金额" type="text" class="layui-input" maxlength="20"
+                       lay-verify="required|number"/>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <!--contractType-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同类别</label>
+            <div class="layui-input-block">
+                <select name="contractType" id="contractType" class="layui-select" lay-verify="required"></select>
+            </div>
+        </div>
+        <!--mentDate-->
+        <div class="layui-inline">
+            <label class="layui-form-label">发货日期</label>
+            <div class="layui-input-block">
+                <input name="mentDate" placeholder="请输入发货日期" type="text" class="layui-input time_item" maxlength="20"
+                       lay-verify="required|date"/>
+            </div>
+        </div>
+        <!--deliveryDate-->
+        <div class="layui-inline">
+            <label class="layui-form-label">交货日期</label>
+            <div class="layui-input-block">
+                <input name="deliveryDate" placeholder="请输入交货日期" type="text" class="layui-input time_item"
+                       maxlength="20" lay-verify="required|date"/>
+            </div>
+        </div>
+        <!--mentType-->
+        <div class="layui-inline">
+            <label class="layui-form-label">运输方式</label>
+            <div class="layui-input-block">
+                <select name="mentType" id="mentType" class="layui-select" lay-verify="required"></select>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <!--mainProducts-->
+        <div class="layui-inline">
+            <label class="layui-form-label">主要产品</label>
+            <div class="layui-input-block" style="width: 446px;">
+                <input name="mainProducts" placeholder="请输入主要产品" type="text" class="layui-input" maxlength="20"
+                       lay-verify="required"/>
+            </div>
+        </div>
+        <!--mentSituation-->
+        <div class="layui-inline">
+            <label class="layui-form-label">发货情况</label>
+            <div class="layui-input-block">
+                <select name="mentSituation" id="mentSituation" class="layui-select" lay-verify="required"></select>
+            </div>
+        </div>
+        <!--contacts-->
+        <div class="layui-inline">
+            <label class="layui-form-label">联系人</label>
+            <div class="layui-input-block">
+                <input name="contacts" placeholder="联系人" type="text" class="layui-input" maxlength="20" lay-verify=""
+                       lay-verify="required"/>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <!--contactsPhone-->
+        <div class="layui-inline">
+            <label class="layui-form-label">联系电话</label>
+            <div class="layui-input-block">
+                <input name="contactsPhone" placeholder="联系电话" type="text" class="layui-input" maxlength="11"
+                       lay-verify="required|phone"/>
+            </div>
+        </div>
+        <!--contactsFax-->
+        <div class="layui-inline">
+            <label class="layui-form-label">用户传真</label>
+            <div class="layui-input-block">
+                <input name="contactsFax" placeholder="用户传真" type="text" class="layui-input" maxlength="20"
+                        lay-verify="required"/>
+            </div>
+        </div>
+        <!--executionState-->
+        <div class="layui-inline">
+            <label class="layui-form-label">执行状态</label>
+            <div class="layui-input-block">
+                <select name="executionState" id="executionState" class="layui-select" lay-verify="required"></select>
+            </div>
+        </div>
+        <!--endUser-->
+        <div class="layui-inline">
+            <label class="layui-form-label">最终用户</label>
+            <div class="layui-input-block">
+                <input name="endUser" placeholder="最终用户" type="text" class="layui-input" maxlength="20"
+                       lay-verify="required"/>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <!--remark-->
+        <div class="layui-block">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea name="remark" id="remark" rows="5" cols="" placeholder="请输入要备注的"></textarea>
+            </div>
+        </div>
+    </div>
+
+    </form>
+<div class="layui-form-item model-form-footer">
+    <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+    <button class="layui-btn" lay-filter="sale_change_form_submit" id="sale_change_form_submit" >保存</button>
+</div>
+
+<script>
+    layui.use(['layer', 'admin', 'table', 'config', 'form', 'formSelects', 'laydate'], function () {
+        var layer = layui.layer;
+        var admin = layui.admin;
+        var config = layui.config;
+        var form = layui.form;
+        var table = layui.table;
+        var formSelects = layui.formSelects;
+        var laydate = layui.laydate;
+
+        //日期选择器
+        lay('.time_item').each(function () {
+            laydate.render({
+                elem: this
+                , trigger: 'click',
+                value: new Date(),
+                done: function (value, date) {
+                }
+            });
+        });
+
+
+        //通过合同编号获取数据并写入表单
+        function writeFormData() {
+            var contractNumber = admin.getTempData("contractNumber");
+            console.log(contractNumber);
+            var url = '/contract/salesContract/getDetail';
+            admin.req(url
+                , {contractNumber: contractNumber, isChange: '001'}
+                , function (data) {
+                    form.val('sale_change_form', data);
+                    //付款条件
+                    dropDown("term_payment","termPayment",data.termPayment);
+                    //运输方式
+                    dropDown("ment_type","mentType",data.mentType);
+                    //项目性质
+                    dropDown("project_nature","projectNature",data.projectNature);
+                    //销售类别
+                    dropDown("sale_type","saleType",data.saleType);
+                    //合同类别
+                    dropDown("contract_type","contractType",data.contractType);
+                    //发货情况
+                    dropDown("ment_situation","mentSituation",data.mentSituation);
+                    //执行状态
+                    dropDown("execution_state","executionState",data.executionState);
+                }, 'GET');
+        }
+        writeFormData();
+        form.render('select');
+        // //新增页有数据时下拉框渲染
+        function dropDown(code,id,parameter){
+        	admin.req('/sys/dictData/list/'+code, {}, function (data) {
+        		layer.closeAll('loading');
+        		// 渲染下拉框
+        		var electData = "<option value=''>请选择</option>";
+        		for (var i in data) {
+        			electData += "<option value='"+data[i].dictValue+"'>"+data[i].dictLabel+"</option>";
+        		}
+        		$('#'+id+'').html(electData);
+        		for (var i in data) {
+        				if (data[i].dictValue == parameter)
+        					$("option[value=" + data[i].dictValue + "]").attr("selected", "selected");
+        		}
+        		form.render('select');
+        	},'GET');
+        }
+
+        // 添加按钮点击事件
+        $('#sale_change_form_submit').click(function () {
+            submitSaleChange();
+        });
+
+        function submitSaleChange(){
+            var data=$('#sale_change_form').serializeJSON();
+            layer.confirm('请确认变更信息无误后提交，提交后不可更改!', function (i) {
+                admin.req('/contract/salesContract/changeApply',
+                    data,
+                    function (data) {
+                        layer.closeAll('loading');
+                        layer.msg("变更成功！", {icon: 1});
+                        admin.finishPopupCenter();
+                    },'POST');
+                return false;
+
+            });
+
+        }
+
+    });
+</script>

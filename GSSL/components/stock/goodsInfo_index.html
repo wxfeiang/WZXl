@@ -1,0 +1,208 @@
+
+<link rel="stylesheet" type="text/css" href="/assets/css/custom/common.css"/>
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">货品信息</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>货品信息</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            <form id="goods_search_form" class="layui-form">
+                <div class="layui-form-item">
+                    货品名称
+                    <input type="text" id="goodsNameSearch" name="goodsName" class="layui-input search-input" placeholder="货品名称">&emsp;
+                    货品品牌
+                    <input type="text" id="goodsBrandSearch" name="goodsBrand" class="layui-input search-input" placeholder="货品品牌">&emsp;
+                    创建时间
+                    <input type="text" name="createStartTime" id="createStartTime" class="layui-input search-input" placeholder="创建时间开始">&emsp;
+                    -
+                    <input type="text" name="createEndTime" id="createEndTime" class="layui-input search-input" placeholder="创建时间结束">&emsp;
+                </div>
+            </form>
+            <button id="btn_goods_search" class="layui-btn icon-btn" type="button" lay-submit><i class="layui-icon">&#xe615;</i>搜索</button>
+            <button id="btn_goods_reset" class="layui-btn layui-btn-warm icon-btn" type="reset"><i class="layui-icon">&#xe9aa;</i>重置</button>
+            <button id="btn_goods_add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+        </div>
+        <div class="content">
+            <table class="layui-table" id="goodsInfo_table" lay-filter="goodsInfo_table"></table>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- 表格操作列 -->
+<script type="text/html" id="goodsInfo_table_bar">
+    <a class="layui-btn  layui-btn-xs" lay-event="check">查看</a>
+    <a class="layui-btn  layui-btn-normal layui-btn-xs"  lay-event="goodsEdit">编辑</a>
+    <a class="layui-btn  layui-btn-warm layui-btn-xs" lay-event="goodsCheckIn">入库</a>
+    <a class="layui-btn  layui-btn-danger  layui-btn-xs" lay-event="goodsCheckOut">出库</a>
+<!--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+</script>
+
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin','formSelects','laydate'], function () {
+        var form = layui.form,table = layui.table,config = layui.config,layer = layui.layer,util = layui.util,admin = layui.admin,laydate=layui.laydate;
+
+        // 渲染表格
+        table.render({
+            elem: '#goodsInfo_table',
+            url: config.base_server + '/stocks/stockGoodsInfo/pageList',
+            headers: {
+                "access_token": config.getToken()
+            },
+            page: true,
+            cols: [[
+                {type: 'numbers'}
+               // , {type: 'checkbox', sort: true}
+                , {field: 'goodsName', title: '货品名称', align: 'left',minWidth: 100,sort:true}
+                , {field: 'goodsBrand', title: '货品品牌', align: 'left'}
+                , {field: 'goodsModel', title: '规格型号', align: 'left'}
+                , {field: 'goodsUnit', title: '货品单位', align: 'center'}
+                , {field: 'goodsAssistUnit', title: '货品辅助单位', align: 'center'}
+                , {field: 'typeName', title: '货品类型', align: 'left',minWidth: 100}
+                , {field: 'goodsMaxNum', title: '库存上限预警', align: 'center'}
+                , {field: 'goodsMinNum', title: '库存下限预警', align: 'center'}
+                , {field: 'goodsAdvancePrice', title: '货品预售价', align: 'center',sort:true}
+                , {field: 'goodsMinPrice', title: '货品最低售价', align: 'center',sort:true}
+                , {field: 'goodsNum', title: '库存数', align: 'center',minWidth: 100,sort:true}
+                , {width: 200,fixed:'right', align: 'center', toolbar: '#goodsInfo_table_bar', title: '操作'}
+            ]]
+        });
+
+        // 添加按钮点击事件
+        $('#btn_goods_add').click(function () {
+            showEditModel();
+        });
+
+        // 工具条点击事件
+        table.on('tool(goodsInfo_table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+            switch (obj.event) {
+                case 'check':showCheckModel(data);break;
+                case 'goodsEdit':showEditModel(data);break;
+                case 'goodsCheckIn':showCheckInModel(data);break;
+                case 'goodsCheckOut':showCheckOutModel(data);break;
+            }
+        });
+
+
+        // laydate startTime
+        laydate.render({
+            elem: '#createStartTime' //指定元素
+        });
+
+        // laydate endTime
+        laydate.render({
+            elem: '#createEndTime' //指定元素
+        });
+
+        // 搜索 按钮点击事件
+        $('#btn_goods_search').click(function () {
+            table.reload('goodsInfo_table',  {
+                where: $('#goods_search_form').serializeJSON(),
+                page: {curr: 1} //重新从第 1 页开始
+            });
+        });
+
+        $('#btn_goods_reset').click(function () {
+            $('#goods_search_form')[0].reset();
+            table.reload('goodsInfo_table', {where: $('#goods_search_form').serializeJSON()});
+        })
+
+        //添加或修改窗口
+        var showEditModel = function (data) {
+            admin.putTempData('t_goodsinfo', data);
+            if(data){
+                admin.putTempData('t_goodsType', data.goodsTypeId);
+                admin.putTempData('t_goodsTypeName', data.typeName);
+            }
+
+            var title = data ?  '修改货品': '添加货品';
+            var areas= ['800px', '460px'];
+            admin.popupCenter({
+                title: title,
+                area:areas,
+                offset:'auto',
+                path: 'components/stock/goodsInfo_add.html',
+                finish: function () {
+                    table.reload('goodsInfo_table', {});
+                }
+            });
+        };
+
+
+
+        //查看
+        var showCheckModel=function(data){
+            admin.putTempData('t_goodsInfo',data);
+            admin.putTempData('t_goodsInfo_id',data.id);
+            var areas=['1024px','720px'];
+            admin.popupCenter({
+                title:'查看详细'
+                ,area:areas
+                // ,offset:'auto'
+                ,scrollbar: true
+                ,path:'components/stock/goodsInfo_look.html'
+                ,finish:function () {
+                    table.reload('goodsInfo_table', {});
+                }
+            })
+
+        }
+
+        //入库
+        var showCheckInModel=function(data){
+            admin.putTempData('t_goodsInfo',data);
+            admin.putTempData('t_goodsInfo_id',data.id);
+            var areas=['1024px','600px'];
+            admin.popupCenter({
+                title:'货品入库'
+                ,area:areas
+                ,offset:'auto'
+                ,path:'components/stock/goodsInfo_check_in.html'
+                ,finish:function () {
+                    table.reload('goodsInfo_table', {});
+                }
+            })
+
+        }
+
+        //出库
+        var showCheckOutModel=function(data){
+            admin.putTempData('t_goodsInfo',data);
+            admin.putTempData('t_goodsInfo_id',data.id);
+            var areas=['1024px','550px'];
+            admin.popupCenter({
+                title:'货品出库'
+                ,area:areas
+                ,offset:'auto'
+                ,path:'components/stock/goodsInfo_check_out.html'
+                ,finish:function () {
+                    table.reload('goodsInfo_table', {});
+                }
+            })
+
+        }
+
+
+        // 删除
+        var doDelete = function (obj) {
+            layer.confirm('确定要删除吗？', function (i) {
+                layer.close(i);
+                layer.load(2);
+                admin.req('/user/clientInfo/remove/' + obj.data.id, {}, function (data) {
+                    layer.closeAll('loading');
+                    layer.msg("删除成功", {icon: 1});
+                    obj.del();
+                }, 'DELETE');
+            });
+            table.reload('goodsInfo_table', {});
+        };
+    });
+</script>

@@ -1,0 +1,295 @@
+<link rel="stylesheet" type="text/css" href="/assets/css/custom/common.css"/>
+<style type="text/css">
+    .layui-form-label {
+        width: 120px;
+        padding: 9px 0;
+    }
+
+    .layui-input-block {
+        margin-left: 130px;
+    }
+
+
+    .xm-form-selected .xm-select, .xm-form-selected .xm-select:hover {
+        border-color: #e6e6e6 !important;
+    }
+
+    textarea {
+        width: 100%;
+        border: 1px solid #e6e6e6 !important;
+        background: #fff !important;
+    }
+
+    .input_gray {
+        background: #f5f5f5;
+    }
+
+    .contentCheckIn {
+        margin-left: 20px;
+        width: 95%;
+
+    }
+
+    .contentCheckOut {
+        margin-top: 20px;
+        margin-left: 20px;
+        width: 95%;
+
+    }
+</style>
+
+<form id="goodsInfo_form_check" lay-filter="goodsInfo_form_check" class="layui-form model-form ">
+    <!--id-->
+    <input name="id" type="hidden"/>
+    <div class="layui-form-item">
+
+        <div class="layui-inline">
+            <label class="layui-form-label">货品名称</label>
+            <div class="layui-input-block">
+                <input name="goodsName" readonly="readonly" class="layui-input input_gray" type="text"/>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">货品品牌</label>
+            <div class="layui-input-block">
+                <input name="goodsBrand" readonly="readonly" type="text" class="layui-input input_gray"/>
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">规格型号</label>
+            <div class="layui-input-block">
+                <input name="goodsModel" readonly="readonly" type="text" class="layui-input input_gray"/>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+
+        <div class="layui-inline">
+            <label class="layui-form-label">货品类型</label>
+            <div class="layui-input-block">
+                <input name="typeName" readonly="readonly" type="text" class="layui-input input_gray"/>
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">货品单位</label>
+            <div class="layui-input-block">
+                <input name="goodsUnit" readonly="readonly" type="text" class="layui-input input_gray"/>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">货品辅助单位</label>
+            <div class="layui-input-block">
+                <input name="goodsAssistUnit" readonly="readonly" class="layui-input input_gray"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">库存上限预警</label>
+            <div class="layui-input-block">
+                <input name="goodsMaxNum" readonly="readonly" type="text" class="layui-input input_gray"/>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">库存下限预警</label>
+            <div class="layui-input-block">
+                <input name="goodsMinNum" readonly="readonly" type="text" class="layui-input input_gray"/>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">库存数</label>
+            <div class="layui-input-block">
+                <input name="goodsNum" readonly="readonly" type="text" class="layui-input input_gray"/>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">货品预售价格</label>
+            <div class="layui-input-block">
+                <input name="goodsAdvancePrice" type="text" readonly="readonly" class="layui-input input_gray"/>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">货品最低售价</label>
+            <div class="layui-input-block">
+                <input name="goodsMinPrice" readonly="readonly" type="text" class="layui-input input_gray"/>
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">货品创建时间</label>
+            <div class="layui-input-block">
+                <input name="createTime" readonly="readonly" type="text" class="layui-input input_gray"/>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="contentCheckIn">
+        <table class="layui-table" id="goodsCheckInTable" lay-filter="goodsCheckinTable"></table>
+    </div>
+    <div class="contentCheckOut">
+        <table class="layui-table" id="goodsCheckOutTable" lay-filter="goodsCheckOutTable"></table>
+    </div>
+
+    <div class="layui-form-item model-form-footer">
+        <button class="layui-btn icon-btn" ew-event="closeDialog" type="button"><i class="layui-icon"></i>关闭</button>
+    </div>
+</form>
+
+
+
+<!-- 表格操作列 -->
+<script type="text/html" id="goods_check_out_bar">
+    <a class="layui-btn  layui-btn-xs" lay-event="downLoad">附件下载</a>
+</script>
+
+
+<!-- 表格操作列 -->
+<script type="text/html" id="goods_check_in_bar">
+    <a class="layui-btn  layui-btn-xs" lay-event="downLoad">附件下载</a>
+</script>
+
+
+
+<script>
+    layui.use(['layer', 'admin', 'table', 'util','form', 'config', 'formSelects'], function () {
+        var layer = layui.layer;
+        var admin = layui.admin;
+        var form = layui.form, table = layui.table, util=layui.util,config = layui.config;
+        var formSelects = layui.formSelects;
+
+        //获取缓存数据
+        var goodsInfo = admin.getTempData('t_goodsInfo');
+        var goodsInfoId = admin.getTempData('t_goodsInfo_id');
+        // 渲染表格
+        table.render({
+            elem: '#goodsCheckInTable',
+            url: config.base_server + '/stocks/stockInDetail/pageList',
+            headers: {
+                "access_token": config.getToken()
+            },
+            where: {page: 1, limit: 5, goodsInfoId: goodsInfoId}
+            , skin: 'row' //表格风格
+            , even: true
+            , page: true //是否显示分页
+            , limits: [3, 5, 10]
+            , limit: 5 //每页默认显示的数量
+            , cols: [[
+                {type: 'numbers'}
+                , {
+                    title: '货品单价(元)', templet: function (d) {
+                        return d.goodsPrice;
+                    }, align: 'center'
+                }
+                , {
+                    title: '入库数量', templet: function (d) {
+                        return d.goodsInNum;
+                    }, align: 'center'
+                }
+
+                , {
+                    title: '入库时间', templet: function (d) {
+                        return util.toDateString(d.goodsInTime);
+                    }, align: 'center'
+
+                }, {
+                    title: '入库人员', templet: function (d) {
+                        return d.goodsInUserName;
+                    }, align: 'center'
+
+                }
+                , {field: 'costumerName', title: '供应商', align: 'center'}
+                , {width: 100,fixed:'right', align: 'center', toolbar: '#goods_check_in_bar', title: '操作'}
+            ]]
+        });
+
+
+        // 渲染表格
+        table.render({
+            elem: '#goodsCheckOutTable',
+            url: config.base_server + '/stocks/stockOutDetail/pageList',
+            headers: {
+                "access_token": config.getToken()
+            },
+            where: {page: 1, limit: 5, goodsInfoId: goodsInfoId}
+            , skin: 'row' //表格风格
+            , even: true
+            , page: true //是否显示分页
+            , limits: [3, 5, 10]
+            , limit: 5 //每页默认显示的数量
+            , cols: [[
+                {type: 'numbers'}
+                ,
+                {
+                    title: '货品单价(元)', templet: function (d) {
+                        return d.goodsPrice;
+                    }, align: 'center'
+                }
+                , {
+                    title: '出库数量', templet: function (d) {
+                        return d.goodsOutNum;
+                    }, align: 'center'
+                }
+                , {
+                    title: '出库时间', templet: function (d) {
+                        return util.toDateString(d.goodsOutTime);
+                    }, align: 'center'
+                }, {
+                    title: '出库人员', templet: function (d) {
+                        return d.goodsOutUserName;
+                    }, align: 'center'
+
+                }
+                , {field: 'costumerName', title: '客户名称', align: 'center'}
+                , {width: 100,fixed:'right', align: 'center', toolbar: '#goods_check_out_bar', title: '操作'}
+            ]]
+
+        });
+        // 回显数据
+        if (goodsInfo) {
+            form.val('goodsInfo_form_check', goodsInfo);
+        }
+
+
+        // 出库列表工具条点击事件
+        table.on('tool(goodsCheckOutTable)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+            switch (obj.event) {
+                case 'downLoad':downFile(data);break;
+            }
+        });
+
+        // 入库列表列表工具条点击事件
+        table.on('tool(goodsCheckinTable)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+            switch (obj.event) {
+                case 'downLoad':downFile(data);break;
+            }
+        });
+
+        // 下载文件
+        function downFile(data){
+            admin.req('/stocks/stockInDetail/download',{filePath:data.goodsFileId},function(res){
+                console.log(res);
+            },'GET');
+
+
+        }
+    });
+
+
+
+
+
+
+
+
+
+</script>

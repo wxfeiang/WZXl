@@ -1,0 +1,245 @@
+<link rel="stylesheet" type="text/css" href="/assets/css/custom/common.css"/>
+<style type="text/css">
+    .layui-form-label {
+        width: 120px;
+        padding: 9px 0;
+    }
+
+    .layui-input-block {
+        margin-left: 130px;
+    }
+
+
+    /*.xm-form-selected .xm-select, .xm-form-selected .xm-select:hover {*/
+    /*    border-color: #e6e6e6 !important;*/
+    /*}*/
+    /*textarea {*/
+    /*    width: 100%;*/
+    /*    border: 1px solid #e6e6e6 !important;*/
+    /*    background: #fff !important;*/
+    /*}*/
+
+    .input_gray {
+        background: #f5f5f5;
+    }
+
+    .danwei {
+        width: 40px;
+        position: absolute;
+        right: -49px;
+        text-align: left;
+        top: 10px;
+    }
+</style>
+<form id="contract_change_check_form" lay-filter="contract_change_check_form" class="layui-form model-form">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>合同信息</legend>
+    </fieldset>
+    <div class="layui-form-item">
+        <!--合同ID-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同编号</label>
+            <div class="layui-input-block">
+                <input id="contractId" type="text" name="contractId" class="layui-input input_gray"
+                       readonly="readonly"
+                       lay-verify="required">
+
+            </div>
+        </div>
+        <!--合同年份-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同类型</label>
+            <div class="layui-input-block">
+                <input id="contractType" type="hidden" name="contractType" class="layui-input input_gray"
+                       readonly="readonly" lay-verify="required">
+                <input id="contractTypeText" type="text" class="layui-input input_gray"
+                       readonly="readonly" lay-verify="required">
+            </div>
+        </div>
+        <!--合同年份-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同年份</label>
+            <div class="layui-input-block">
+                <input id="year" type="text" name="year" class="layui-input input_gray" readonly="readonly"
+                       lay-verify="required">
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="layui-form-item">
+        <!--月份-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同月份</label>
+            <div class="layui-input-block">
+                <input id="month" type="text" name="month" class="layui-input input_gray" readonly="readonly"
+                       lay-verify="required">
+            </div>
+        </div>
+        <!--签约人-->
+        <div class="layui-inline">
+            <label class="layui-form-label">签约人</label>
+            <div class="layui-input-block">
+                <input id="signatory" type="text" name="signatory" class="layui-input input_gray" readonly="readonly"
+                       lay-verify="required">
+            </div>
+        </div>
+        <!--签约时间-->
+        <div class="layui-inline">
+            <label class="layui-form-label">签约时间</label>
+            <div class="layui-input-block">
+                <input id="signingTime" type="text" name="signingTime" class="layui-input input_gray"
+                       readonly="readonly" lay-verify="required">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <!--合同金额-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同金额</label>
+            <div class="layui-input-block">
+                <input id="conAmount" type="text" name="conAmount" class="layui-input input_gray" readonly="readonly"
+                       lay-verify="required">
+            </div>
+            <span class="danwei">(元)</span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <!--主要产品-->
+        <div class="layui-block">
+            <label class="layui-form-label">主要产品</label>
+            <div class="layui-input-block" style="width: 786px;">
+                <textarea id="mainProducts" name="mainProducts" class="layui-textarea" readonly="readonly"
+                          lay-verify="required"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>申请信息</legend>
+    </fieldset>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">变更申请人</label>
+            <div class="layui-input-block">
+                <input id="applyUserId" name="applyUserId" type="hidden"/>
+                <input id="applyUserName" type="text" name="applyUserName" class="layui-input input_gray"
+                       readonly="readonly"
+                       lay-verify="required">
+            </div>
+        </div>
+
+        <!--变更申请时间-->
+        <div class="layui-inline">
+            <label class="layui-form-label">申请时间</label>
+            <div class="layui-input-block">
+                <input id="applyTime" type="text" name="applyTime" class="layui-input input_gray" readonly="readonly"
+                       lay-verify="required">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <!--供应商信息-->
+        <div class="layui-block">
+            <label class="layui-form-label">变更内容</label>
+            <div class="layui-input-block" style="width: 786px;">
+                <textarea name="applyContent" class="layui-textarea" lay-verify="required"
+                          readonly="readonly"></textarea>
+            </div>
+        </div>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>审核信息</legend>
+    </fieldset>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">审核结果</label>
+            <div class="layui-input-block">
+                <input id="checkState" type="text" name="checkState" class="layui-input input_gray" readonly="readonly"
+                       lay-verify="required">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <!--变更内容-->
+        <div class="layui-block">
+            <label class="layui-form-label">审核意见</label>
+            <div class="layui-input-block" style="width: 786px;">
+                <textarea name="checkResult" id="checkResult" class="layui-textarea" readonly="readonly"
+                          lay-verify="required"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item model-form-footer">
+        <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">关闭</button>
+        </button>
+    </div>
+
+
+</form>
+<script>
+    layui.use(['layer', 'admin', 'config', 'form', 'config', 'formSelects', 'laydate'], function () {
+        var layer = layui.layer,
+            layer = layui.layer,
+            admin = layui.admin,
+            form = layui.form,
+            formSelects = layui.formSelects,
+            laydate = layui.laydate,
+            config = layui.config;
+
+        // 回显数据
+        var changeApplyInfo = admin.getTempData('contract_apply_info');
+        form.val('contract_change_check_form', changeApplyInfo);
+
+        //审核状态显示
+        if ('002' == changeApplyInfo.checkState) {
+            $('#checkState').val('审核通过');
+        } else if ('001' == changeApplyInfo.checkState) {
+            $('#checkState').val('待审核');
+        } else {
+            $('#checkState').val('审核不通过');
+        }
+
+        //处理合同类型显示
+        if ('001' == changeApplyInfo.contractType) {
+            $('#contractTypeText').val('销售合同');
+        } else {
+            $('#contractTypeText').val('采购合同');
+        }
+
+        //获取合同信息并赋值
+        function contractInfo() {
+            var contractType = changeApplyInfo.contractType;
+            console.log(changeApplyInfo);
+            var url = "";
+            // 构造json参数对象
+            var jsonParam = {contractNumber: changeApplyInfo.contractNum, isChange: '001'};
+            if (contractType == '001') {
+                url = "/contract/salesContract/getDetail/";
+            } else {
+                url = "/contract/purchaseContract/getDetail";
+            }
+            console.log(url);
+            admin.req(url, jsonParam, function (data) {
+                layer.closeAll('loading');
+                console.log(data);
+                if (data != null) {
+                    $('#contractId').val(data.contractNumber);
+                    $('#year').val(data.year);
+                    $('#month').val(data.month);
+                    $('#signatory').val(data.signatory);
+                    $('#signingTime').val(data.signingTime);
+                    $('#conAmount').val(data.conAmount);
+                    $('#mainProducts').val(data.mainProducts);
+                }
+            }, 'GET');
+        }
+
+        contractInfo();
+        form.render();
+
+    })
+    ;
+</script>

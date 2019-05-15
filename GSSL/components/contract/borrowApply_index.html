@@ -1,0 +1,246 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">合同借阅信息</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>合同借阅信息</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            <button id="borrow-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>借阅申请</button>
+        </div>
+        <div class="content">
+            <table class="layui-table" id="borrow-table" lay-filter="borrow-table"></table>
+        </div>
+
+    </div>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="borrow-table-bar">
+    <a class="layui-btn  layui-btn-xs" lay-event="look">查看</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit" id="layui-edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="check" id="layui-check">审核</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="read" id="layui-read">阅览</a>
+</script>
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin'], function () {
+        var $ = layui.jquery;
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var util = layui.util;
+        var admin = layui.admin;
+
+        // 渲染表格
+        table.render({
+            elem: '#borrow-table',
+            url: config.base_server + '/contract/borrowApply/list',
+            method: 'GET',
+            headers: {
+                "access_token": config.getToken()
+            },
+            page: true,
+            cols: [[
+                {type: 'numbers', title: '排序'},
+                {type: 'checkbox', sort: true},
+                {field: 'contractId', sort: true, title: '合同编号'},
+                {
+                    field: 'contractType', sort: true, title: '合同类型', templet: function (d) {
+                        return (d.contractType == 1) ? "销售合同" : "采购合同";
+                    }
+                },
+                {field: 'borrowUserName', sort: true, title: '借阅人'},
+                {field: 'borrowBeginTime', sort: true, title: '借阅开始时间'},
+                {field: 'borrowEndTime', sort: true, title: '借阅结束时间'},
+                {field: 'applyTime', sort: true, title: '申请时间'},
+                {
+                    field: 'checkState', sort: true, title: '审核状态', templet: function (d) {
+                        var strs = {
+                            '001': '待审核',
+                            '002': '审核通过',
+                            '003': '审核未通过'
+                        };
+                        return strs[d.checkState];
+                    }
+                },
+                {field: 'checkTime', sort: true, title: '审核时间'},
+                {field: 'checkUserName', sort: true, title: '审核人'},
+                {width: 270, align: 'center', toolbar: '#borrow-table-bar', fixed: 'right', title: '操作'}
+            ]]
+        });
+
+        // 借阅申请按钮点击事件
+        $('#borrow-btn-add').click(function () {
+            showEditModel();
+        });
+
+
+        // 工具条点击事件
+        table.on('tool(borrow-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+            if (layEvent === 'look') {// 查看
+                showLookModel(data);
+            } else if (layEvent === 'edit') { // 修改
+                showEditModel(data);
+            } else if (obj.event === 'del') { //删除
+                doDelete(obj);
+            } else if (layEvent === 'check') { //审核
+                showCheckModel(data);
+            } else if (layEvent === 'read') { //阅览
+                var jsonParam = {borrowBeginTime: data.borrowBeginTime, borrowEndTime: data.borrowEndTime};
+                judgeTime("/contract/borrowApply/judgeTimeSales", jsonParam,obj);
+            }
+        });
+
+        function judgeTime(url, param,obj) {
+            $.ajax({
+                type: "GET",
+                url: url,
+                contentType: "application/json",
+                data: param,
+                dataType: 'json',
+                beforeSend: function (XMLHttpRequest) {
+                    XMLHttpRequest.setRequestHeader(config.tokenName, config.getToken());
+                },
+                success: function (data) {
+                    if ('101' == data.code) {
+                        showReadModel(obj.data);
+                    }else {
+                        layer.msg("不在借阅时间范围内，不允许借阅！", {icon: 2})
+                        return false;
+                    }
+                },
+                error: function (jqXHR) {
+                    aler("发生错误：" + jqXHR.status);
+                }
+            });
+            return false;
+        }
+
+        //添加和修改表单弹窗
+        var showEditModel = function (data) {
+            if (data) {
+                if ('002' == data.checkState) {
+                    layer.msg("已审核，不可编辑！", {icon: 2});
+                    return;
+                }
+            }
+            admin.putTempData('t_borrow', data);
+            var title = data ? '修改合同借阅申请' : ' 添加合同借阅申请';
+            var areas = ['1000px', '600px']
+            admin.popupCenter({
+                title: title,
+                area: areas,
+                offset: 'auto',
+                path: 'components/contract/borrowApply_add.html',
+                finish: function () {
+                    table.reload('borrow-table', {});
+                }
+            });
+
+        };
+
+        //查看表单弹窗
+        var showLookModel = function (data) {
+            admin.putTempData('t_borrow', data);
+            var title = '查看合同借阅申请';
+            var areas = ['1000px', '600px']
+            admin.popupCenter({
+                title: title,
+                area: areas,
+                offset: 'auto',
+                path: 'components/contract/borrowApply_look.html',
+                finish: function () {
+                    table.reload('borrow-table', {});
+                }
+            });
+        };
+
+        // 删除
+        var doDelete = function (obj) {
+            if ('001' != obj.data.checkState) {
+                layer.msg("已审核，不可删除！", {icon: 2});
+                return;
+            } else {
+                layer.confirm('确定要删除吗？', function (i) {
+                    layer.close(i);
+                    layer.load(2);
+                    admin.req('/contract/borrowApply/remove/' + obj.data.id, {}, function (data) {
+                        layer.closeAll('loading');
+                        layer.msg("删除成功", {icon: 1});
+                        obj.del();
+                    }, 'DELETE');
+                });
+            }
+        };
+
+        //审核表单弹窗
+        var showCheckModel = function (data) {
+            if ('002' == data.checkState) {
+                layer.msg("已审核,不可重复审核！", {icon: 2});
+                return;
+            } else {
+                admin.putTempData('t_borrow', data);
+                var title = '审核合同借阅申请';
+                var areas = ['1000px', '600px']
+                admin.popupCenter({
+                    title: title,
+                    area: areas,
+                    offset: 'auto',
+                    path: 'components/contract/borrowApply_check.html',
+                    finish: function () {
+                        table.reload('borrow-table', {});
+                    }
+                });
+            }
+        };
+
+        //阅览表单弹窗
+        var showReadModel = function (data) {
+            admin.putTempData("contractNumber", data.contractId);
+            console.log(data.contractId);
+            console.log(data);
+            if ('001' == data.checkState) {
+                layer.msg("未审核，不能阅览！", {icon: 2});
+                return;
+            }
+            if ('003' == data.checkState) {
+                layer.msg("审核未通过，不能阅览！", {icon: 2});
+                return;
+            }
+            if ('001' == data.contractType) {
+                //销售合同信息
+                var areas = ['1200px', '600px']
+                admin.popupCenter({
+                    title: '销售合同信息'
+                    , area: areas
+                    // ,offset:'auto'
+                    , scrollbar: true
+                    , path: 'components/contract/borrowApply_readsales.html'
+                    , finish: function () {
+                        table.reload('borrow-table', {});
+                    }
+                })
+            } else {
+                //采购合同信息
+                var areas = ['1200px', '600px']
+                admin.popupCenter({
+                    title: '采购合同信息',
+                    area: areas,
+                    //  offset: 'auto',
+                    path: 'components/contract/borrowApply_readpurchase.html',
+                    finish: function () {
+                        table.reload('borrow-table', {});
+                    }
+                });
+            }
+        }
+
+    });
+</script>

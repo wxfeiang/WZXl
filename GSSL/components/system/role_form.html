@@ -1,0 +1,64 @@
+<!-- role表单弹窗 -->
+<form id="role-form" lay-filter="role-form" class="layui-form model-form">
+
+    <!-- 非显性字段 -->
+
+    <!-- id -->
+    <input name="id" type="hidden"/>
+    <!-- 状态 -->
+    <input name="status" type="hidden"/>
+
+    <!-- 显性字段 -->
+
+    <!-- 角色名称 -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">名称</label>
+        <div class="layui-input-block">
+            <input name="roleName" placeholder="请输入角色名称" type="text" class="layui-input" maxlength="20"
+                   lay-verify="required" required/>
+        </div>
+    </div>
+    <!-- 备注 -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <input name="remark" placeholder="角色备注" type="text" class="layui-input"/>
+        </div>
+    </div>
+
+    <!-- 按钮组件 -->
+    <div class="layui-form-item model-form-footer">
+        <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+        <button class="layui-btn" lay-filter="role-form-submit" lay-submit>保存</button>
+    </div>
+</form>
+
+<script>
+    layui.use(['layer', 'admin', 'form'], function () {
+        var layer = layui.layer;
+        var admin = layui.admin;
+        var form = layui.form;
+
+        // 回显角色数据
+        var role = admin.getTempData('t_role');
+        $('#role-form').attr('method', 'POST');// 【默认】没数据是POST
+        if(role){
+            $('#role-form').attr('method', 'PUT'); // 有数据是PUT
+            form.val('role-form', role);
+        }
+
+        // 提交表单
+        form.on('submit(role-form-submit)', function (data) {
+            layer.load(2);
+            admin.req('/sys/role', data.field, function (data) {
+                layer.closeAll('loading');
+                layer.msg("添加成功", {icon: 1});
+                // 执行父页面上的回掉方法
+                admin.finishPopupCenter();
+            }, $('#role-form').attr('method'));
+
+            // 阻止使用form的属性提交数据
+            return false;
+        });
+    });
+</script>

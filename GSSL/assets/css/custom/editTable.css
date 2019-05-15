@@ -1,0 +1,84 @@
+.edtitable {
+	width: 90%;
+	margin: 10px auto;
+	border-collapse: collapse;
+	border: 1px #aaa solid;
+	text-align: center;
+	table-layout: fixed;
+}
+.edtitable thead tr{
+	background: #f2f2f2;
+}
+.edtitable tr {
+	border: 1px #eee solid;
+}
+.edtitable tr td input{
+}
+.edtitable tr th,.edtitable tr td {
+	border: 1px #ddd solid;
+	height: 30px;
+	min-width: 50px;
+	color: #666;
+	font-size: 12px;
+
+font-weight: normal;
+	/*使表格列宽度相等*/
+}
+.edtitable tr td {background: #fff;}
+.edtitable tr .del-col {
+}
+.edtitable tr a {
+	color: #f95959;
+}
+
+.edtitable .append-row td input{
+	color: #0085E8;
+	cursor: pointer;
+}
+.edtitable .append-row td {
+	padding-right: 2.7%;
+}
+/*
+.edtitable tbody tr:nth-child(odd) td,
+.edtitable tbody tr:nth-child(odd) th {
+	background-color: #ECE9D8;
+}*/
+#mx-form{
+	position: relative;
+}
+
+#invoice-form{
+	position: relative;
+}
+#back-form{
+	position: relative;
+}
+/*#addBtn{*/
+/*    position: absolute;*/
+/*    top: 6px;*/
+/*    right: 57px;*/
+/*    width: 20px;*/
+/*    border: none;*/
+/*    background: #5a98de;*/
+/*    text-align: center;*/
+/*    overflow: hidden;*/
+/*    white-space: nowrap;*/
+/*    color: #fff;*/
+/*    font-size: 23px;*/
+/*    height: 20px;*/
+/*    line-height: 20px;*/
+/*    border-radius: 4px;*/
+/*    -webkit-border-radius: 2px;*/
+/*    -moz-border-radius: 2px;*/
+/*    cursor: pointer;*/
+/*    display: inline-block;*/
+/*}*/
+.edtitable tr input{
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    color: #666;
+    background: none;
+    border: none;
+	
+}

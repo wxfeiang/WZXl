@@ -1,0 +1,229 @@
+
+<link rel="stylesheet" type="text/css" href="/assets/css/custom/common.css"/>
+<style type="text/css">
+    .layui-form-label {
+        width: 140px;
+        padding: 9px 0;
+    }
+
+    .layui-input-block {
+        margin-left: 150px;
+    }
+
+    textarea {
+        width: 93.8%;
+    }
+
+    .downpanel .layui-select-title span {
+        line-height: 38px;
+    }
+
+    .downpanel dl dd:hover {
+        background-color: inherit;
+    }
+
+    .layui-form-checkbox span {
+        height: 30px;
+    }
+
+    .danwei{
+        width: 40px;
+        position: absolute;
+        right: -49px;
+        text-align: left;
+        top: 10px;
+    }
+
+</style>
+
+<form id="goodsInfo_form" lay-filter="goodsInfo_form" class="layui-form model-form ">
+    <!--id-->
+    <input name="id" type="hidden"/>
+
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">货品名称</label>
+            <div class="layui-input-block">
+                <input name="goodsName" type="text" maxlength="20" placeholder="请输入货品名称" class="layui-input" lay-verify="required"/>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">货品品牌</label>
+            <div class="layui-input-block">
+                <input name="goodsBrand" type="text" placeholder="请输入货品品牌" class="layui-input" lay-verify="required"/>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">规格型号</label>
+            <div class="layui-input-block">
+                <input name="goodsModel" type="text" placeholder="请输入规格型号" class="layui-input" lay-verify="required"/>
+            </div>
+        </div>
+        <div class="layui-inline">
+           <label class="layui-form-label">货品类型</label>
+           <div class="layui-input-block">
+	            <div class="layui-unselect layui-form-select downpanel">
+	                <div class="layui-select-title">
+	                    <span class="layui-input layui-unselect" id="treeclass">选择货品类型</span>
+	                    <input type="hidden" name="goodsTypeId" value="0" lay-verify="goodsType">
+	                    <i class="layui-edge"></i>
+	                </div>
+	                <dl class="layui-anim layui-anim-upbit">
+	                    <dd>
+	                        <ul id="classtree"></ul>
+	                    </dd>
+	                </dl>
+	            </div>
+	        </div>
+        </div>
+ 	</div> 
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">货品单位</label>
+            <div class="layui-input-block">
+                <input name="goodsUnit" id="goodsUnit" type="text" placeholder="请输入货品单位" class="layui-input" maxlength="20"
+                       lay-verify="required"/>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">货品辅助单位</label>
+            <div class="layui-input-block">
+                <input name="goodsAssistUnit"  id="goodsAssistUnit" placeholder="请输入货品辅助单位" maxlength="20" class="layui-input" lay-verify="required"/>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">库存上限预警</label>
+            <div class="layui-input-block">
+                <input name="goodsMaxNum" type="text" placeholder="请输入库存上限预警" class="layui-input" maxlength="10"
+                       lay-verify="Positive|number|required"/>
+            </div>
+            <span class="danwei" >(个数)</span>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label"><span style="color: red;">*</span>库存下限预警</label>
+            <div class="layui-input-block">
+                <input name="goodsMinNum" type="text" placeholder="请输入库存下限预警" class="layui-input" maxlength="10"
+                       lay-verify="Positive|number|required"/>
+            </div>
+            <span class="danwei" >(个数)</span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+
+        <div class="layui-inline">
+            <label class="layui-form-label">货品预售价格</label>
+            <div class="layui-input-block">
+                <input name="goodsAdvancePrice" placeholder="请输入货品预售价格" type="text" class="layui-input" maxlength="8"
+                       lay-verify="AdPrice|required|number"/>
+            </div>
+             <span class="danwei" >(元)</span>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">货品最低售价</label>
+            <div class="layui-input-block">
+                <input name="goodsMinPrice" placeholder="请输入货品最低售价" type="text" class="layui-input"  maxlength="8"
+                       lay-verify="AdPrice|required|number"/>
+            </div>
+            <span class="danwei" >(元)</span>
+        </div>
+    </div>
+ 	<div class="layui-form-item model-form-footer" >
+        <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+        <button class="layui-btn" lay-filter="goods_form_submit" lay-submit>保存</button>
+    </div>
+</form>
+<script>
+    layui.use(['layer', 'admin', 'form', 'formSelects', 'tree'], function () {
+        var layer = layui.layer;
+        var admin = layui.admin;
+        var form = layui.form;
+        var formSelects = layui.formSelects;
+        var tree = layui.tree;
+
+        // 回显数据
+
+        var goodsInfo = admin.getTempData('t_goodsinfo');
+        $('#goodsInfo_form').attr('method', 'POST');// 没数据是POST
+        //回显地区下拉框，根据父级查询数据显示
+        if (goodsInfo) {
+            form.val('goodsInfo_form', goodsInfo);
+            $('#goodsInfo_form').attr('method', 'PUT'); // 有数据是PUT
+            var nodeValue=admin.getTempData('t_goodsType');
+            var nodeName=admin.getTempData('t_goodsTypeName');
+            $('#treeclass').html(nodeName) ;
+            $('#goodsTypeId').val(nodeValue);
+        }
+
+
+        // 表单提交事件
+        form.on('submit(goods_form_submit)', function (data) {
+            layer.load(2);
+            admin.req('/stocks/stockGoodsInfo/saveOrUpdate', data.field, function (resData) {
+                layer.closeAll('loading');
+                layer.msg('操作成功！', {icon: 1});
+                admin.finishPopupCenter();
+            }, $('#goodsInfo_form').attr('method'));
+            return false;
+        });
+
+        var getTreeSelects = function () {
+            admin.req('/stocks/stockGoodsType/findeTree', {}, function (resData) {
+                tree({
+                    elem: "#classtree"
+                    , nodes: resData
+                    ,click: function (node) {
+                        var $select = $($(this)[0].elem).parents(".layui-form-select");
+                        $select.removeClass("layui-form-selected").find(".layui-select-title span").html(node.name).end().find("input:hidden[name='goodsTypeId']").val(node.id);
+                    }
+                });
+            }, 'GET');
+
+            $(".downpanel").on("click", ".layui-select-title", function (e) {
+                $(".layui-form-select").not($(this).parents(".layui-form-select")).removeClass("layui-form-selected");
+                $(this).parents(".downpanel").toggleClass("layui-form-selected");
+                layui.stope(e);
+            }).on("click", "dl i", function (e) {
+                layui.stope(e);
+            });
+            $(document).on("click", function (e) {
+                $(".layui-form-select").removeClass("layui-form-selected");
+            });
+
+        }
+
+
+
+
+        // 自定义校验规则
+        //这个里面的title、number就写在Html 代码中lay-verify的属性值，即可
+        //例如：lay-verify="title"
+        form.verify({
+            AdPrice: [
+                /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/
+                ,'格式不正确，必须为金额(最多保留两位小数！)！'
+            ]
+            , goodsType: function(value){
+                if(value==0){
+                    return '请选择货品类型！';
+                }
+            }
+            ,content: function(value){
+                layedit.sync(editIndex);
+            },
+            Positive: [
+                /^\+?[1-9][0-9]*$/
+                ,'格式不正确，必须为数字！'
+            ]
+        });
+        getTreeSelects();
+
+
+
+    });
+</script>

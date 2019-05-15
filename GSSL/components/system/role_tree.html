@@ -1,0 +1,134 @@
+<!-- user表单弹窗 -->
+<style type="text/css">
+/*layer弹窗加滚动条*/
+.layui-layout-body .layui-layer-page .layui-layer-content {
+	    /*overflow-y: auto;*/
+	   height: 402px;
+	}
+	/*树*/
+.left_tree label{
+	width: 64px;
+    padding: 9px 0;
+    text-align: left;
+}
+.left_tree .layui-input-block {
+	margin-left: 64px;
+}
+.layui-form-checkbox[lay-skin=primary] span{
+	padding-left: 15px;
+}
+.left_tree .layui-form-checked[lay-skin=primary] i{
+    border-color: #5FB878;
+    background-color: #fff;
+    color: #5FB878;
+}
+.layui-form-checkbox[lay-skin=primary] i {
+   	width: 12px;
+	height: 12px;
+	line-height: 12px;
+	text-align: center;
+	margin-top: 2px;
+    border: 1px solid #000;
+    background-color: #fff;
+}
+.left_tree .layui-icon {
+	width: 20px;
+    font-size: 20px;
+}
+.left_tree .layui-form-checkbox[lay-skin=primary] span{
+	padding-right: 15px;
+}
+</style>
+<form id="auth-form"lay-filter="auth-form"  class="layui-form model-form" style="    margin-left: 45px;
+    padding-bottom: 20px;
+    height: 316px;
+    overflow-y: auto;">
+    <div class="left_tree">
+		<div id="LAY-auth-tree-index"></div>
+	</div>
+	<div class="layui-form-item model-form-footer" style=" margin-top: 30px;
+    padding-right: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+    line-height: 50px;
+    background: #eee;
+    right: 0;
+    margin: auto;
+    text-align: center;
+    box-shadow: 0px 0px 13px #aaa;
+    width: 100%;">
+        <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+        <button class="layui-btn" lay-filter="roleAuth-form-submit" lay-submit>保存</button>
+    </div>
+   
+</form>
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin', 'formSelects','authtree', 'layer'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var util = layui.util;
+        var admin = layui.admin;
+        var formSelects = layui.formSelects;
+        var authtree = layui.authtree;
+
+        // 获取缓存
+        var role = admin.getTempData('t_role');
+
+ 		// 渲染树形权限分配
+ 		admin.req('/sys/menu/authTree/'+role.id,{},function(data){
+
+ 			var trees = authtree.listConvert(data.list, {
+			    primaryKey: 'id'
+			    ,startPid: 0
+			    ,parentKey: 'parentId'
+			    ,nameKey: 'menuName'
+			    ,valueKey: 'id'
+			    ,checkedKey: data.checkedIds
+			});
+
+ 			authtree.render('#LAY-auth-tree-index', trees, {
+				inputname: 'authids[]', 
+				layfilter: 'lay-check-auth', 
+				autowidth: true,
+				openchecked: true,
+//				openIconContent:'▷',//展开的前显字符配置
+//				closeIconContent:'▽',	//折叠的前显字符配置
+				prefixChildStr:"✐"
+			});
+ 			
+ 		},'GET');
+
+ 		// 监听表单的提交事件
+        form.on('submit(roleAuth-form-submit)', function (data) {
+        	
+        	var authIds = '';
+        	var checkedId = authtree.getChecked('#LAY-auth-tree-index');
+
+        	// 遍历
+        	for (var i = checkedId.length - 1; i >= 0; i--) {
+        		if(i != 0){
+        			authIds += checkedId[i]+',';
+        		}else{
+        			authIds += checkedId[i]
+        		}
+        	}
+            layer.load(2);
+            admin.req('/sys/role/auth/'+role.id, {"authIds":authIds}, function (res) {
+                layer.closeAll('loading');
+                layer.msg("权限修改成功", {icon: 1});
+                // 执行父页面上的回掉方法
+                admin.finishPopupCenter();
+            }, 'put');
+
+            // 阻止使用form的属性提交数据
+            return false;
+        });
+
+       
+    });
+</script>

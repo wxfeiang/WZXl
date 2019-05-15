@@ -1,0 +1,166 @@
+<!-- 数据字典类型管理 -->
+<div class="layui-card">
+    <div class="layui-card-body">
+        <!-- 表格上方工具条 -->
+        <div class="layui-form toolbar">
+            <button id="dictData-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+        </div>
+        <!-- 数据表格 -->
+        <div class="content">
+            <table class="layui-table" id="dictData-table" lay-filter="dictData-table"></table>
+        </div>
+    </div>
+</div>
+
+<!-- 表格“状态”列 -->
+<script type="text/html" id="dictData-tpl-state">
+    <input type="checkbox" lay-filter="dictData-tpl-state" value="{{d.id}}" lay-skin="switch" lay-text="正常|停用" {{d.status==0 ? 'checked' : '' }}/>
+</script>
+
+<!-- 表格“状态”列 -->
+<script type="text/html" id="dictData-tpl-default">
+    <input type="checkbox" lay-filter="dictData-tpl-default" value="{{d.id}}" lay-skin="switch" lay-text="默认|非默认" {{d.status=='Y' ? 'checked' : '' }}/>
+</script>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="dictData-table-bar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<!-- 执行脚本 -->
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin', 'layer'], function () {
+
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var util = layui.util;
+        var admin = layui.admin;
+
+        // 获取缓存数据
+        var dictType = admin.getTempData('t_dictType');
+
+        // 渲染表格
+        table.render({
+            elem: '#dictData-table',
+            url: config.base_server + '/sys/dictData/'+dictType.dictType,
+          	headers: {
+                "access_token":config.getToken()
+            },
+            method: 'GET',
+            page: false,
+            cols: [[
+                {type:'checkbox',sort:true},
+                {field: 'dictLabel', sort: true, title: '名称', width: 120},
+                {field: 'dictValue', sort: true, title: '编码', width: 120},
+                {field: 'cssClass', sort: true, title: '样式属性', width: 80},
+                {field: 'isDefault', sort: true, templet: '#dictData-tpl-default', title: '是否默认', width: 100, align:'center'},
+                {
+                    field: 'createTime', sort: true, templet: function (d) {
+                        return util.toDateString(d.createTime);
+                    }, title: '创建时间'
+                },
+                {field: 'status', sort: true, templet: '#dictData-tpl-state', title: '状态', width: 90, align:'center'},
+                {field: 'remark', sort: true, title: '备注', width: 80},
+                {align: 'center', toolbar: '#dictData-table-bar', title: '操作', width: 110}
+            ]]
+        });
+
+        // 监听开关
+        form.on('switch(dictData-tpl-state)', function(data){
+            // 开关是否开启，true或者false
+            var status = data.elem.checked;
+            var title = '停用';
+            if(status){
+                title = '启用';
+            }
+            // 请求后台数据同步 ----> 后期可能还要同步系统缓存
+            admin.req('/sys/dictData/status/'+data.value, {}, function (data) {
+                layer.msg(title+'成功', {icon: 1});
+            }, 'PUT');
+
+        });
+
+        // 监听开关
+        form.on('switch(dictData-tpl-default)', function(data){
+            //开关是否开启，true或者false
+            var status = data.elem.checked;
+            var title = '非默认';
+            if(status){
+                title = '默认';
+            }
+            // 请求后台数据同步 ----> 后期可能还要同步系统缓存
+            admin.req('/sys/dictData/default/'+data.value, {}, function (data) {
+                layer.msg('已改为'+title+'成功', {icon: 1});
+            }, 'PUT');
+        });
+
+        // 操作栏按钮
+        table.on('tool(dictData-table)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') { //修改
+                showEditModel(data);
+            } else if (obj.event === 'del') { //删除
+                doDelete(data);
+            }
+        });
+
+        // 添加
+        $('#dictData-btn-add').click(function () {
+            showEditModel();
+        });
+
+        // 修改
+        var showEditModel = function (data) {
+
+            // 缓存当前字典类型数据
+            admin.putTempData('t_dictType', dictType);
+            // 缓存当前行的数据
+            admin.putTempData('t_dictData', data);
+            // 打开弹窗
+            var title = data ? '修改' : '添加';
+            var param = {};
+            param.type = 1;
+            param.title = title;
+            param.path = 'components/system/dictData_from.html';
+            param.area = param.area ? param.area : '450px';
+            param.offset = param.offset ? param.offset : '120px';
+            param.resize ? param.resize : false;
+            param.shade ? param.shade : .2;
+            param.success = function(layero, index){
+                table.reload('dictData-table', {});
+                $(layero).children('.layui-layer-content').load(param.path);
+            };
+
+            var dictTypeIndex = layer.open(param);
+            admin.putTempData('t_dictType_index', dictTypeIndex);
+        };
+
+        // 删除
+        var doDelete = function (data) {
+            layer.confirm('确定要删除吗？', function (i) {
+                layer.close(i);
+                layer.load(2);
+                admin.req('/sys/dictData/' + data.id, {}, function (data) {
+                    layer.closeAll('loading');
+                    table.reload('dictData-table', {});
+                    layer.msg('删除成功', {icon: 1});
+                }, 'DELETE');
+            });
+        };
+
+    });
+
+    /**
+     * 为子页面回调构造方法
+     */
+    function reloadTable(){
+        layui.use('table', function () {
+            var table = layui.table;
+            table.reload('dictData-table', {});
+        })
+    }
+
+</script>

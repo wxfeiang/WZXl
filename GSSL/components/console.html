@@ -1,0 +1,192 @@
+<link rel="stylesheet" href="../assets/css/console-new.css">
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">快捷方式</div>
+                        <div class="layui-card-body">
+                            <div class="layui-carousel layadmin-carousel layadmin-shortcut" lay-anim="" lay-indicator="inside" lay-arrow="none" style="width: 100%; height: 280px;">
+                                <div>
+                                    <ul class="layui-row layui-col-space10 layui-this">
+                                        <li class="layui-col-xs3">
+                                            <a lay-href="home/homepage1.html">
+                                                <i class="layui-icon layui-icon-shrink-right" style="color: #009688;"></i>
+                                                <cite>销售合同</cite>
+                                            </a>
+                                        </li>
+                                        <li class="layui-col-xs3">
+                                            <a lay-href="home/homepage2.html">
+                                                <i class="layui-icon layui-icon-spread-left" style="color: #009688;"></i>
+                                                <cite>采购合同</cite>
+                                            </a>
+                                        </li>
+                                        <li class="layui-col-xs3">
+                                            <a lay-href="component/layer/list.html">
+                                                <i class="layui-icon layui-icon-form" style="color: #009688;"></i>
+                                                <cite>客户信息</cite>
+                                            </a>
+                                        </li>
+                                        <li class="layui-col-xs3">
+                                            <a layadmin-event="im">
+                                                <i class="layui-icon layui-icon-templeate-1" style="color: #009688;"></i>
+                                                <cite>库存信息</cite>
+                                            </a>
+                                        </li>
+                                        <li class="layui-col-xs3">
+                                            <a lay-href="component/progress/index.html">
+                                                <i class="layui-icon layui-icon-edit" style="color: #009688;"></i>
+                                                <cite>合同变更</cite>
+                                            </a>
+                                        </li>
+                                        <li class="layui-col-xs3">
+                                            <a lay-href="app/workorder/list.html">
+                                                <i class="layui-icon layui-icon-file-b" style="color: #009688;"></i>
+                                                <cite>合同借阅</cite>
+                                            </a>
+                                        </li>
+                                        <li class="layui-col-xs3">
+                                            <a lay-href="user/user/list.html">
+                                                <i class="layui-icon layui-icon-add-circle-fine" style="color: #009688;"></i>
+                                                <cite>待定</cite>
+                                            </a>
+                                        </li>
+                                        <li class="layui-col-xs3">
+                                            <a lay-href="set/system/website.html">
+                                                <i class="layui-icon layui-icon-add-circle-fine" style="color: #009688;"></i>
+                                                <cite>待定</cite>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">待办事项</div>
+                        <div class="layui-card-body">
+                            <div class="layui-carousel layadmin-carousel layadmin-backlog" lay-anim="" lay-indicator="inside" lay-arrow="none" style="width: 100%; height: 280px;">
+                                <div>
+                                    <ul class="layui-row layui-col-space10 layui-this">
+                                        <li class="layui-col-xs6">
+                                            <a lay-href="app/content/comment.html" class="layadmin-backlog-body">
+                                                <h3>合同变更申请</h3>
+                                                <p><cite>10</cite></p>
+                                            </a>
+                                        </li>
+                                        <li class="layui-col-xs6">
+                                            <a lay-href="app/forum/list.html" class="layadmin-backlog-body">
+                                                <h3>合同借阅申请</h3>
+                                                <p><cite>12</cite></p>
+                                            </a>
+                                        </li>
+                                        <li class="layui-col-xs6">
+                                            <a lay-href="template/goodslist.html" class="layadmin-backlog-body">
+                                                <h3>待定</h3>
+                                                <p><cite>0</cite></p>
+                                            </a>
+                                        </li>
+                                        <li class="layui-col-xs6">
+                                            <a lay-href="template/goodslist.html" class="layadmin-backlog-body">
+                                                <h3>待定</h3>
+                                                <p><cite>0</cite></p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">版本信息</div>
+                <div class="layui-card-body layui-text">
+                    <table class="layui-table" style="margin:14px">
+                        <colgroup>
+                            <col width="100">
+                            <col>
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <td>当前版本</td>
+                            <td>
+                                <script type="text/html" template="">
+                                    v{{ layui.admin.v }}
+                                </script>
+                                GSSL_Contract V1.0
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>基于框架</td>
+                            <td>
+                                <script type="text/html" template="">
+                                    layui-v{{ layui.v }}
+                                </script>
+                                layui-v2.x / Spring Boot MyBatis-Plus
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>主要特色</td>
+                            <td>响应式 / 极简 / 安全</td>
+                        </tr>
+                        <tr style="height: 20px">
+                            <td>技术支持</td>
+                            <td style="padding-bottom: 8px;">
+                                兰州威智讯联信息科技有限公司
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="layui-card">
+                <div class="layui-card-header">效果报告</div>
+                <div class="layui-card-body layadmin-takerates">
+                    <div class="layui-progress" lay-showpercent="yes">
+                        <h3>销售合同开票率（年度 98% <span class="layui-edge layui-edge-top" lay-tips="比率" lay-offset="-15"></span>）</h3>
+                        <div class="layui-progress-bar" lay-percent="98%" style="width: 98%;"><span class="layui-progress-text">98%</span></div>
+                    </div>
+                    <div class="layui-progress" lay-showpercent="yes">
+                        <h3>销售合同回款率（年度 88% <span class="layui-edge layui-edge-bottom" lay-tips="比率" lay-offset="-15"></span>）</h3>
+                        <div class="layui-progress-bar" lay-percent="88%" style="width: 88%;"><span class="layui-progress-text">88%</span></div>
+                    </div>
+                    <div class="layui-progress" lay-showpercent="yes">
+                        <h3>采购合同开票率（年度 70% <span class="layui-edge layui-edge-top" lay-tips="比率" lay-offset="-15"></span>）</h3>
+                        <div class="layui-progress-bar" lay-percent="65%" style="width: 70%;"><span class="layui-progress-text">70%</span></div>
+                    </div>
+                    <div class="layui-progress" lay-showpercent="yes">
+                        <h3>采购合同回款率（年度 65% <span class="layui-edge layui-edge-bottom" lay-tips="比率" lay-offset="-15"></span>）</h3>
+                        <div class="layui-progress-bar" lay-percent="65%" style="width: 65%;"><span class="layui-progress-text">65%</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['carousel', 'element'], function () {
+        var carousel = layui.carousel;
+        var element = layui.element;
+        var device = layui.device;
+
+        layui.link('assets/css/console.css');
+        // 渲染轮播
+        carousel.render({
+            elem: '.layui-carousel',
+            width: '100%',
+            height: '60px',
+            arrow: 'none',
+            autoplay: true,
+            trigger: device.ios || device.android ? 'click' : 'hover',
+            anim: 'fade'
+        });
+    });
+</script>

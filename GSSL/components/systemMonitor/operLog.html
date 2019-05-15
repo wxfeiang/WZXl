@@ -1,0 +1,91 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">操作日志</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>操作日志</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+           	 搜索：
+           	  <input id="operLog-search-value" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
+            <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>搜索</button>
+            <button id="btn_reset" class="layui-btn layui-btn-danger icon-btn" type="reset"><i class="layui-icon">&#xe9aa;</i>删除</button>
+        </div>
+
+        <!-- 数据显示区 -->
+        <div class="content">
+            <table class="layui-table" id="operLogaTble" lay-filter="operLogaTble"></table>
+        </div>
+
+    </div>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="customer-table-bar">
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="detail">详细</a>
+</script>
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var util = layui.util;
+        var admin = layui.admin;
+         // 渲染表格
+        table.render({
+            elem: '#operLogaTble',
+            url: config.base_server + '/sys/logOper',
+            headers: {
+                "access_token":config.getToken()
+            },
+            method: 'GET',
+            page: true,
+            cols: [[
+                {type: 'checkbox',sort:true},
+                {field: 'title', sort: true, title: '模块'},
+                {field: 'action', sort: true, title: '功能'},
+                {field: 'method', sort: true, title: '方法'},
+                {field: 'operName', sort: true, title: '操作人'},
+                {field: 'operUrl', sort: true, title: 'url'},
+                {field: 'operParam', sort: true, title: '请求参数'},
+                {field: 'operIp', sort: true, title: '客户端ip'},
+                {field: 'operLocation', sort: true, title: '客户端地址'},
+                {
+                    title: '操作状态', templet: function (d) {
+                        var strs = {
+                            '1':'<span class="layui-badge layui-bg-green">成功</span>',
+                            '0':'<span class="layui-badge layui-bg-orange">失败</span>',
+                        };
+                        return strs[d.status];
+                    }, align: 'center'
+                },
+                {field: 'errorMsg', sort: true, title: '错误信息'},
+                {
+                    field: 'operTime',
+                    sort: true,
+                    templet: function (d) {
+                        return util.toDateString(d.createTime);
+                    },
+                    title: '操作时间'
+                }
+            ]]
+        });
+       
+        // 搜索按钮点击事件
+        $('#btnSearch').click(function () {
+            var key = $('#sel_goods_search_key').val();
+            var value = $('#input_goods_search').val();
+            table.reload('goodsInfo_table', {where: {searchKey: key, searchValue: value}});
+        });
+		//点击重置按钮
+        $('#btn_reset').click(function () {
+       		 $('#client-search-value').val("");
+        	form.render();        
+        })
+
+    });
+</script>

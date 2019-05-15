@@ -1,0 +1,364 @@
+<div class="layui-card">
+  <div class="layui-card-header">
+    <h2 class="header-title">用户管理</h2>
+    <span class="layui-breadcrumb pull-right">
+      <a href="#!console">首页</a>
+      <a><cite>用户管理</cite></a>
+    </span>
+  </div>
+  <div class="layui-card-body">
+    <!-- 搜索框 -->
+    <div class="layui-form toolbar">
+      <form id="user-search-form" class="layui-form">
+        <div class="layui-form-item">
+          <div class="layui-inline">
+            <label class="layui-form-mid"> 账号</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <input
+                type="text"
+                id="busineLicense"
+                name="busineLicense"
+                class="layui-input search-input"
+                placeholder="请输入账号"
+              />
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid"> 用户名</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <input
+                type="text"
+                name="nickName"
+                class="layui-input search-input"
+                placeholder="请输入用户名"
+              />
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid"> 手机号</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <input
+                type="tel"
+                name="cellphone"
+                class="layui-input search-input"
+                placeholder="请输入手机号"
+              />
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid"> 邮箱</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <input
+                type="email"
+                name="email"
+                class="layui-input search-input"
+                placeholder="请输入邮箱"
+              />
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid"> 角色</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <select name="roleId" class="layui-input search-input"></select>
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid"> 创建时间</label>
+            <div class="layui-input-inline" style="width: 320px;">
+              <input
+                type="text"
+                name="startTime"
+                class="layui-input search-input"
+                id="startTime"
+                placeholder="开始时间"
+              />
+              -
+              <input
+                type="text"
+                name="endTime"
+                class="layui-input search-input"
+                id="endTime"
+                placeholder="结束时间"
+              />
+            </div>
+          </div>
+          <div class="layui-inline">
+            <!-- 两个按钮 -->
+            <button
+              id="user-btn-search"
+              class="layui-btn icon-btn"
+              type="button"
+            >
+              <i class="layui-icon">&#xe615;</i>搜索
+            </button>
+            <button id="user-btn-add" class="layui-btn icon-btn" type="button">
+              <i class="layui-icon">&#xe654;</i>添加
+            </button>
+          </div>
+
+          <!-- 账号
+        <input
+          type="text"
+          name="loginName"
+          class="layui-input search-input"
+          placeholder="请输入账号"
+        />&emsp; 用户名
+        <input
+          type="text"
+          name="nickName"
+          class="layui-input search-input"
+          placeholder="请输入用户名"
+        />&emsp; 手机号
+        <input
+          type="tel"
+          name="cellphone"
+          class="layui-input search-input"
+          placeholder="请输入手机号"
+        />&emsp; 邮箱
+        <input
+          type="email"
+          name="email"
+          class="layui-input search-input"
+          placeholder="请输入邮箱"
+        />
+       &emsp; 角色
+        <select name="roleId" class="layui-input search-input"></select
+        >
+        
+        &emsp; 创建时间
+        <input
+          type="text"
+          name="startTime"
+          class="layui-input search-input"
+          id="startTime"
+          placeholder="开始时间"
+        />
+        -
+        <input
+          type="text"
+          name="endTime"
+          class="layui-input search-input"
+          id="endTime"
+          placeholder="结束时间"
+        />&emsp;
+ -->
+        </div>
+      </form>
+    </div>
+
+    <!-- 用户数据表格 -->
+    <div class="content">
+      <table
+        class="layui-table"
+        id="user-table"
+        lay-filter="user-table"
+      ></table>
+    </div>
+  </div>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="user-table-bar">
+  <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="reset">重置密码</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<!-- 表格状态列 -->
+<script type="text/html" id="user-tpl-state">
+  <input type="checkbox" lay-filter="user-tpl-state" value="{{d.id}}" lay-skin="switch" lay-text="正常|锁定"
+         {{d.status==0?'checked':''}}/>
+</script>
+
+<script>
+  layui.use(
+    ["form", "table", "util", "config", "admin", "laydate"],
+    function() {
+      var form = layui.form;
+      var table = layui.table;
+      var layer = layui.layer;
+      var util = layui.util;
+      var laydate = layui.laydate;
+      var config = layui.config;
+      var admin = layui.admin;
+
+      // 执行一个laydate实例
+      laydate.render({
+        elem: "#startTime" //指定元素
+      });
+
+      // 执行一个laydate实例
+      laydate.render({
+        elem: "#endTime" //指定元素
+      });
+
+      // 渲染搜索框中的角色下拉框
+      admin.req(
+        "/sys/role/availableList",
+        {},
+        function(data) {
+          var optionHtml = '<option value="">请选择</option>';
+          for (var i in data) {
+            optionHtml +=
+              '<option value="' +
+              data[i].id +
+              '">' +
+              data[i].roleName +
+              "</option>";
+          }
+          $('select[name="roleId"]').html(optionHtml);
+          // 渲染下拉框
+          form.render("select");
+        },
+        "GET"
+      );
+
+      // 渲染表格
+      table.render({
+        elem: "#user-table",
+        url: config.base_server + "/sys/user",
+        headers: {
+          access_token: config.getToken()
+        },
+        // where: $('#user-search-form').serializeJSON(), 这个参数不之后的用加，下面的reload是对render方法的重载，以后调用都会加上重载参数的
+        method: "GET",
+        page: true,
+        cols: [
+          [
+            // {field: 'userId', title: 'ID'},
+            { type: "checkbox", sort: true },
+            // {type:'numbers'},
+            { field: "loginName", sort: true, title: "账号" },
+            { field: "nickName", sort: true, title: "用户名" },
+            { field: "cellphone", sort: true, title: "手机号" },
+            { field: "email", sort: true, title: "邮箱" },
+            { field: "avatar", sort: true, title: "头像" },
+            { field: "creator", sort: true, title: "创建者" },
+            {
+              field: "createTime",
+              sort: true,
+              templet: function(d) {
+                return util.toDateString(d.createTime);
+              },
+              title: "创建时间"
+            },
+            { field: "roleName", sort: true, title: "角色" },
+            {
+              field: "status",
+              sort: true,
+              templet: "#user-tpl-state",
+              title: "状态",
+              width: 100
+            },
+            { field: "remark", sort: true, title: "备注" },
+            {
+              width: 280,
+              align: "center",
+              toolbar: "#user-table-bar",
+              title: "操作"
+            }
+          ]
+        ]
+      });
+
+      // 添加
+      $("#user-btn-add").click(function() {
+        showEditModel();
+      });
+
+      // 搜索
+      $("#user-btn-search").click(function() {
+        table.reload("user-table", {
+          where: $("#user-search-form").serializeJSON(),
+          page: { curr: 1 } //重新从第 1 页开始
+        });
+      });
+
+      // 工具条点击事件
+      table.on("tool(user-table)", function(obj) {
+        // 获取当前行数据
+        var data = obj.data;
+        var layEvent = obj.event;
+
+        // 判断监听的操作类型
+        if (layEvent === "edit") {
+          // 修改
+          showEditModel(data);
+        } else if (obj.event === "del") {
+          // 删除
+          doDelete(data);
+        } else if (layEvent === "reset") {
+          // 重置密码
+          reloadPassword(data);
+        }
+      });
+
+      // 修改/添加
+      var showEditModel = function(data) {
+        admin.putTempData("t_user", data);
+        var title = data ? "修改用户" : "添加用户";
+        admin.popupCenter({
+          title: title,
+          path: "components/system/user_form.html",
+          finish: function() {
+            table.reload("user-table", {});
+          }
+        });
+      };
+
+      // 删除
+      var doDelete = function(data) {
+        layer.load(2);
+        // 请求后台数据同步 ----> 后期可能还要同步系统缓存
+        admin.req(
+          "/sys/user/" + data.id,
+          {},
+          function(data) {
+            layer.closeAll("loading");
+            table.reload("user-table", {});
+            layer.msg("删除成功", { icon: 1 });
+          },
+          "DELETE"
+        );
+      };
+
+      // 重置密码
+      var reloadPassword = function(data) {
+        layer.confirm("确定重置此用户的密码吗？", function(i) {
+          layer.close(i);
+          layer.load(2);
+          admin.req(
+            "/sys/user/reSet",
+            { id: data.id },
+            function(data) {
+              layer.closeAll("loading");
+              layer.alert("密码已重置为【123456】");
+            },
+            "PUT"
+          );
+        });
+      };
+
+      // 修改user状态
+      form.on("switch(user-tpl-state)", function(data) {
+        layer.load(2);
+        //开关是否开启，true或者false
+        var status = data.elem.checked;
+        var title = "锁定";
+        if (status) {
+          title = "启用";
+        }
+        // 请求后台数据同步 ----> 后期可能还要同步系统缓存
+        admin.req(
+          "/sys/user/status/" + data.value,
+          { status: data.elem.checked },
+          function(data) {
+            layer.closeAll("loading");
+            layer.msg(title + "成功", { icon: 1 });
+          },
+          "PUT"
+        );
+      });
+    }
+  );
+</script>

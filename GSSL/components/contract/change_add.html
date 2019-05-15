@@ -1,0 +1,266 @@
+<link rel="stylesheet" type="text/css" href="/assets/css/custom/common.css"/>
+<style type="text/css">
+    .layui-form-label {
+        width: 120px;
+        padding: 9px 0;
+    }
+
+    .layui-input-block {
+        margin-left: 130px;
+    }
+
+
+    /*.xm-form-selected .xm-select, .xm-form-selected .xm-select:hover {*/
+    /*    border-color: #e6e6e6 !important;*/
+    /*}*/
+
+    /*textarea {*/
+    /*    width: 100%;*/
+    /*    border: 1px solid #e6e6e6 !important;*/
+    /*    background: #fff !important;*/
+    /*}*/
+
+    .input_gray {
+        background: #f5f5f5;
+    }
+
+    .danwei{
+        width: 40px;
+        position: absolute;
+        right: -49px;
+        text-align: left;
+        top: 10px;
+    }
+</style>
+<form id="contract_change_form" lay-filter="contract_change_form" class="layui-form model-form">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>合同变更申请</legend>
+    </fieldset>
+    <input name="id" id="id" type="hidden"/>
+    <input name="checkState" id="checkState" type="hidden"/>
+    <div class="layui-form-item">
+        <!--合同类型-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同类型</label>
+            <span style="margin-left: 10px">
+                <input type="radio" name="contractType" lay-filter="contractType"    value="001" title="销售合同" checked="" >
+                <input type="radio" name="contractType"  lay-filter="contractType" value="002" title="采购合同" >
+                </span>
+        </div>
+        <!--合同编号-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同编号</label>
+            <div class="layui-input-block">
+                <input name="contractNum" id="contractNum" type="text" class="layui-input" placeholder="请输入合同编号！"/>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <button id="contract_change_search" class="layui-btn icon-btn" type="button"><i
+                    class="layui-icon">&#xe615;</i>查询
+            </button>
+        </div>
+    </div>
+
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>合同信息</legend>
+    </fieldset>
+    <div class="layui-form-item">
+        <!--合同ID-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同编号</label>
+            <div class="layui-input-block">
+                <input id="contractId" type="text" name="contractId" class="layui-input input_gray" readonly="readonly" lay-verify="required">
+            </div>
+        </div>
+        <!--合同年份-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同年份</label>
+            <div class="layui-input-block">
+                <input id="year" type="text" name="year" class="layui-input input_gray" readonly="readonly" lay-verify="required">
+            </div>
+        </div>
+        <!--月份-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同月份</label>
+            <div class="layui-input-block">
+                <input id="month" type="text" name="month" class="layui-input input_gray" readonly="readonly" lay-verify="required">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <!--签约人-->
+        <div class="layui-inline">
+            <label class="layui-form-label">签约人</label>
+            <div class="layui-input-block">
+                <input id="signatory" type="text" name="signatory" class="layui-input input_gray" readonly="readonly" lay-verify="required">
+            </div>
+        </div>
+        <!--签约时间-->
+        <div class="layui-inline">
+            <label class="layui-form-label">签约时间</label>
+            <div class="layui-input-block">
+                <input id="signingTime" type="text" name="signingTime" class="layui-input input_gray"
+                       readonly="readonly" lay-verify="required">
+            </div>
+        </div>
+        <!--合同金额-->
+        <div class="layui-inline">
+            <label class="layui-form-label">合同金额</label>
+            <div class="layui-input-block">
+                <input id="conAmount" type="text" name="conAmount"  class="layui-input input_gray" readonly="readonly" lay-verify="required">
+            </div>
+            <span class="danwei" >(元)</span>
+        </div>
+
+    </div>
+    <div class="layui-form-item">
+        <!--主要产品-->
+        <div class="layui-block">
+            <label class="layui-form-label">主要产品</label>
+            <div class="layui-input-block" style="width: 786px;">
+                   <textarea id="mainProducts" name="mainProducts" class="layui-textarea" readonly="readonly"
+                             lay-verify="required"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>申请信息</legend>
+    </fieldset>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">变更申请人</label>
+            <div class="layui-input-block">
+                <input id="applyUserId" name="applyUserId" type="hidden"/>
+                <input id="applyUserName" type="text" name="applyUserName" class="layui-input input_gray" readonly="readonly"
+                       lay-verify="required">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <!--供应商信息-->
+        <div class="layui-block">
+            <label class="layui-form-label">变更内容</label>
+            <div class="layui-input-block" style="width: 766px;">
+                <textarea name="applyContent" id="applyContent" placeholder="请输入变更内容！" class="layui-textarea" lay-verify="required"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item model-form-footer">
+        <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+        <button class="layui-btn" id="change_apply_form_submit" lay-filter="change_apply_form_submit" lay-submit>保存
+        </button>
+    </div>
+
+
+</form>
+<script>
+    layui.use(['layer', 'admin', 'config', 'form', 'config', 'formSelects', 'laydate'], function () {
+        var layer = layui.layer,
+            layer = layui.layer,
+            admin = layui.admin,
+            form = layui.form,
+            formSelects = layui.formSelects,
+            laydate = layui.laydate,
+            config = layui.config;
+
+            //查询按钮点击事件
+            $('#contract_change_search').click(function () {
+                var contractType = $("input[name='contractType']:checked").val();
+                var contractNum = $('#contractNum').val();
+                if (null==contractNum  || "" == contractNum || undefined==contractNum) {
+                    layer.msg("请输入合同编号后在进行查询", {icon: 2});
+                    return false;
+                }
+                // 构造json参数对象
+                var jsonParam={contractNumber:contractNum,isChange:'001'};
+                if (contractType=='001' ) {
+                    contractInfo("/contract/salesContract/getDetail/",jsonParam);
+                }else {
+                    contractInfo("/contract/purchaseContract/getDetail/",jsonParam);
+                }
+            });
+            form.render('radio');
+            //申请人信息赋值
+            $('#applyUserId').val(config.getUser().id);
+            $('#applyUserName').val(config.getUser().nickName);
+
+
+            //获取合同信息 并赋值
+            function contractInfo(url,param){
+                layer.load(2);
+                admin.req(url,param,function (data) {
+                    layer.closeAll('loading');
+                    if (data != null) {
+                        $('#contractId').val(data.contractNumber);
+                        $('#year').val(data.year);
+                        $('#month').val(data.month);
+                        $('#signatory').val(data.signatory);
+                        $('#signingTime').val(data.signingTime);
+                        $('#conAmount').val(data.conAmount);
+                        $('#mainProducts').val(data.mainProducts);
+                        layer.closeAll('loading');
+                    }else{
+                        layer.msg("没有对应的合同！", {icon: 2});
+                    }
+                },'GET');
+                return false;
+            }
+
+
+            var contractApplyInfo = admin.getTempData('contract_apply_info');
+            $('#contract_change_form').attr('method', 'POST');// 没数据是POST
+
+            if (contractApplyInfo) {
+                $('#contract_change_form').attr('method', 'PUT');// 没数据是POST
+                form.val('contract_change_form', contractApplyInfo);
+                $('#contractNum').val(contractApplyInfo.contractId);
+                $('#checkState').val('001');
+                form.render('radio');
+                // 构造json参数对象
+                var jsonParam={contractNumber:contractApplyInfo.contractId,isChange:'001'};
+                var contractType = $("input[name='contractType']:checked").val();
+
+                if (contractType=='001' ) {
+                    contractInfo("/contract/salesContract/getDetail/",jsonParam);
+                }else {
+                    contractInfo("/contract/purchaseContract/getDetail/",jsonParam);
+                }
+            }
+            //合同类型变更验证
+             form.on('radio(contractType)', function(data){
+                 var contractNum = $('#contractNum').val();
+                 if (null==contractNum || "" == contractNum || undefined==contractNum) {
+                     $('#contractId').val('');
+                 }else{
+                     layer.msg("更改合同类型请重新查询！", {icon: 2});
+                     $('#contractNum').val('');
+                     $('#contractId').val('');
+                     $('#year').val('');
+                     $('#month').val('');
+                     $('#signatory').val('');
+                     $('#signingTime').val('');
+                     $('#conAmount').val('');
+                     $('#mainProducts').val('');
+                     $('#applyContent').val('');
+                 }
+
+            });
+
+        // 表单提交事件
+                form.on('submit(change_apply_form_submit)', function (data) {
+                    form.render();
+                    layer.load(2);
+                    admin.req('/contract/changeApply/saveOrUpdate', data.field, function (resData) {
+                        //var dataObj = JSON.parse(resData);
+                        layer.closeAll('loading');
+                        layer.msg("操作成功！", {icon: 1});
+                        admin.finishPopupCenter();
+                    }, $('#contract_change_form').attr('method'));
+                    return false;
+                });
+    });
+</script>

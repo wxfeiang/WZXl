@@ -1,0 +1,823 @@
+.h_container {
+  position: relative;
+  width: 98%;
+  /*width: 1488px;*/
+  margin: 0 auto;
+}
+.content {
+  display: none;
+}
+
+/*左*/
+.h_container .shouan {
+  width: 23%;
+  /*width: 342px;*/
+}
+
+.shouan .biao {
+  padding: 10px;
+  background: rgba(26, 93, 141, 0.2);
+  border-radius: 4px;
+  padding-bottom: 0;
+}
+.shouan .biao .tit {
+  text-align: left;
+  padding-bottom: 10px;
+  font-size: 14px;
+  color: #fff;
+}
+.shouan .biao .tit img {
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.shouan .shiyou {
+  display: block;
+  padding: 0 10px;
+}
+.shouan .shiyou li {
+  text-align: center;
+  float: left;
+  margin: 20px 0;
+  width: 33.333%;
+}
+.shouan .shiyou li div {
+  width: 90%;
+  margin: 0 auto;
+  color: #fff;
+}
+.shouan .shiyou li .t_name {
+  font-size: 16px;
+  /*background: url(../img/b_name.png);*/
+  background-size: 100% 100%;
+}
+.shouan .shiyou li .num {
+  width: 84%;
+  margin-top: 12px;
+  font-size: 14px;
+  /*background: url(../img/b_num.png);*/
+  background-size: 100% 100%;
+}
+.shouan .jk {
+  text-align: center;
+  height: 220px;
+  background: rgba(26, 93, 141, 0.2);
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px 0;
+}
+.shouan .jk img {
+  width: 100%;
+  height: 100%;
+}
+.person {
+  margin: 10px 0;
+}
+.person .num {
+  width: 100%;
+  height: 130px;
+  padding: 10px 0;
+  background: rgba(26, 93, 141, 0.2);
+  border-radius: 4px;
+}
+.numlist {
+  width: 425px;
+  height: 126px;
+  float: left;
+  overflow: hidden;
+  position: relative;
+}
+.listul {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.person .num li {
+  text-align: center;
+  float: left;
+  width: 121px;
+  margin: 0 10px;
+  height: 126px;
+  margin-bottom: 0px;
+  background: url(../img/manbg.png);
+  background-size: 100% 100%;
+}
+.person .num li img {
+  width: 90%;
+  height: 90%;
+  margin-top: 5%;
+}
+.per_duibi {
+  background: rgba(26, 93, 141, 0.2);
+  border-radius: 4px;
+  margin: 10px 0;
+  padding: 10px;
+}
+.per_duibi li {
+  position: relative;
+  width: 48%;
+  color: #fff;
+  cursor: pointer;
+}
+.per_duibi li:hover .thum {
+  opacity: 1;
+}
+.imtop span {
+  margin-right: 1%;
+}
+.imtop1 span {
+  margin-left: 1% !important;
+}
+.per_duibi .thum {
+  z-index: 999;
+  left: 0;
+  top: 0;
+  height: auto;
+  background-size: 100% 100%;
+  transition: all 1s;
+}
+.per_duibi li p {
+  font-size: 14px;
+  color: #fff;
+  margin-top: 4px;
+}
+.per_duibi li .imtop span,
+.imtop1 span {
+  text-align: center;
+  display: inline-block;
+  width: 47%;
+  height: 91px;
+}
+.per_duibi li .imtop span img,
+.imtop1 img {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+}
+
+/*中间*/
+.h_container .map {
+  width: 53%;
+  /*width: 744px;*/
+  margin: 0 0.5%;
+}
+.map_wripper,
+#map {
+  position: relative;
+  width: 100%;
+  height: 515px;
+  background: rgba(26, 93, 141, 0.2);
+  border-radius: 4px;
+}
+.map_wripper .title {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  margin-bottom: 0 !important;
+  z-index: 99;
+}
+
+.map .title,
+.map_wripper .title {
+  background: rgba(26, 93, 141, 0.2);
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.map .tit_li,
+.map_wripper .tit_li {
+  float: left;
+  width: 20%;
+  margin: 10px 0;
+  text-align: center;
+}
+.map .tit_li img,
+.map_wripper .tit_li img {
+  width: 38px;
+  height: 38px;
+  vertical-align: middle;
+}
+.map .tit_li span,
+.map_wripper .tit_li span {
+  display: inline-block;
+  height: 38px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.map_wripper .tit_li span {
+  line-height: 38px;
+}
+.tli1 {
+  color: #00f0ff;
+}
+.tli2 {
+  color: #54fe8b;
+}
+.tli3 {
+  color: #f8b37f;
+}
+.tli4 {
+  color: #fe5c23;
+}
+.tli5 {
+  color: #fd2423;
+}
+.table {
+  position: relative;
+  width: 100%;
+  height: 233px;
+  background: rgba(26, 93, 141, 0.2);
+  border-radius: 4px;
+  margin: 10px 0;
+}
+.table table {
+  width: 100%;
+  border: none;
+}
+.tablecont {
+  width: 100%;
+  height: 190px;
+  overflow-y: auto;
+}
+.tablecont::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 2px; /*高宽分别对应横竖滚动条的尺寸*/
+  height: 1px;
+}
+.tablecont::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius: 10px;
+  background: #00f0ff;
+}
+.tablecont::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0);
+}
+/*.table thead tr:first-child{
+	position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 99;
+}*/
+.table table td,
+.table table th {
+  text-align: center;
+  border: none;
+  padding: 7px 15px;
+}
+.table table th {
+  color: #00f0ff;
+  font-size: 16px;
+}
+.table table td {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+}
+.table table td img {
+  vertical-align: middle;
+}
+
+/*右*/
+.h_container .jiean {
+  width: 23%;
+  position: relative;
+}
+
+.datas {
+  background: rgba(26, 93, 141, 0.2);
+  border-radius: 4px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+.jiean .tab {
+  width: 96%;
+  left: 0;
+  right: 0;
+  top: 10px;
+  margin: auto;
+  margin-bottom: 10px;
+  padding: 10px 2%;
+  background: rgba(0, 210, 255, 0.1);
+}
+.jiean .tab ul {
+  width: 99%;
+  margin: 0 auto;
+  display: block;
+  border: 1px solid rgba(0, 210, 255, 0.4);
+  border-radius: 5px;
+}
+.jiean .tab li {
+  float: left;
+  width: 33.33%;
+  padding: 8px 0;
+  font-size: 18px;
+  text-align: center;
+  color: #0090ff;
+  cursor: pointer;
+}
+.jiean .tab li.current {
+  font-weight: bold;
+}
+.zdrq {
+}
+.jiean_cont .jiean_cont_wriper {
+  display: none;
+}
+.datas .tit {
+  padding: 15px 0;
+  color: #fff;
+  font-size: 14px;
+}
+.datas .tit img {
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.tongji {
+  padding: 0 24px;
+  padding-bottom: 6px;
+}
+
+.tongji span {
+  color: #38a0fa;
+  font-size: 16px;
+}
+.tongji span img {
+  margin-top: 2px;
+  vertical-align: text-top;
+  margin-right: 8px;
+  height: 18px;
+}
+.bjtj_list {
+  padding: 0 14px;
+}
+.bjtj_list li {
+  margin: 16px 0;
+}
+.bjtj_list li span {
+  margin: 0 10px;
+}
+.bjtj_list li .dizhi {
+  color: #aca10e;
+  font-size: 15px;
+}
+.bjtj_list li .anjian,
+.bjtj_list li .time {
+  color: #52b3df;
+}
+.bjtj_list li .chuli {
+  color: #970a10;
+}
+
+.gzdt_list .item {
+  padding: 8px 0;
+}
+.gzdt_list .img {
+  width: 18%;
+  height: 66px;
+  overflow: hidden;
+}
+.gzdt_list .img img {
+  width: 100%;
+  height: auto;
+  min-height: 50px;
+}
+.gzdt_list .thum {
+  width: 80%;
+  padding: 3px 0;
+  color: #52b3df;
+}
+.gzdt_list .thum .title {
+  font-size: 16px;
+}
+.gzdt_list .thum .meta {
+  font-size: 14px;
+  margin-top: 13px;
+}
+
+/*网络管理*/
+.enternet_center {
+  width: 76.5%;
+}
+.tooltip {
+  width: 400px;
+  height: 350px;
+  background: rgba(26, 93, 141, 0.2);
+  border-radius: 4px;
+  background: #102f56;
+}
+
+.tooltip_cont .title {
+  padding: 8px 0;
+  color: #fff;
+  text-align: center;
+}
+.tooltip input,
+select,
+button {
+  outline: none;
+  height: 30px;
+  font-size: 12px;
+  border: 1px solid #52b3df;
+  border-radius: 5px;
+  background: transparent;
+  color: #00010e;
+  margin: 0 4px;
+}
+input::-moz-placeholder {
+  color: #00010e;
+}
+input::placeholder {
+  color: #00010e;
+}
+.tooltip select {
+  width: 80px;
+}
+.tooltip input {
+  width: 100px;
+}
+.tooltip button {
+  width: 60px;
+}
+.but {
+  text-align: center;
+}
+.but a {
+  text-align: center;
+  display: inline-block;
+  width: 90px;
+  height: 40px;
+  line-height: 40px;
+  line-height: 40px\9;
+  font-size: 12px;
+  color: #fff;
+  background: url(../img/yh_tit.png);
+  background-size: 100% 100%;
+}
+.infos {
+  padding: 10px 20px;
+  color: #fff;
+}
+.infos span {
+  margin: 10px auto;
+  font-size: 12px;
+}
+
+/*指挥调度*/
+.command {
+  width: 100%;
+}
+.command .li {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 500px;
+  padding: 9px 6px;
+  background: rgba(18, 150, 219, 0.3);
+  z-index: 99;
+}
+.command .li li {
+  text-align: center;
+  float: left;
+  width: 23%;
+  height: 80px;
+  background: #000;
+  margin: 0 1%;
+}
+
+.command .li1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 300px;
+  padding: 9px 6px;
+  background: rgba(18, 150, 219, 0.3);
+  z-index: 99;
+}
+.command .li1 li {
+  text-align: center;
+  float: left;
+  width: 31.3%;
+  height: 60px;
+  margin: 0 1%;
+  font-size: 12px;
+}
+
+.li1 li .shebei_name {
+  background: #164d7b;
+  padding: 5px 0;
+  color: #fff;
+}
+.li1 li .shebei_num {
+  background: #41668a;
+  padding: 5px 0;
+  color: #fff;
+}
+
+.r_gd {
+  position: absolute;
+  top: 80px;
+  right: 3px;
+  z-index: 99;
+}
+.r_gd li {
+  text-align: center;
+  width: 140px;
+  height: 38px;
+  line-height: 38px;
+  line-height: 38px\9;
+  background: #a9d18e;
+  margin-bottom: 10px;
+}
+.r_gd li a {
+  color: red;
+}
+.r_gd .first {
+  position: relative;
+  margin-bottom: 20px;
+}
+.r_gd .first a {
+  color: #fff;
+}
+.r_gd .first i {
+  position: absolute;
+  bottom: -26px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  font-style: normal;
+  width: 0;
+  height: 0;
+  border-width: 13px;
+  border-style: solid;
+  border-color: #a9d18e transparent transparent transparent;
+}
+
+#xtgk {
+  position: relative;
+  color: #fff;
+}
+#xtgk span {
+  display: inline-block;
+}
+#xtgk .title span {
+  color: #f6a717;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 12px;
+}
+#xtgk .num {
+  position: absolute;
+  right: 10px;
+  top: -44px;
+}
+#xtgk .num p {
+  color: #00f0ff;
+  font-size: 12px;
+  padding-bottom: 2px;
+}
+
+#xtgk .times li {
+  width: 50%;
+  margin: 10px 0;
+}
+#xtgk .times .moth,
+#xtgk .times .week {
+  text-align: center;
+  width: 55px;
+  height: 45px;
+  line-height: 45px;
+  font-size: 16px;
+  border-radius: 50%;
+  border: 2px dashed #1296db;
+}
+#xtgk .times .tb {
+  margin-left: 10px;
+  vertical-align: middle;
+}
+#xtgk .police li {
+  text-align: center;
+  float: left;
+  width: 20%;
+  margin: 0 2.5%;
+  font-size: 12px;
+}
+
+#date_zk {
+  color: #fff;
+  position: relative;
+}
+#date_zk span {
+  display: inline-block;
+}
+#date_zk .title span {
+  color: #f6a717;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 12px;
+}
+#date_zk .num {
+  position: absolute;
+  right: 10px;
+  top: -44px;
+}
+#date_zk .num p {
+  color: #00f0ff;
+  font-size: 12px;
+  padding-bottom: 2px;
+}
+#date_zk .biao .ybp,
+#date_zk .biao .ybp1 {
+  position: relative;
+  width: 50%;
+  text-align: center;
+}
+#date_zk .biao .ti {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+#ybp,
+#ybp1 {
+  width: 80%;
+  height: 143px;
+  margin: 0 auto;
+}
+
+/*人脸识别*/
+#point .one-item {
+  font-size: 14px;
+  color: #9ec9fe;
+  width: 100%;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  padding: 0.6rem;
+  padding-top: 0;
+  padding-left: 24px;
+  vertical-align: middle;
+}
+
+#point .one-item .item {
+  display: -webkit-flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+#point .one-item img {
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/*今日概况*/
+#jrgk {
+  color: #fff;
+  position: relative;
+}
+#jrgk .title span {
+  color: #f6a717;
+  font-size: 20px;
+  font-weight: bold;
+}
+#jrgk .num {
+  position: absolute;
+  right: 10px;
+  top: -44px;
+}
+#jrgk .num p {
+  color: #00f0ff;
+  font-size: 12px;
+  padding-bottom: 2px;
+}
+
+/*实施监控*/
+.jk_content {
+  padding: 0 0.5%;
+}
+.jk_left {
+  float: left;
+  width: 23%;
+}
+.jk_center {
+  float: left;
+  width: 53%;
+  margin: 0 0.5%;
+}
+.jk_right {
+  float: right;
+  width: 23%;
+}
+.show {
+  padding: 10px;
+  background: rgba(26, 93, 141, 0.2);
+  border-radius: 4px;
+}
+.jk_content .title {
+  text-align: center;
+  font-size: 16px;
+  color: #fff;
+  padding: 10px 0;
+}
+.zpry .num_li {
+  float: left;
+  width: 46%;
+  margin: 30px 0;
+  text-align: center;
+}
+.zpry .num_li img {
+  width: 36px;
+  height: 36px;
+  vertical-align: middle;
+}
+.zpry .num_li span {
+  text-align: left;
+  display: inline-block;
+  height: 38px;
+  font-size: 14px;
+  margin-left: 8px;
+  margin-top: -30px;
+  color: #fff;
+  vertical-align: middle;
+}
+.zpry .num_li span {
+}
+.zpry .num_li span .num {
+  width: 110px;
+  font-size: 30px;
+  letter-spacing: 10px;
+}
+.zpry .num_li span .num1 {
+  color: #fb6a6a;
+}
+.zpry .num_li span .num2 {
+  color: #80beff;
+}
+.zpry .num_li span .num3 {
+  color: #f79441;
+}
+.zpry .num_li span .num4 {
+  color: #f6e902;
+}
+.line {
+  width: 8%;
+  margin-top: 30px;
+}
+.bjry .gj_tit li {
+  text-align: center;
+  float: left;
+  width: 32%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 5px 0;
+}
+.bjry .gj_tit li:nth-child(2),
+.bjry .gj_tit li:nth-child(3) {
+  margin-left: 2%;
+}
+.date_num {
+  color: #f79441;
+}
+.week_num {
+  color: #80beff;
+}
+.month_num {
+  color: #80beff;
+}
+#jscg li {
+  text-align: center;
+  float: left;
+  width: 32%;
+}
+#jscg li:nth-child(2),
+#jscg li:nth-child(3) {
+  margin-left: 2%;
+}
+#jscg li .sxnums {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 5px 0;
+}
+#Total_number span {
+  display: inline-block;
+  margin: 0 10px;
+  margin-top: 80px;
+  color: #fb6a6a;
+}
+#Total_number span:nth-child(2) {
+  color: #80beff;
+}
+#Total_number .tit {
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 20px;
+}

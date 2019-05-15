@@ -1,0 +1,236 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">采购合同信息</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>采购合同信息</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            <form id="purch-search-form" class="layui-form">
+                <div class="layui-form-item">
+                    合同编号
+                    <input type="text" id="contractNumberSearch" name="contractNumber" class="layui-input search-input" placeholder="请输入合同编号">&emsp;
+                    签约时间
+                    <input type="text" id="signingDateSearch" name="signingDate" class="layui-input search-input" placeholder="请输入签约时间">
+                    -
+                    <input type="text" name="signingEndDate" id="signingEndDateSearch" class="layui-input search-input" placeholder="签约时间结束">&emsp;
+                    付款条件
+                    <select id="termPaymentNameSearch" name="termPaymentName" class="layui-input search-input" placeholder="请输入付款条件"></select>&emsp;
+                    运输方式
+                    <select id="mentTypeNameSearch" name="mentTypeName" class="layui-input search-input" placeholder="请输入运输方式"></select>&emsp;
+                    到货时间
+                    <input type="text" id="arrivalDateSearch" name="arrivalDate" class="layui-input search-input" placeholder="请输入到货开始时间">
+                    -
+                    <input type="text" id="arrivalEndDateSearch" name="arrivalEndDate" class="layui-input search-input" placeholder="请输入到结束货时间">&emsp;
+                </div>
+            </form>
+            <button id="purch-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+            <button id="btn_reset" class="layui-btn layui-btn-warm icon-btn" type="reset"><i class="layui-icon">&#xe9aa;</i>重置</button>
+            <button id="purch-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+            <div class="content">
+                <table class="layui-table" id="purch-table" lay-filter="purch-table"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 表格操作列 -->
+<script type="text/html" id="purch-table-bar">
+    <a class="layui-btn  layui-btn-xs" lay-event="look">查看</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn  layui-btn-xs" lay-event="invoice">开票</a>
+    <a class="layui-btn  layui-btn-xs" lay-event="back">付款</a>
+</script>
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin','laydate'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var util = layui.util;
+        var admin = layui.admin;
+        var laydate = layui.laydate;
+
+        // 执行一个laydate实例
+        laydate.render({
+            elem: '#signingDate' //指定元素
+        });
+        laydate.render({
+            elem: '#signingEndDate' //指定元素
+        });
+
+        // 执行一个laydate实例
+        laydate.render({
+            elem: '#arrivalDate' //指定元素
+        });
+        laydate.render({
+            elem: '#arrivalEndDate' //指定元素
+        });
+        // 渲染表格
+        table.render({
+            elem: '#purch-table',
+            url: config.base_server + '/contract/purchaseContract/pagePurchase',
+            method: 'GET',
+            headers: {
+                "access_token":config.getToken()
+            },
+            where:{isChange:'001'},
+            page: true,
+            cols: [[
+                {type: 'numbers',title: '排序'},
+                {type: 'checkbox',sort:true},
+                {field: 'year', sort: true, title: '年度',width:65},
+                {field: 'contractNumber', sort: true, title: '合同编号'},
+                {field: 'conAmount', sort: true, title: '合同金额'},
+                {field: 'clientName', sort: true, title: '供货商'},
+                {field: 'signatory', sort: true, title: '签约人',width:80},
+                {field: 'signingDate', sort: true, title: '签约时间'},
+                {field: 'termPaymentName', sort: true,   title: '付款条件'},
+                {field: 'mentTypeName', sort: true, title: '运输方式',width:94},
+                {field: 'arrivalDate', sort: true,   title: '到货时间'},
+                {width:300,align: 'center', toolbar: '#purch-table-bar',fixed:'right', title: '操作'}
+            ]]
+        });
+
+        //selectsInit
+        function initSelect() {
+            //付款条件
+            dropDownSearch("term_payment", "termPaymentNameSearch");
+            //运输方式
+            dropDownSearch("ment_type", "mentTypeNameSearch");
+
+        }
+        //selectsData
+        function dropDownSearch(code,selectName){
+            admin.req('/sys/dictData/list/'+code, {}, function (data) {
+                // 渲染下拉框
+                var electData = "<option value=''>请选择</option>";
+                for (var i in data) {
+                    electData += "<option value='" + data[i].dictValue + "'>" + data[i].dictLabel + "</option>";
+                }
+                $('#'+selectName+'').html(electData);
+                form.render('select');
+            },'GET');
+        }
+        initSelect();
+
+        // 搜索按钮点击事件
+        $('#purch-btn-search').click(function () {
+            table.reload('purch-table', {
+                    where: $('#purch-search-form').serializeJSON(),
+                    page: {curr: 1} //重新从第 1 页开始
+                }
+            );
+        });
+         //重置按钮点击事件
+         $('#btn_reset').click(function () {
+             $('#purch-search-form')[0].reset();
+             table.reload('purch-table', {
+                 where: $('#purch-search-form').serializeJSON(),
+                 page: {curr: 1} //重新从第 1 页开始
+             });
+         });
+
+        // 添加按钮点击事件
+        $('#purch-btn-add').click(function () {
+            showEditModel();
+        });
+
+        //
+
+        // 工具条点击事件
+        table.on('tool(purch-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+            if(layEvent==='look'){// 查看
+                showLookModel(data);
+            } else if (layEvent === 'edit') { // 修改
+                showEditModel(data);
+            } else if (layEvent === 'del') { //删除
+                doDelete(obj);
+            }else if(layEvent === 'invoice'){//开票明细
+                showInvoiceModel(obj);
+            }else if(layEvent === 'back'){
+                showBackModel(obj);
+            }
+        });
+
+        //添加和修改表单弹窗
+        var showEditModel = function (data) {
+            admin.putTempData('t_purch', data);
+            var title = data ? '修改采购合同' : ' 添加采购合同';
+            var areas= ['1016px', '600px']
+            admin.popupCenter({
+                title: title,
+                area: areas,
+                offset: 'auto',
+                path: 'components/contract/purchase_add.html',
+                finish: function () {
+                    table.reload('purch-table', {});
+                }
+            });
+        };
+        //查看表单弹窗
+        var showLookModel = function (data) {
+            admin.putTempData('t_purch', data);
+            var title = '查看采购合同';
+            var areas= ['1064px', '600px']
+            admin.popupCenter({
+                title: title,
+                area: areas,
+                offset: 'auto',
+                path: 'components/contract/purchase_look.html',
+                finish: function () {
+                    table.reload('purch-table', {});
+                }
+            });
+        };
+
+        //开票明细弹窗
+        var showInvoiceModel = function (data) {
+            admin.putTempData('t_invoice', data);
+            var title = '采购合同开票明细';
+            var areas= ['1064px', '600px']
+            admin.popupCenter({
+                title: title,
+                area: areas,
+                offset: 'auto',
+                path: 'components/contract/purchaseInvoice_add.html',
+                finish: function () {
+                    table.reload('purch-table', {});
+                }
+            });
+        };
+
+        //付款明细弹窗
+        var showBackModel = function (data) {
+            admin.putTempData('t_blck', data);
+            var title = '采购合同付款明细';
+            var areas= ['1064px', '600px']
+            admin.popupCenter({
+                title: title,
+                area: areas,
+                offset: 'auto',
+                path: 'components/contract/purchaseBack_add.html',
+                finish: function () {
+                    table.reload('purch-table', {});
+                }
+            });
+        };
+
+        // 删除
+        var doDelete = function (obj) {
+            layer.confirm('确定要删除吗？', function (i) {
+                layer.close(i);
+                layer.load(2);
+                admin.req('/contract/purchaseContract/remove/' + obj.data.id, {}, function (data) {
+                    layer.closeAll('loading');
+                    layer.msg("删除成功", {icon: 1});
+                    obj.del();
+                }, 'DELETE');
+            });
+        };
+    });
+</script>

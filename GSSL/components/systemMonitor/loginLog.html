@@ -1,0 +1,104 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">登陆日志</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>登陆日志</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+
+            <form id="login-log-search-form" class="layui-form">
+
+                账号
+                <input type="text" name="loginName" class="layui-input search-input" placeholder="请输入账号">&emsp;
+
+                ip地址
+                <input type="text" name="ipaddr" class="layui-input search-input" placeholder="请输入ip地址">&emsp;
+
+                <!-- 功能按钮 -->
+                <button id="btnSearch" class="layui-btn icon-btn" type="button"><i class="layui-icon"></i>搜索</button>
+                <button id="btn_reset" class="layui-btn layui-btn-warm icon-btn" type="button"><i class="layui-icon">&#xe9aa;</i>重置</button>
+
+            </form>
+
+        </div>
+
+        <!-- 数据显示区 -->
+        <div class="content">
+            <table class="layui-table" id="loginLogaTble" lay-filter="loginLogaTble"></table>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var util = layui.util;
+        var admin = layui.admin;
+         // 渲染表格
+        table.render({
+            elem: '#loginLogaTble',
+            url: config.base_server + '/sys/logLogin',
+            headers: {
+                "access_token":config.getToken()
+            },
+            method: 'GET',
+            page: true,
+            cols: [[
+//              {type: 'numbers',title: '排序'},
+                {type: 'checkbox',sort:true},
+                {field: 'loginName', sort: true, title: '账号'},
+                {field: 'ipaddr', sort: true, title: 'IP地址'},
+                {field: 'loginLocation', sort: true, title: '登录地点'},
+                {field: 'browser', sort: true, title: '浏览器'},
+                {field: 'os', sort: true, title: '操作系统'},
+                {
+                    title: '状态', templet: function (d) {
+                        var strs = {
+                            '1':'<span class="layui-badge layui-bg-green">成功</span>',
+                            '0':'<span class="layui-badge layui-bg-orange">失败</span>',
+                        };
+                        return strs[d.loginStatus];
+                    }, align: 'center'
+                },
+                {field: 'msg', sort: true, title: '提示消息'},
+                {
+                    field: 'loginTime',
+                    sort: true,
+                    templet: function (d) {
+                        return util.toDateString(d.loginTime);
+                    },
+                    title: '操作时间'
+                }
+            ]]
+        });
+       
+        // 搜索
+        $('#btnSearch').click(function () {
+            table.reload(
+                'loginLogaTble',
+                {
+                    where: $('#login-log-search-form').serializeJSON(),
+                    page: {curr: 1} //重新从第 1 页开始
+                }
+            );
+        });
+
+        // 重置
+        $('#btn_reset').click(function () {
+            table.reload(
+                'loginLogaTble',
+                {
+                    where: {"loginName":"","ipaddr":""},
+                    page: {curr: 1} //重新从第 1 页开始
+                }
+            );
+        });
+
+    });
+</script>

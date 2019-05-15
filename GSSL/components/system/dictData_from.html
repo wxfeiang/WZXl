@@ -1,0 +1,102 @@
+<!-- user表单弹窗 -->
+<form id="dictData-form" lay-filter="dictData-form" class="layui-form model-form">
+
+    <!-- id&status&isDelete -->
+    <input name="id" type="hidden"/>
+    <input name="status" type="hidden"/>
+    <input name="isDefault" type="hidden"/>
+    <input name="dictType" type="hidden"/>
+    <input name="isDelete" type="hidden"/>
+
+    <!-- dictName -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">标签</label>
+        <div class="layui-input-block">
+            <input name="dictLabel" placeholder="标签" type="text" class="layui-input"/>
+        </div>
+    </div>
+
+    <!-- dictValue -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">键值</label>
+        <div class="layui-input-block">
+            <input name="dictValue" placeholder="键值" type="text" class="layui-input"/>
+        </div>
+    </div>
+
+    <!-- cssClass -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">样式属性</label>
+        <div class="layui-input-block">
+            <input name="cssClass" placeholder="样式属性" type="text" class="layui-input"/>
+        </div>
+    </div>
+
+    <!-- remark -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <input name="remark" placeholder="备注" type="text" class="layui-input"/>
+        </div>
+    </div>
+
+    <!-- sort -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序值</label>
+        <div class="layui-input-block">
+            <input name="sort" placeholder="排序值" type="text" class="layui-input"/>
+        </div>
+    </div>
+
+    <div class="layui-form-item model-form-footer">
+        <button class="layui-btn layui-btn-primary" type="button" id="closeBtn">取消</button>
+        <button class="layui-btn" lay-filter="dictData-form-submit" lay-submit>保存</button>
+    </div>
+
+</form>
+
+<script>
+
+    layui.use(['layer', 'admin', 'form'], function () {
+        var layer = layui.layer;
+        var admin = layui.admin;
+        var form = layui.form;
+
+        // 获取弹框索引
+        var index= admin.getTempData('t_dictType_index');
+        // 获取字典类型缓存
+        var dictType = admin.getTempData('t_dictType');
+        // 回显字典数据
+        $('#dictData-form').attr('method', 'POST');// 没数据是POST
+        var dictData = admin.getTempData('t_dictData');
+        if (dictData) {
+            // 表单提交类型为PUT
+            $('#dictData-form').attr('method', 'PUT');
+        } else {
+            dictData = {};
+        }
+        dictData.dictType = dictType.dictType;
+        form.val('dictData-form', dictData);
+
+        // 表单提交
+        form.on('submit(dictData-form-submit)', function (data) {
+
+            layer.load(2);
+            admin.req('/sys/dictData', data.field, function (data) {
+                layer.closeAll('loading');
+                // 回调方法
+                parent.reloadTable();
+                layer.close(index);
+                // admin.finishPopupCenter();
+            }, $('#dictData-form').attr('method'));
+
+            // 一定要return
+            return false;
+        });
+
+        $('#closeBtn').click(function(){
+            layer.close(index);
+        })
+
+    });
+</script>

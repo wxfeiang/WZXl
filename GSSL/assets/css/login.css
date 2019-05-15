@@ -1,0 +1,100 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+body {
+  position: relative;
+  background: url(../images/login/login_bg.png) no-repeat;
+  background-size: 100% 100%;
+}
+.login {
+  width: 420px;
+  height: 382px;
+  position: fixed;
+  margin: auto;
+  top: 2%;
+  right: -36%;
+  left: 0;
+  bottom: 0;
+}
+.login_top {
+  width: 370px;
+  height: 64px;
+  margin: auto;
+  font-size: 20px;
+  font-family: MicrosoftYaHei;
+  font-weight: 400;
+  color: rgba(20, 147, 250, 1);
+  text-align: center;
+  line-height: 64px;
+  background: url(../images/login/big_top.png) no-repeat;
+}
+.login_bottom {
+  width: 425px;
+  height: 340px;
+  margin-top: -23px;
+  margin-left: -3px;
+  background: url(../images/login/big.png) no-repeat;
+}
+.username {
+  width: 325px;
+  height: 50px;
+  outline: none;
+  padding-left: 10px;
+  background: rgba(245, 245, 245, 1);
+  border: 1px solid rgba(221, 221, 221, 1);
+  border-radius: 3px;
+  margin: auto;
+  margin-top: 78px;
+  color: #999999;
+  margin-left: 45px;
+}
+.username1 {
+  width: 325px;
+  height: 50px;
+  outline: none;
+  padding-left: 10px;
+  background: rgba(245, 245, 245, 1);
+  border: 1px solid rgba(221, 221, 221, 1);
+  border-radius: 3px;
+  margin-top: 15px;
+  color: #999999;
+  margin-left: 45px;
+}
+.btn {
+  width: 325px;
+  height: 50px;
+  border: none;
+  outline: none;
+  background: url(../images/login/dl_normal.png) no-repeat;
+  margin-top: 50px;
+  margin-left: 45px;
+  font-family: MicrosoftYaHei;
+  font-weight: 400;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 1);
+  cursor: pointer;
+}
+.btn:hover {
+  background: url(../images/login/dl_select.png) no-repeat;
+}
+
+.login-footer {
+  width: 100%;
+  position: fixed;
+  bottom: 20px;
+  text-align: center;
+  color: #fff;
+  font-size: 12px;
+}
+/*.login-footer p{
+    margin-top:10px;
+}
+.bq{
+    margin:5px;
+}*/

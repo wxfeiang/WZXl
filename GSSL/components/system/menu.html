@@ -1,0 +1,206 @@
+
+<div class="layui-card">
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label w-auto">搜索：</label>
+                    <div class="layui-input-inline mr0">
+                        <input id="edtSearch" class="layui-input" type="text" placeholder="输入关键字">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon"></i>搜索</button>
+                    <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon"></i>添加</button>
+                    <button id="btnExpand" class="layui-btn icon-btn">全部展开</button>
+                    <button id="btnFold" class="layui-btn icon-btn">全部折叠</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 数据表格 -->
+        <table class="layui-table" id="menuTable" lay-filter="menuTable"></table>
+    </div>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="tableBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="addSub">添加下级菜单</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<!-- js部分 -->
+<script>
+    layui.use(['layer', 'util', 'form', 'table', 'admin', 'treetable'], function () {
+        var $ = layui.jquery;
+        var util = layui.util;
+        var layer = layui.layer;
+        var table = layui.table;
+        var admin = layui.admin;
+        var treetable = layui.treetable;
+
+        // 渲染表格
+        function renderTable() {
+            // 从服务器调数据
+            admin.req(
+                '/sys/menu',
+                {},
+                // 请求成功回掉方法
+                function(data){
+                    // 数据存储在本地，调用treetable渲染页面
+                    treetable.render({
+                        treeColIndex: 1,
+                        treeSpid: 0,
+                        treeIdName: 'id',
+                        treePidName: 'parentId',
+                        treeDefaultClose:true,//是否默认折叠
+                        treeLinkage:false,//父级展开时是否自动展开所有子级
+                        elem: '#menuTable',
+                        data: data,
+                        page: false, //树形表格一般是没有分页的
+                        cols: [[
+                            {type: 'numbers'},
+                            //{field: 'id', align: 'center'},
+                            {field: 'menuName', title: '菜单名称', minWidth: 200},
+                            {field: 'icon', title: '图标', width:150},
+                            {field: 'url', title: '路由地址'},
+                            {field: 'path', title: '页面路径'},
+                            {field: 'perms', title: '权限标识'},
+                            {
+                                title: '类型', templet: function (d) {
+                                    var strs = {
+                                        'M':'<span class="layui-btn layui-btn-normal layui-btn-xs">目录</span>',
+                                        'C':'<span class="layui-btn layui-btn-warm layui-btn-xs">菜单</span>',
+                                        'F':'<span class="layui-btn layui-btn-xs">按钮</span>'
+                                    };
+                                    return strs[d.menuType];
+                                }, align: 'center', width: 70
+                            },
+                            {field: 'orderNum', title: '排序', width: 70},
+                            {
+                                field: 'createTime',
+                                templet: function (d) {
+                                    return util.toDateString(d.createTime);
+                                },
+                                title: '创建时间',
+                                width:160
+                            },
+                            {field: 'remark', title: '备注', width: 80},
+                            {templet: '#tableBar', title: '操作', align: 'center'}
+                        ]]
+                    });
+                },
+                "GET"
+            );
+        }
+
+        // 加载数据+渲染  添加之后的回调函数
+        renderTable();
+
+        // 添加按钮点击事件
+        $('#btnAdd').click(function () {
+            showEditModel();
+        });
+
+        // 全部展开按钮
+        $('#btnExpand').click(function () {
+            treetable.expandAll('#menuTable');
+        });
+
+        // 全部折叠
+        $('#btnFold').click(function () {
+            treetable.foldAll('#menuTable');
+        });
+
+        // 工具条点击事件
+        table.on('tool(menuTable)', function (obj) {
+
+            // 获取当前行数据
+            var data = obj.data;
+            var layEvent = obj.event;
+
+            // 判断触发按钮
+            if (layEvent === 'edit') { // 修改
+                showEditModel(obj.data);
+            } else if (layEvent === 'addSub') {
+                addSubMenu(obj.data)
+            } else if (layEvent === 'del') { // 删除
+                doDel(data.id, data.menuName);
+            }
+        });
+
+        // 显示表单弹窗(修改/添加)
+        function showEditModel(data) {
+            admin.putTempData('t_menu', data);
+            admin.putTempData('t_menu_addSub', false); // 判断是否为添加下级菜单
+            var title = data ? '修改菜单' : '添加菜单';
+            admin.popupCenter({
+                title: title,
+                path: 'components/system/menu_form.html',
+                finish: function () {
+                    renderTable(); // 操作完成之后刷新页面[回调]
+                }
+            });
+        }
+
+        // 添加下级菜单
+        function addSubMenu(data){
+            admin.putTempData('t_menu', data);
+            admin.putTempData('t_menu_addSub', true); // 判断是否为添加下级菜单
+            var title = data ? '修改菜单' : '添加菜单';
+            admin.popupCenter({
+                title: title,
+                path: 'components/system/menu_form.html',
+                finish: function () {
+                    renderTable(); // 操作完成之后刷新页面[回调]
+                }
+            });
+        }
+
+        // 删除
+        function doDel(menuId, menuName) {
+
+            layer.confirm('确定要删除“' + menuName + '”吗？', function (i) {
+                layer.close(i);
+                layer.load(2);
+                admin.req('/sys/menu/' + menuId, {}, function (data) {
+                    layer.closeAll('loading');
+                    layer.msg("删除成功", {icon: 1});
+                    renderTable(); // 操作完成之后刷新页面[回调]
+                }, 'DELETE');
+            });
+        }
+
+        // 搜索按钮点击事件
+        $('#btnSearch').click(function () {
+            $('#edtSearch').removeClass('layui-form-danger');
+            var keyword = $('#edtSearch').val();
+            var $tds = $('#menuTable').next('.treeTable').find('.layui-table-body tbody tr td');
+            $tds.css('background-color', 'transparent');
+            if (!keyword) {
+                layer.msg("请输入关键字", {icon: 5, anim: 6});
+                $('#edtSearch').addClass('layui-form-danger');
+                $('#edtSearch').focus();
+                return;
+            }
+            var searchCount = 0;
+            $tds.each(function () {
+                if ($(this).text().indexOf(keyword) >= 0) {
+                    $(this).css('background-color', '#FAE6A0');
+                    if (searchCount == 0) {
+                        $('body,html').stop(true);
+                        $('body,html').animate({scrollTop: $(this).offset().top - 150}, 500);
+                    }
+                    searchCount++;
+                }
+            });
+            if (searchCount == 0) {
+                layer.msg("没有匹配结果", {icon: 5, anim: 6});
+            } else {
+                treetable.expandAll('#menuTable');
+            }
+        });
+
+    });
+</script>

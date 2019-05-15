@@ -1,0 +1,336 @@
+<!-- user表单弹窗 -->
+<link rel="stylesheet" type="text/css" href="/assets/css/custom/common.css" />
+<style type="text/css">
+  .layui-form-label {
+    width: 166px;
+    padding: 9px 0;
+  }
+  .layui-input-block {
+    margin-left: 166px;
+  }
+  textarea {
+    width: 93.8%;
+  }
+</style>
+<form
+  id="custom-form"
+  lay-filter="custom-form"
+  class="layui-form model-form look_bg"
+>
+  <!--id-->
+  <input name="id" type="hidden" />
+  <div class="layui-form-item">
+    <!--clientName-->
+    <div class="layui-inline">
+      <label class="layui-form-label">客户名称：</label>
+      <div class="layui-input-block">
+        <input
+          name="clientName"
+          readonly="readonly"
+          type="text"
+          class="layui-input"
+        />
+      </div>
+    </div>
+    <!--clientShortName-->
+    <div class="layui-inline">
+      <label class="layui-form-label">客户简称：</label>
+      <div class="layui-input-block">
+        <input
+          name="clientShortName"
+          readonly="readonly"
+          type="text"
+          class="layui-input"
+        />
+      </div>
+    </div>
+    <!--busineLicense-->
+    <div class="layui-inline">
+      <label class="layui-form-label">统一社会信用代码：</label>
+      <div class="layui-input-block">
+        <input
+          name="busineLicense"
+          readonly="readonly"
+          type="text"
+          class="layui-input"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <!--shortSpell-->
+    <div class="layui-inline">
+      <label class="layui-form-label">客户名称简拼：</label>
+      <div class="layui-input-block">
+        <input
+          name="shortSpell"
+          readonly="readonly"
+          type="text"
+          class="layui-input"
+        />
+      </div>
+    </div>
+    <!--fullSpell-->
+    <div class="layui-inline">
+      <label class="layui-form-label">客户名称全拼：</label>
+      <div class="layui-input-block">
+        <input name="fullSpell" readonly="readonly" class="layui-input" />
+      </div>
+    </div>
+    <!--clientType-->
+    <div class="layui-inline">
+      <label class="layui-form-label">客户类型：</label>
+      <div class="layui-input-block">
+        <select
+          name="clientType"
+          id="clientType"
+          lay-filter="clientType"
+          disabled="disabled"
+          lay-verift="required"
+        ></select>
+      </div>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <!--name-->
+    <div class="layui-inline">
+      <label class="layui-form-label">联系人姓名：</label>
+      <div class="layui-input-block">
+        <input
+          name="name"
+          readonly="readonly"
+          type="text"
+          class="layui-input"
+        />
+      </div>
+    </div>
+    <!--clientTel-->
+    <div class="layui-inline">
+      <label class="layui-form-label">联系人电话：</label>
+      <div class="layui-input-block">
+        <input
+          name="clientTel"
+          readonly="readonly"
+          type="text"
+          class="layui-input"
+        />
+      </div>
+    </div>
+    <!--clientFax-->
+    <div class="layui-inline">
+      <label class="layui-form-label">传真：</label>
+      <div class="layui-input-block">
+        <input
+          name="clientFax"
+          type="text"
+          readonly="readonly"
+          class="layui-input"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <!--shortSpell-->
+    <div class="layui-inline">
+      <label class="layui-form-label">创建人：</label>
+      <div class="layui-input-block">
+        <input
+          name="nickName"
+          readonly="readonly"
+          type="text"
+          class="layui-input"
+        />
+      </div>
+    </div>
+    <!--fullSpell-->
+    <div class="layui-inline">
+      <label class="layui-form-label">创建时间：</label>
+      <div class="layui-input-block">
+        <input name="createTime" readonly="readonly" class="layui-input" />
+      </div>
+    </div>
+    <!--postCode-->
+    <div class="layui-inline">
+      <label class="layui-form-label">邮编：</label>
+      <div class="layui-input-block">
+        <input
+          name="postCode"
+          type="text"
+          readonly="readonly"
+          class="layui-input"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <!--clientProc  clientCity clientCounty clientAdd-->
+    <div class="layui-inline">
+      <label class="layui-form-label">客户所属地区：</label>
+      <div class="layui-input-inline custom_ssx">
+        <select
+          name="clientProc"
+          id="clientProc"
+          lay-filter="clientProc"
+          disabled="disabled"
+        ></select>
+      </div>
+      <div class="layui-input-inline custom_ssx">
+        <select
+          name="clientCity"
+          id="clientCity"
+          lay-filter="clientCity"
+          disabled="disabled"
+        ></select>
+      </div>
+      <div class="layui-input-inline custom_ssx">
+        <select
+          name="clientCounty"
+          id="clientCounty"
+          lay-filter="clientCounty"
+          disabled="disabled"
+        ></select>
+      </div>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <!--clientAdd-->
+    <div class="layui-block">
+      <label class="layui-form-label">详细地址：</label>
+      <div class="layui-input-block">
+        <textarea
+          name="clientAdd"
+          readonly="readonly"
+          rows="1"
+          cols="1"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <!--clientDesc-->
+    <div class="layui-block">
+      <label class="layui-form-label">客户简介：</label>
+      <div class="layui-input-block">
+        <textarea
+          name="clientDesc"
+          rows="5"
+          readonly="readonly"
+          cols=""
+        ></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-form-item model-form-footer">
+    <button
+      class="layui-btn layui-btn-primary"
+      ew-event="closeDialog"
+      type="button"
+    >
+      关闭
+    </button>
+  </div>
+</form>
+<script>
+  layui.use(["layer", "admin", "form", "formSelects"], function() {
+    var layer = layui.layer;
+    var admin = layui.admin;
+    var form = layui.form;
+    var formSelects = layui.formSelects;
+
+    // 回显数据
+    var custom = admin.getTempData("t_custom");
+    if (custom) {
+      form.val("custom-form", custom);
+      //回显地区下拉框，根据父级查询数据显示
+      //省
+      if (
+        custom.clientProc != null &&
+        custom.clientProc != undefined &&
+        custom.clientProc != ""
+      )
+        areaAttr("-1", "clientProc", custom.clientProc);
+      //市
+      if (
+        custom.clientProc != null &&
+        custom.clientProc != undefined &&
+        custom.clientProc != ""
+      )
+        areaAttr(custom.clientProc, "clientCity", custom.clientCity);
+      //县
+      if (
+        custom.clientCity != null &&
+        custom.clientCity != undefined &&
+        custom.clientCity != ""
+      )
+        if (
+          custom.clientCounty != null &&
+          custom.clientCounty != undefined &&
+          custom.clientCounty != ""
+        )
+          areaAttr(custom.clientCity, "clientCounty", custom.clientCounty);
+    }
+    //客户类型数据渲染
+    admin.req(
+      "/sys/dictData/list/customer_type",
+      {},
+      function(data) {
+        layer.closeAll("loading");
+        // 渲染下拉框
+        var electData = "<option value='请选择'></option>";
+        for (var i in data) {
+          electData +=
+            "<option value='" +
+            data[i].dictValue +
+            "'>" +
+            data[i].dictLabel +
+            "</option>";
+        }
+        $("#clientType").html(electData);
+        for (var i in data) {
+          if (custom) {
+            if (data[i].dictValue == custom.clientType)
+              $("option[value=" + data[i].dictValue + "]").attr(
+                "selected",
+                "selected"
+              );
+          }
+        }
+        form.render("select");
+      },
+      "GET"
+    );
+    //客户所属地区下拉渲染
+    function areaAttr(areaCode, id, parameter) {
+      admin.req(
+        "/sys/area/list/" + areaCode,
+        {},
+        function(data) {
+          layer.closeAll("loading");
+          // 渲染下拉框
+          var electData = "<option value='请选择'>请选择</option>";
+          for (var i in data) {
+            electData +=
+              "<option value='" +
+              data[i].areaCode +
+              "'>" +
+              data[i].areaName +
+              "</option>";
+          }
+          $("#" + id + "").html(electData);
+          for (var i in data) {
+            if (data[i].areaCode == parameter) {
+              $("option[value=" + data[i].areaCode + "]").attr(
+                "selected",
+                "selected"
+              );
+            }
+          }
+          form.render("select");
+        },
+        "GET"
+      );
+    }
+  });
+</script>

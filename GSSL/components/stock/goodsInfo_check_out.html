@@ -1,0 +1,293 @@
+
+<link rel="stylesheet" type="text/css" href="/assets/css/custom/common.css"/>
+<style type="text/css">
+    .layui-form-label {
+        width: 120px;
+        padding: 9px 0;
+    }
+
+    .layui-input-block {
+        margin-left: 130px;
+    }
+
+
+    .input_gray {
+        background: #f5f5f5;
+    }
+
+    .checkOutFile{
+        /*margin-left:45px;*/
+    }
+    .danwei{
+        width: 40px;
+        position: absolute;
+        right: -49px;
+        text-align: left;
+        top: 10px;
+    }
+</style>
+<script src="/assets/libs/PINYIN.JS"></script>
+<form id="goodsInfo_checkoout_form" lay-filter="goodsInfo_checkout_form" class="layui-form model-form ">
+    <!--当前全部为新增操作不需要ID，改为货品ID-->
+    <input name="goodsFileId" id="goodsFileIdOut" type="hidden"/>
+    <input name="goodsInfoId" id="goodsInfoId" type="hidden"/>
+    <div class="layui-form-item">
+        <!--        货品名称-->
+        <div class="layui-inline">
+            <label class="layui-form-label">货品名称</label>
+            <div class="layui-input-block">
+                <input name="goodsName" type="text" class="layui-input input_gray" maxlength="40" readonly="readonly"/>
+            </div>
+        </div>
+        <!--货品品牌-->
+        <div class="layui-inline">
+            <label class="layui-form-label">货品品牌</label>
+            <div class="layui-input-block">
+                <input name="goodsBrand" type="text" class="layui-input input_gray" maxlength="20" readonly="readonly"/>
+            </div>
+        </div>
+        <!--规格型号-->
+        <div class="layui-inline">
+            <label class="layui-form-label">规格型号</label>
+            <div class="layui-input-block">
+                <input name="goodsModel" type="text" class="layui-input input_gray" maxlength="20" readonly="readonly"
+                       lay-verify="required"/>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="layui-form-item">
+        <!--货品类型-->
+        <div class="layui-inline">
+            <label class="layui-form-label">货品类型</label>
+            <div class="layui-input-block">
+                <input name="typeName" type="text" class="layui-input input_gray" readonly="readonly"
+                       lay-verify="required"/>
+            </div>
+        </div>
+        <!--        货品单位-->
+        <div class="layui-inline">
+            <label class="layui-form-label">货品单位</label>
+            <div class="layui-input-block">
+                <input name="goodsUnit" type="text" class="layui-input input_gray" maxlength="20" readonly="readonly"/>
+            </div>
+        </div>
+        <!--        货品辅助单位-->
+        <div class="layui-inline">
+            <label class="layui-form-label">货品辅助单位</label>
+            <div class="layui-input-block">
+                <input name="goodsAssistUnit" class="layui-input input_gray" maxlength="20"  readonly="readonly"/>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="layui-form-item">
+        <!--库存数量-->
+        <div class="layui-inline">
+            <label class="layui-form-label">库存数量</label>
+            <div class="layui-input-block">
+                <input name="goodsNum" class="layui-input input_gray" maxlength="10"  readonly="readonly"/>
+            </div>
+            <span class="danwei" >(个数)</span>
+        </div>
+
+    </div>
+
+
+    <div class="layui-form-item">
+
+        <!--出库时间 -->
+        <div class="layui-inline">
+            <label class="layui-form-label">出库时间</label>
+            <div class="layui-input-block">
+                <input name="goodsOutTime" id="goodsOutTime" placeholder="请选择出库时间" type="text"
+                       class="layui-input time_item" maxlength="20" lay-verify="required"/>
+            </div>
+        </div>
+
+        <!--        货品单价-->
+        <div class="layui-inline">
+            <label class="layui-form-label">货品单价</label>
+            <div class="layui-input-block">
+                <input name="goodsPrice" type="text" placeholder="请输出货品单价" maxlength="8"  class="layui-input"
+                       lay-verify="required|number|AdPrice"/>
+            </div>
+            <span class="danwei" >(元)</span>
+        </div>
+        <!--        出库数量-->
+        <div class="layui-inline">
+            <label class="layui-form-label">出库数</label>
+            <div class="layui-input-block">
+                <input name="goodsOutNum" type="text" placeholder="请输出出库数"  maxlength="8" class="layui-input"
+                       lay-verify="required|number|Positive"/>
+            </div>
+            <span class="danwei" >(个数)</span>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+
+        <!--供应商信息-->
+        <div class="layui-inline">
+            <label class="layui-form-label">客户信息</label>
+            <div class="layui-input-block" style="width: 786px;">
+                <select name="customerBaseInfoId" xm-select="customer" xm-select-radio="" xm-select-search=""  xm-select-search-type="dl" lay-verify="required">
+
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="checkOutFile">
+        <div class="layui-inline">
+            <label class="layui-form-label">附件</label>
+            <button type="button" class="layui-btn layui-btn-normal" id="chooseCheckOut" style="margin-left:10px">添加附件</button>
+            <!--                <button type="button" class="layui-btn" id="uploadCheckIn">开始上传</button>-->
+        </div>
+        <div class="layui-inline">
+            <label id="goodsFileOutInfo" class="layui-form-label" style="width: 400px; text-align: left;"></label>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item model-form-footer">
+        <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+        <button class="layui-btn" id="goods_checkout_form_submit" lay-filter="goods_checkout_form_submit" lay-submit>
+            保存
+        </button>
+    </div>
+
+
+</form>
+<script>
+    layui.use(['layer', 'admin', 'config', 'form', 'formSelects', 'laydate', 'upload'], function () {
+        var layer = layui.layer,
+            layer = layui.layer,
+            admin = layui.admin,
+            form = layui.form,
+            formSelects = layui.formSelects,
+            laydate = layui.laydate,
+            upload = layui.upload,
+            config = layui.config;
+
+        upload.render({ //允许上传的文件后缀
+            elem: '#chooseCheckOut'
+            , url: '/stocks/stockOutDetail/appended/'
+            , headers: {
+                "access_token": config.getToken()
+            }
+            // ,bindAction:'#uploadCheckIn'
+            , bindAction: '#goods_checkout_form_submit'
+            , auto: false
+            , accept: 'file' //普通文件
+            , exts: 'zip|rar|7z|png|jpg|bmp|xls|doc|docx|xlsx|txt' //只允许上传压缩文件
+            , done: function (res) {
+                layer.msg(res.msg);
+                $('#goodsFileOutInfo').html('暂未返回文件名');
+                $('#goodsFileIdOut').val(res.url);
+                console.log(res)
+            }, choose: function (obj) {
+                //将每次选择的文件追加到文件队列
+                var files = obj.pushFile();
+                //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
+                obj.preview(function (index, file, result) {
+                    $('#goodsFileOutInfo').html(file.name);
+                    console.log(index); //得到文件索引
+                    console.log(file); //得到文件对象
+                })
+            }
+        });
+
+
+
+        // 回显数据
+        var goodsInfo = admin.getTempData('t_goodsInfo');
+        var goodsInfoId = admin.getTempData('t_goodsInfo_id');
+        console.log(goodsInfo);
+        //回显地区下拉框，根据父级查询数据显示
+        if (goodsInfo) {
+            form.val('goodsInfo_checkout_form', goodsInfo);
+            $('#goodsInfoId').val(goodsInfoId);
+        }
+        //日期选择器
+        lay('.time_item').each(function () {
+            laydate.render({
+                elem: this
+                , trigger: 'click'
+                , value: new Date()
+                , format: 'yyyy-MM-dd HH:mm:ss' //可任意组合
+                , done: function (value, date) {
+                }
+            });
+        });
+
+        function selectsCustomer() {
+            admin.req("/user/clientInfo/customerByType", {client_type: 1}, function (data) {
+                console.log(data);
+                formSelects.data('customer', 'local', {
+                    arr: data,
+                    keyName: 'clientName',            //自定义返回数据中name的key, 默认 name
+                    keyVal: 'id',            //自定义返回数据中value的key, 默认 value
+                    clearInput: true,          //当有搜索内容时, 点击选项是否清空搜索内容, 默认不清空
+                    searchName: 'clientName',
+                });
+            }, 'GET');
+        }
+
+
+        // 设置下拉框工具栏为空
+        formSelects.btns('customer', []);
+        formSelects.filter('customer', function (id, inputVal, val, isDisabled) {
+            if (
+                PY.fullPY(val.name).toLowerCase().indexOf(inputVal) != -1 ||    //拼音全拼是否包含
+                PY.fullPY(val.name, true).indexOf(inputVal) != -1 ||            //拼音简拼是否包含
+                val.name.indexOf(inputVal) != -1                                //文本是否包含
+            ) {
+                return false;
+            }
+            return true;
+        });
+
+        selectsCustomer();
+
+
+        // 表单提交事件
+        form.on('submit(goods_checkout_form_submit)', function (data) {
+            layer.load(2);
+            admin.req('/stocks/stockOutDetail/checkOut', data.field, function (resData) {
+                layer.closeAll('loading');
+                layer.msg("操作成功！", {icon: 1});
+                admin.finishPopupCenter(
+                );
+            }, 'POST');
+            return false;
+        });
+
+
+        // 自定义校验规则
+        //这个里面的title、number就写在Html 代码中lay-verify的属性值，即可
+        //例如：lay-verify="title"
+        form.verify({
+            AdPrice: [
+                /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/
+                , '格式不正确，必须为金额(最多保留两位小数)!'
+            ]
+            , goodsType: function (value) {
+                if (value == 0) {
+                    return '请选择货品类型！';
+                }
+            }
+            , content: function (value) {
+                layedit.sync(editIndex);
+            },
+            Positive: [
+                /^\+?[1-9][0-9]*$/
+                , '格式不正确，必须为正数！'
+            ]
+        });
+    });
+</script>

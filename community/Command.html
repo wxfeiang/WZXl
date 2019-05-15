@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>指挥调度</title>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	</head>
+	<body style="background: #061B38;">
+		<div class="h_container clearfix">
+			
+			<div class="command" >
+				<!--左侧-->
+				<div class="command">
+					<div class="map_wripper" style="height: 759px;">
+						<div class="title clearfix">
+							<div class="tit_li tli1">
+								<img src="img/buts1.png"/>
+								<span>门禁刷卡</span>
+							</div>
+							<div class="tit_li tli1">
+								<img src="img/buts1.png"/>
+								<span>人像对比</span>
+							</div>
+							<div class="tit_li tli1">
+								<img src="img/buts1.png"/>
+								<span>车辆识别</span>
+							</div>
+							<div class="tit_li tli1">
+								<img src="img/buts1.png"/>
+								<span>网络标识</span>
+							</div>
+							<div class="tit_li tli1">
+								<img src="img/buts1.png"/>
+								<span>事件售警</span>
+							</div>
+						</div>
+						
+						<div class="li">
+							<ul>
+								<li></li>
+								<li></li>
+								<li></li>
+								<li></li>
+							</ul>
+						</div>
+						<div class="li1">
+							<ul>
+								<li>
+									<div class="shebei_name">求助设备</div>
+									<div class="shebei_num">46</div>
+								</li>
+								<li>
+									<div class="shebei_name">巡逻设备</div>
+									<div class="shebei_num">46</div>
+								</li>
+								<li>
+									<div class="shebei_name">告警数量</div>
+									<div class="shebei_num">46</div>
+								</li>
+							</ul>
+						</div>
+						<div class="r_gd">
+							<ul>
+								<li class="first"><a href="#">图层 <i></i></a></li>
+								<li><a href="#">监控点位</a></li>
+								<li><a href="#">报警设备</a></li>
+								<li><a href="#">求助设备</a></li>
+								<li><a href="#">人脸识别</a></li>
+								<li><a href="#">车辆识别</a></li>
+							</ul>
+						</div>
+						<div id="map" style="height: 759px;">
+							<img src="img/mapimg.png" style="width: 100%;height: 100%;"/>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<!--尾部-->
+		<script src="js/jQuery-3.3.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/zzt.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/zzt1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/zzt2.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){  
+			    $('.tab li').click(function() {
+		            $(this).addClass("current").siblings().removeClass('current');//siblings()意思就是当前对象的同级元素 
+					$(".biao_content  .zzt").hide().eq($('.tab li').index(this)).show(); 
+		       })
+			    
+			//鼠标上去固定导航出现    
+			    $(".nav_arrows").mouseover(function (){  
+		            $(".navs").show();  
+		        }).mouseout(function (){  
+		             $(".navs").hide();  
+		       })
+			    
+	        }); 
+		</script>
+	</body>
+</html>
+ 

@@ -1,0 +1,292 @@
+<div class="layui-card">
+  <div class="layui-card-header">
+    <h2 class="header-title">客户信息</h2>
+    <span class="layui-breadcrumb pull-right">
+      <a href="#!console">首页</a>
+      <a><cite>客户信息</cite></a>
+    </span>
+  </div>
+  <div class="layui-card-body">
+    <div class="layui-form toolbar">
+      <form id="customer-search-form" class="layui-form">
+        <div class="layui-form-item">
+          <div class="layui-inline">
+            <label class="layui-form-mid">客户名称</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <input
+                type="text"
+                id="clientName"
+                name="clientName"
+                class="layui-input search-input"
+                placeholder="请输入客户名称"
+              />
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid">名称简拼</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <input
+                type="text"
+                id="shortSpell"
+                name="shortSpell"
+                class="layui-input search-input"
+                placeholder="请输入名称简称"
+              />
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid">联系人姓名</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="layui-input search-input"
+                placeholder="请输入联系人姓名"
+              />
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid">联系人电话</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <input
+                type="text"
+                id="clientTel"
+                name="clientTel"
+                class="layui-input search-input"
+                placeholder="请输入联系人电话"
+              />
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid"> 统一社会信用代码</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <input
+                type="text"
+                id="busineLicense"
+                name="busineLicense"
+                class="layui-input search-input"
+                placeholder="请输入统一社会信用代码"
+              />
+            </div>
+          </div>
+
+          <!-- 
+          <input
+            type="text"
+            id="clientName"
+            name="clientName"
+            class="layui-input search-input"
+            placeholder="请输入客户名称"
+          />&emsp;  -->
+          <!-- 名称简拼
+          <input
+            type="text"
+            id="shortSpell"
+            name="shortSpell"
+            class="layui-input search-input"
+            placeholder="请输入名称简称"
+          />&emsp; 联系人姓名
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="layui-input search-input"
+            placeholder="请输入联系人姓名"
+          />
+          &emsp; 联系人电话
+          <input
+            type="text"
+            id="clientTel"
+            name="clientTel"
+            class="layui-input search-input"
+            placeholder="请输入联系人电话"
+          />&emsp; 统一社会信用代码
+          <input
+            type="text"
+            id="busineLicense"
+            name="busineLicense"
+            class="layui-input search-input"
+            placeholder="请输入统一社会信用代码"
+          />&emsp; -->
+          <!--  按钮组 -->
+          <div class="layui-inline">
+            <button id="client-btn-search" class="layui-btn icon-btn">
+              <i class="layui-icon">&#xe615;</i>搜索
+            </button>
+            <button
+              id="btn_reset"
+              class="layui-btn layui-btn-warm icon-btn"
+              type="reset"
+            >
+              <i class="layui-icon">&#xe9aa;</i>重置
+            </button>
+            <button id="client-btn-add" class="layui-btn icon-btn">
+              <i class="layui-icon">&#xe654;</i>添加
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="content">
+        <table
+          class="layui-table"
+          id="customer-table"
+          lay-filter="customer-table"
+        ></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="customer-table-bar">
+  <a class="layui-btn layui-btn-xs" lay-event="look">查看</a>
+  <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script>
+  layui.use(["form", "table", "util", "config", "admin"], function() {
+    var form = layui.form;
+    var table = layui.table;
+    var config = layui.config;
+    var layer = layui.layer;
+    var util = layui.util;
+    var admin = layui.admin;
+
+    // 渲染表格
+    table.render({
+      elem: "#customer-table",
+      url: config.base_server + "/user/clientInfo/list",
+      headers: {
+        access_token: config.getToken()
+      },
+      page: true,
+      cols: [
+        [
+          { type: "numbers", title: "排序" },
+          { type: "checkbox", sort: true },
+          { field: "clientName", sort: true, title: "客户名称" },
+          {
+            field: "clientShortName",
+            sort: true,
+            title: "客户简称",
+            width: 100
+          },
+          { field: "shortSpell", sort: true, title: "名称简拼", width: 100 },
+          { field: "name", sort: true, title: "联系人姓名", width: 115 },
+          { field: "clientTel", sort: true, title: "联系人电话", width: 125 },
+          {
+            field: "busineLicense",
+            sort: true,
+            title: "统一社会信用代码",
+            width: 170
+          },
+          { field: "dictLabel", sort: true, title: "客户类型", width: 100 },
+          { field: "createTime", sort: true, title: "创建时间", width: 170 },
+          {
+            width: 180,
+            fixed: "right",
+            align: "center",
+            toolbar: "#customer-table-bar",
+            title: "操作"
+          }
+        ]
+      ]
+    });
+
+    // 添加按钮点击事件
+    $("#client-btn-add").click(function() {
+      showEditModel();
+    });
+
+    // 工具条点击事件
+    table.on("tool(customer-table)", function(obj) {
+      var data = obj.data;
+      var layEvent = obj.event;
+      if ("edit" === layEvent) {
+        // 修改
+        showEditModel(data);
+      } else if ("del" === layEvent) {
+        //删除
+        doDelete(obj);
+      } else if ("look" === layEvent) {
+        //查看
+        showLookModel(data);
+      }
+    });
+
+    // 搜索按钮点击事件
+    $("#client-btn-search").click(function() {
+      table.reload("customer-table", {
+        where: $("#customer-search-form").serializeJSON(),
+        page: { curr: 1 } //重新从第 1 页开始
+      });
+    });
+
+    //重置按钮点击事件
+    $("#btn_reset").click(function() {
+      $("#clientName").val("");
+      $("#shortSpell").val("");
+      $("#name").val("");
+      $("#clientTel").val("");
+      $("#busineLicense").val("");
+      form.render();
+      table.reload("customer-table", {
+        where: $("#customer-search-form").serializeJSON(),
+        page: { curr: 1 } //重新从第 1 页开始
+      });
+    });
+
+    //添加客户显示表单弹窗
+    var showEditModel = function(data) {
+      admin.putTempData("t_custom", data);
+      var title = data ? "添加客户" : "修改客户";
+      var areas = ["1050px", "535px"];
+      admin.popupCenter({
+        title: title,
+        area: areas,
+        offset: "auto",
+        path: "components/contract/custom_add.html",
+        finish: function() {
+          table.reload("customer-table", {});
+        }
+      });
+    };
+
+    //查看客户显示表单弹窗
+    var showLookModel = function(data) {
+      admin.putTempData("t_custom", data);
+      var areas = ["1106px", "588px"];
+      admin.popupCenter({
+        title: "查看客户",
+        area: areas,
+        resize: false,
+        offset: "auto",
+        path: "components/contract/custom_look.html",
+        finish: function() {
+          table.reload("customer-table", {});
+        }
+      });
+    };
+
+    // 删除
+    var doDelete = function(obj) {
+      layer.confirm("确定要删除吗？", function(i) {
+        layer.close(i);
+        layer.load(2);
+        admin.req(
+          "/user/clientInfo/remove/" + obj.data.id,
+          {},
+          function(data) {
+            layer.closeAll("loading");
+            layer.msg("删除成功", { icon: 1 });
+            obj.del();
+          },
+          "DELETE"
+        );
+      });
+    };
+  });
+</script>

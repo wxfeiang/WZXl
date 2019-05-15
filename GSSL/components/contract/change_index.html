@@ -1,0 +1,224 @@
+<link rel="stylesheet" type="text/css" href="/assets/css/custom/common.css"/>
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">合同变更</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>合同变更</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            <button id="btn_change_apply_add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>申请变更</button>
+        </div>
+        <div class="content">
+            <table class="layui-table" id="contract_apply_table" lay-filter="contract_apply_table"></table>
+        </div>
+    </div>
+</div>
+
+
+<!-- 表格操作列 -->
+<script type="text/html" id="contract_apply_bar">
+    <a class="layui-btn  layui-btn-xs" lay-event="applyCheck">查看</a>
+    <a class="layui-btn  layui-btn-normal layui-btn-xs" lay-event="applyEdit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="applyDel">删除</a>
+    <a class="layui-btn  layui-btn-normal layui-btn-xs" lay-event="applyVerify">审核</a>
+    <a class="layui-btn   layui-btn-warm  layui-btn-xs" lay-event="applyChange">变更</a>
+</script>
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin', 'formSelects'], function () {
+        var form = layui.form, table = layui.table, config = layui.config, layer = layui.layer, util = layui.util,
+            admin = layui.admin;
+        // 渲染表格
+        table.render({
+            elem: '#contract_apply_table',
+            url: config.base_server + '/contract/changeApply/pageList',
+            headers: {
+                "access_token": config.getToken()
+            },
+            page: true,
+            cols: [[
+                {type: 'numbers'}
+                //, {type: 'checkbox', sort: true}
+                , {field: 'contractId', title: '合同编号', align: 'left', minWidth: 100, sort: true}
+                , {
+                    field: 'contractType', title: '合同类型', templet: function (d) {
+                        var strs = {
+                            '001': '销售合同',
+                            '002': '采购合同',
+                        };
+                        return strs[d.contractType];
+                    }, align: 'center'
+                }
+                , {field: 'applyUserName', title: '申请人', align: 'center'}
+                , {field: 'applyTime', title: '申请时间', align: 'center', sort: true}
+
+                , {
+                    field: 'checkState', title: '审核状态', templet: function (d) {
+                        var strs = {
+                            '001': '待审核',
+                            '002': '审核通过',
+                            '003': '审核未通过'
+                        };
+                        return strs[d.checkState];
+                    }, align: 'center'
+                }, {field: 'checkUserName', title: '审核人', align: 'center'}
+                , {field: 'checkTime', title: '审核时间', align: 'left', sort: true}
+                , {field: 'changeState', title: '变更状态', align: 'left', sort: true,
+                    templet :function(d){
+                        var strs={
+                            '001':'未变更',
+                            '002':'已变更'
+                        }
+                        return strs[d.changeState]
+                    }
+                }
+                , {width: 300, align: 'center', toolbar: '#contract_apply_bar', title: '操作'}
+            ]]
+        });
+
+        // 添加按钮点击事件
+        $('#btn_change_apply_add').click(function () {
+            showEditModel();
+        });
+
+        // 工具条点击事件
+        table.on('tool(contract_apply_table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+            switch (obj.event) {
+                case 'applyDel':
+                    doDelete(data);
+                    break;
+                case 'applyCheck':
+                    showCheckModel(data);
+                    break;
+                case 'applyEdit':
+                    showEditModel(data);
+                    break;
+                case 'applyVerify':
+                    showVerifyModel(data);
+                    break;
+                case 'applyChange':
+                    changeApply(data);
+                    break;
+            }
+        });
+
+
+        //添加或修改窗口
+        var showEditModel = function (data) {
+            if (data) {
+                if ('002' == data.checkState) {
+                    layer.msg("已审核，不可编辑！", {icon: 2});
+                    return;
+                }
+            }
+            admin.putTempData('contract_apply_info', data);
+            var title = data ? '修改申请' : '添加申请';
+            var areas = ['1024px', '720px'];
+            admin.popupCenter({
+                title: title,
+                area: areas,
+                offset: 'auto',
+                path: 'components/contract/change_add.html',
+                finish: function () {
+                    table.reload('contract_apply_table', {});
+                }
+            });
+        };
+
+
+        //查看
+        var showCheckModel = function (data) {
+            admin.putTempData('contract_apply_info', data);
+            var areas = ['1024px', '730px'];
+            admin.popupCenter({
+                title: '查看详细'
+                , area: areas
+                // ,offset:'auto'
+                , scrollbar: true
+                , path: 'components/contract/change_look.html'
+                , finish: function () {
+                    table.reload('contract_apply_table', {});
+                }
+            })
+        }
+
+
+        //审核
+        var showVerifyModel = function (data) {
+            if ('002' == data.checkState) {
+                layer.msg("已审核,不可重复审核！", {icon: 2});
+                return;
+            }
+            admin.putTempData('contract_apply_info', data);
+            var areas = ['1024px', '720px'];
+            var path='';
+            admin.popupCenter({
+                title: '申请审核'
+                , area: areas
+                // ,offset:'auto'
+                , scrollbar: true
+                , path: 'components/contract/change_verify.html'
+                , finish: function () {
+                    table.reload('contract_apply_table', {});
+                }
+            })
+        }
+
+
+        // 删除
+        var doDelete = function (obj) {
+            if ('001' != obj.checkState) {
+                layer.msg("已审核，不可删除！", {icon: 2});
+                return;
+            } else {
+                layer.confirm('确定要删除吗？', function (i) {
+                    layer.close(i);
+                    layer.load(2);
+                    admin.req('/contract/changeApply/remove', {id: obj.id}, function (data) {
+                        layer.closeAll('loading');
+                        layer.msg("删除成功", {icon: 1});
+                        obj.del();
+                    }, 'DELETE');
+                    table.reload('contract_apply_table', {});
+                });
+            }
+        };
+
+
+        // 变更
+        var changeApply = function (obj) {
+            var path='';
+            admin.putTempData("contractNumber", obj.contractId);
+            if ('002' != obj.checkState) {
+                layer.msg("审核未通过，不允许变更！", {icon: 2});
+                return;
+            } else {
+                if ('001' != obj.changeState) {
+                    layer.msg("已变更，不允许变更！", {icon: 2});
+                    return;
+                }
+            }
+            if ('001' == obj.contractType) {
+                 path = 'components/contract/change_sales.html';
+            }else{
+                 path = 'components/contract/change_purchase.html';
+            }
+            var areas = ['1160px', '720px'];
+            admin.popupCenter({
+                title: '合同变更'
+                , area: areas
+                // ,offset:'auto'
+                , scrollbar: true
+                , path: path
+                , finish: function () {
+                    table.reload('contract_apply_table', {});
+                }
+            })
+        }
+    });
+
+</script>

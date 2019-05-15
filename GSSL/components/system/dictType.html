@@ -1,0 +1,153 @@
+<!-- 数据字典类型管理 -->
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">字典管理</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>字典管理</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+
+        <!-- 表格上方工具条 -->
+        <div class="layui-form toolbar">
+            <button id="dictType-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+        </div>
+
+        <!-- 数据表格 -->
+        <div class="content">
+        	<div class="" >
+        		<table class="layui-table" id="dictType-table" lay-filter="dictType-table"></table>
+        	</div>
+        	
+        </div>
+        
+    </div>
+</div>
+
+<!-- 表格“状态”列 -->
+<script type="text/html" id="dictType-tpl-state">
+    <input type="checkbox" lay-filter="dictType-tpl-state" value="{{d.id}}" lay-skin="switch" lay-text="正常|停用" {{d.status==0 ? 'checked' : '' }}/>
+</script>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="dictType-table-bar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs" lay-event="detail">查看明细</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<!-- 执行脚本 -->
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin', 'layer'], function () {
+
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var util = layui.util;
+        var admin = layui.admin;
+
+        // 渲染表格
+        table.render({
+            elem: '#dictType-table',
+            url: config.base_server + '/sys/dictType',
+          	headers: {
+                "access_token":config.getToken()
+            },
+            method: 'GET',
+            page: true,
+            cols: [[
+                {type:'checkbox',sort:true},
+                {field: 'dictName', sort: true, title: '名称'},
+                {field: 'dictType', sort: true, title: '编码'},
+                {
+                    field: 'createTime', sort: true, templet: function (d) {
+                        return util.toDateString(d.createTime);
+                    }, title: '创建时间'
+                },
+                {field: 'status', sort: true, templet: '#dictType-tpl-state', title: '状态', width: 120, align:'center'},
+                {field: 'remark', sort: true, title: '备注', width: 150},
+                {align: 'center', toolbar: '#dictType-table-bar', title: '操作', width: 200}
+            ]]
+        });
+
+        // 监听开关
+        form.on('switch(dictType-tpl-state)', function(data){
+            //开关是否开启，true或者false
+            var status = data.elem.checked;
+            var title = '停用';
+            if(status){
+                title = '启用';
+            }
+            // 请求后台数据同步 ----> 后期可能还要同步系统缓存
+            admin.req('/sys/dictType/status/'+data.value, {}, function (data) {
+                layer.msg(title+'成功', {icon: 1});
+            }, 'PUT');
+           
+        });
+
+        // 操作栏按钮
+        table.on('tool(dictType-table)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') { //修改
+                showEditModel(data);
+            } else if (obj.event === 'del') { //删除
+                doDelete(data);
+            }else if (obj.event === 'detail') {  // 查看明细
+                showDetailModel(data);
+            }
+        });
+
+        // 添加
+        $('#dictType-btn-add').click(function () {
+            showEditModel();
+        });
+
+        // 修改
+        var showEditModel = function (data) {
+            // 缓存当前行的数据
+            admin.putTempData('t_dictType', data);
+            var title = data ? '修改字典类型' : '添加字典类型';
+            admin.popupCenter({
+                title: title,
+                // area: '450px',
+                // offset: 'auto',
+                path: 'components/system/dictType_from.html',
+                finish: function () {
+                    table.reload('dictType-table', {});
+                }
+            });
+        };
+
+        // 删除
+        var doDelete = function (data) {
+            layer.confirm('确定要删除吗？', function (i) {
+                layer.close(i);
+                layer.load(2);
+                admin.req('/sys/dictType/' + data.id, {}, function (data) {
+                    layer.closeAll('loading');
+                    table.reload('dictType-table', {});
+                    layer.msg('删除成功', {icon: 1});
+                }, 'DELETE');
+            });
+        };
+
+        // 查看明细
+        var showDetailModel = function (data) {
+
+            // 缓存当前行的数据
+            admin.putTempData('t_dictType', data);
+            admin.popupCenter({
+                title: "字典明细",
+                area: ['1100px', '400px'],
+                path: 'components/system/dictData.html',
+                finish: function () {
+                    table.reload('dictType-table', {});
+                }
+            });
+
+        }
+    });
+
+</script>

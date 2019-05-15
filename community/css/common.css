@@ -1,0 +1,282 @@
+@font-face {
+  font-family: "百度综艺简体";
+  src: url("百度综艺简体.woff2") format("woff2"),
+    url("百度综艺简体.woff") format("woff"),
+    url("百度综艺简体.ttf") format("truetype"),
+    url("百度综艺简体.eot") format("embedded-opentype"),
+    url("百度综艺简体.svg") format("svg");
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "microsoft yahei [Regular]";
+  font-family: 微软雅黑;
+  font-size: 14px;
+  width: 100%;
+  position: relative;
+}
+
+/*清除浮动*/
+
+.clearfix:after {
+  content: "";
+  height: 0;
+  display: block;
+  clear: both;
+}
+
+.clearfix {
+  zoom: 1;
+  /*为了兼容IE8*/
+}
+
+img {
+  border: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style-type: none !important;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+/*头部*/
+
+.header {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  height: 92px;
+  color: #fff;
+  font-size: 16px;
+  background: url(../img/header_bg.png) top no-repeat;
+  background-size: 100% 100%;
+  margin-bottom: 10px;
+}
+
+.header .title {
+  line-height: 88px;
+  font-size: 30px;
+  font-family: "百度综艺简体";
+}
+
+.l_address {
+  position: absolute;
+  top: 65px;
+  left: 50px;
+  width: 123px;
+  height: 30px;
+  line-height: 30px;
+  padding-left: 20px;
+  color: #0090ff;
+  background: url(../img/name_arrow.png) left no-repeat;
+}
+
+.lbuts {
+  position: absolute;
+  right: 10px;
+  top: 40px;
+}
+
+.lbuts a {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+/*固定导航*/
+
+.nav_arrows {
+  cursor: pointer;
+  position: absolute;
+  width: 26px;
+  height: 46px;
+  top: 65px;
+  left: 1%;
+  background: url(../img/home.png) no-repeat;
+  background-size: 100% auto;
+  border-radius: 5px;
+  z-index: 98;
+}
+
+.navs {
+  display: none;
+  position: fixed;
+  width: 68px;
+  height: 80%;
+  overflow-y: auto;
+  top: 100px;
+  left: 0;
+  background: #061b38;
+  border-radius: 5px;
+  z-index: 99;
+  border: 1px solid #1a5d8d;
+  overflow: hidden;
+}
+
+.navs .arrow {
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.navs .arrow img {
+  width: 22px;
+  height: 22px;
+}
+
+.navs .top {
+  top: 10px;
+}
+
+.navs .down {
+  bottom: 10px;
+}
+
+.nav_list {
+  position: absolute;
+  height: 84%;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  overflow-y: auto;
+}
+
+.nav_list::-webkit-scrollbar {
+  width: 5px;
+  height: 16px;
+  background-color: #061b38;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+
+.nav_list::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #061b38;
+}
+
+/*定义滑块 内阴影+圆角*/
+
+.nav_list::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #1296db;
+}
+
+/*滚动条的轨道的两端按钮，允许通过点击微调小方块的位置。*/
+
+.nav_list::-webkit-scrollbar-button {
+  background-color: #061b38;
+}
+
+.nav_list li {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-top: 26px;
+}
+
+.nav_list li.home {
+  background: url(../img/home.png) top no-repeat;
+  background-size: 25px 25px;
+}
+
+.nav_list li.home:hover,
+.nav_list .home.active {
+  background: #1296db url(../img/home1.png) top no-repeat;
+  background-size: 25px 25px;
+}
+
+.nav_list li.wlgl {
+  background: url(../img/wlgl.png) top no-repeat;
+  background-size: 25px 25px;
+}
+
+.nav_list li.wlgl:hover,
+.nav_list .wlgl.active {
+  background: #1296db url(../img/wlgl1.png) top no-repeat;
+  background-size: 25px 25px;
+}
+
+.nav_list li.zhdd {
+  background: url(../img/zhdd.png) top no-repeat;
+  background-size: 25px 25px;
+}
+
+.nav_list li.zhdd:hover,
+.nav_list .zhdd.active {
+  background: #1296db url(../img/zhdd1.png) top no-repeat;
+  background-size: 25px 25px;
+}
+
+.nav_list li.fzjc {
+  background: url(../img/fzjc.png) top no-repeat;
+  background-size: 25px 25px;
+}
+
+.nav_list li.fzjc:hover,
+.nav_list .fzjc.active {
+  background: #1296db url(../img/fzjc1.png) top no-repeat;
+  background-size: 25px 25px;
+}
+
+.nav_list li.zhxx {
+  background: url(../img/zhxx.png) top no-repeat;
+  background-size: 25px 25px;
+}
+
+.nav_list li.zhxx:hover,
+.nav_list .zhxx.active {
+  background: #1296db url(../img/zhxx1.png) top no-repeat;
+  background-size: 25px 25px;
+}
+
+.nav_list li a {
+  display: inline-block;
+  color: #1296db;
+  font-size: 12px;
+}
+
+.nav_list li:hover a,
+.nav_list li.active a {
+  color: #fff;
+}
+
+.nav_list li a img {
+  width: 25px;
+}
+
+/*-----author 王鹏-------*/
+.bg-video {
+  margin: 0 0 10px 0;
+}
+.img-items {
+}
+.img-items li {
+  width: 50%;
+  padding: 0 5px;
+  box-sizing: border-box;
+  margin: 0 0 10px 0;
+}
+.img-items li img {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #f83466;
+}
+.jiean_cont {
+  display: none;
+}
