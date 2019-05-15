@@ -160,6 +160,8 @@
   width: 53%;
   /*width: 744px;*/
   margin: 0 0.5%;
+ box-sizing: border-box;
+ overflow: hidden;
 }
 .map_wripper,
 #map {

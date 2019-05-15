@@ -8,7 +8,8 @@
 	<link rel="stylesheet" type="text/css" href="css/index.css" />
 </head>
 
-<body style="background: #061B38;">
+<body style="background: #061B38;" onload="onLoad()">
+
 	<!--头部-->
 	<div class="header">
 		<div class="title">天水互联网+智慧社区信息服务平台</div>
@@ -108,7 +109,7 @@
 
 			</div>
 			<!--中间-->
-			<div class="map fl " onLoad="onLoad()">
+			<div class="map fl">
 				<!-- <div class="title clearfix">
 					<div class="tit_li tli1">
 						<img src="img/buts1.png" />
@@ -245,8 +246,10 @@
 					</div>
 				</div> -->
 				
-				<div id="mapDiv" style="width:100%; height:100%;margin:-8px;padding:0px;"></div>
-				<!-- side -->
+				
+				
+				<div id="mapDiv" style="width:100%; height:600px;">
+					</div>
 
 
 
@@ -261,7 +264,7 @@
 					</ul>
 				</div>
 
-				<div class="jiean_cont">
+				<div class="jiean_cont " style="display:block">
 					<!--社区概况-->
 					<div class="jiean_cont_wriper" style="display: block;">
 						<div class="zdrq datas">
@@ -389,7 +392,7 @@
 					</div>
 				</div>
 				<!--人脸识别-->
-				<div class="jiean_cont_wriper">
+				<div class="jiean_cont">
 					<div class="datas">
 						<div class="biao_content">
 							<div class="zzt">
@@ -437,6 +440,10 @@
 						</div>
 					</div>
 				</div>
+				<div class="jiean_cont">
+					车辆比对
+				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -599,9 +606,9 @@
 		</div>
 	</div>
 	<!--指挥调度-->
-	<div class="content">
+	<!-- <div class="content">
 		<iframe src="Command.html" style="width: 100%; height: 759px;" scrolling="no" frameborder="no"></iframe>
-	</div>
+	</div> -->
 	<!--人脸识别-->
 	<div class="content">
 		<!--<iframe src="Command.html" style="width: 100%; height: 759px;"  scrolling="no"frameborder="no"></iframe>-->
@@ -624,13 +631,13 @@
 
 	<script src="js/jQuery-3.3.1.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/echarts.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/main1.js" type="text/javascript" charset="utf-8"></script>
+	<!-- <script src="js/main1.js" type="text/javascript" charset="utf-8"></script> -->
 	<script src="js/zzt1.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/zzt2.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/ybp.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/ybp1.js" type="text/javascript" charset="utf-8"></script>
+	<!-- <script src="js/ybp.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/ybp1.js" type="text/javascript" charset="utf-8"></script>-->
 	<!--7日过车走势图-->
-	<script src="js/week.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="js/week.js" type="text/javascript" charset="utf-8"></script> -->
 
 	<!--人脸比对-->
 	<script src="js/face.js" type="text/javascript" charset="utf-8"></script>
@@ -651,8 +658,27 @@
 			//首页右侧切换
 			$('.tab li').click(function () {
 				$(this).addClass("current").siblings().removeClass('current'); //siblings()意思就是当前对象的同级元素 
-				$(".jiean_cont .jiean_cont_wriper").hide().eq($('.tab li').index(this)).show();
+				$(".jiean_cont").eq($('.tab li').index(this)).show().siblings(".jiean_cont").hide();
 			})
+			$(".tab li").each(function (index,elem) {
+             
+                $(this).click(function () {
+                    //全清
+                    $("button").removeClass("current");
+                    $(".jiean_cont").hide();
+
+                    //添加对应
+                    $(this).addClass("current");
+                
+                    $(".jiean_cont").eq(index).show();
+                });
+
+            })
+
+
+
+
+
 			//鼠标上去固定导航出现    
 			$(".nav_arrows").mouseover(function () {
 				$(".navs").show();
@@ -661,9 +687,8 @@
 			})
 
 		});
-
-
-		//  地图 
+		;
+		//  地图
 		var map;
 		var zoom = 12;
 
@@ -671,6 +696,7 @@
 			map = new T.Map('mapDiv');
 			map.centerAndZoom(new T.LngLat(105.72085, 34.58219), zoom);
 		}
+
 	</script>
 	<!--轮播-->
 
