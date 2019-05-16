@@ -1,4 +1,4 @@
-var myChart = echarts.init(document.getElementById("face"));
+var myChart = echarts.init(document.getElementById("car1"));
 var option = {
   color: ["#3398DB"],
   tooltip: {
@@ -26,17 +26,10 @@ var option = {
       axisLabel: {
         textStyle: {
           color: "#fff", //坐标值得具体的颜色.
-          fontSize: 10
+          fontSize: 12
         }
       },
-      data: [
-        "信访人员",
-        "邪教人员",
-        "精神障碍人员",
-        "吸毒人员",
-        "危险品从业人员",
-        "陌生人员"
-      ],
+      data: ["抓拍总量", "车辆数量", "摄像头数量", "卡口数量"],
       axisTick: {
         alignWithLabel: true
       }
@@ -71,7 +64,15 @@ var option = {
       name: "",
       type: "bar",
       barWidth: "30%",
-      data: [50, 52, 10, 60, 20, 5]
+      data: [50, 52, 10, 60],
+      itemStyle: {
+        normal: {
+          color: "#58cb97",
+          lineStyle: {
+            color: "#58cb97"
+          }
+        }
+      }
     }
   ]
 };

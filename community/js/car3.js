@@ -1,4 +1,4 @@
-var myChart = echarts.init(document.getElementById("jrgk"));
+var myChart = echarts.init(document.getElementById("car3"));
 option = {
   tooltip: {
     trigger: "item",

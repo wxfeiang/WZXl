@@ -1,11 +1,21 @@
-var myChart = echarts.init(document.getElementById("face"));
-var option = {
-  color: ["#3398DB"],
+var myChart = echarts.init(document.getElementById("car2"));
+
+option = {
+  title: {
+    text: "",
+    subtext: "单位(辆)",
+    textStyle: {
+      color: "#fff",
+      fontSize: 12
+    }
+  },
   tooltip: {
     trigger: "axis",
     axisPointer: {
-      // 坐标轴指示器，坐标轴触发有效
-      type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+      type: "cross",
+      label: {
+        backgroundColor: "#6a7985"
+      }
     }
   },
   grid: {
@@ -18,6 +28,7 @@ var option = {
   xAxis: [
     {
       type: "category",
+      boundaryGap: false,
       axisLine: {
         lineStyle: {
           color: "rgba(255,255,255,.5)" //边线的颜色
@@ -30,21 +41,20 @@ var option = {
         }
       },
       data: [
-        "信访人员",
-        "邪教人员",
-        "精神障碍人员",
-        "吸毒人员",
-        "危险品从业人员",
-        "陌生人员"
-      ],
-      axisTick: {
-        alignWithLabel: true
-      }
+        "星期一",
+        "星期二",
+        "星期三",
+        "星期四",
+        "星期五",
+        "星期六",
+        "星期日"
+      ]
     }
   ],
   yAxis: [
     {
       type: "value",
+      nameLocation: "center",
       axisLine: {
         lineStyle: {
           color: "rgba(255,255,255,.5)" //左边线的颜色
@@ -66,21 +76,30 @@ var option = {
       }
     }
   ],
+
   series: [
     {
-      name: "",
-      type: "bar",
-      barWidth: "30%",
-      data: [50, 52, 10, 60, 20, 5]
+      data: [80, 1000, 80, 80, 80, 80, 80, 0, 80, 8, 80, 80],
+      type: "line",
+      smooth: true,
+      symbolSize: 8,
+      itemStyle: {
+        normal: {
+          color: "#ffbb93",
+
+          lineStyle: {
+            color: "#ffbb93"
+          }
+        }
+      }
     }
   ]
 };
 
 myChart.setOption(option);
-var ofwidth = $("#ofwidth").width();
-
+var w = $("#ofwidth").width();
 var resize = {
-  width: ofwidth,
+  width: w,
   height: 170
 };
 
