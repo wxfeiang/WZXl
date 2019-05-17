@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>智慧社区</title>
+    <link rel="stylesheet" href="css/swiper.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/common.css" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+  </head>
+
+  <body style="background: #061B38;" onload="onLoad()">
+    <!--头部-->
+    <div class="header">
+      <div class="title">天水互联网+智慧社区信息服务平台</div>
+      <div class="l_address fl">
+        天水市
+      </div>
+      <!-- <div class="lbuts fr">
+				<a href="#"><img src="img/setting.png"/></a>
+				<a href="#"><img src="img/guanbi.png"/></a>
+			</div> -->
+    </div>
+    <!--左侧固定导航栏-->
+    <div class="nav_arrows">
+      <div class="navs">
+        <span class="arrow top">
+          <img src="img/arrow-top.png" />
+        </span>
+        <span class="arrow down">
+          <img src="img/arrow-down.png" />
+        </span>
+        <div class="nav_list" id="nav">
+          <ul>
+            <li class="home active">
+              <a href="#">
+                <div>首页</div>
+              </a>
+            </li>
+            <li class="wlgl">
+              <a href="#">
+                <div>网络管理</div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!--内容-->
+    <div class="h_container clearfix" id="container">
+      <!--首页-->
+      <div class="content" style="display: block;">
+        <!--左侧-->
+        <div class="shouan fl">
+          <div class="biao clearfix">
+            <div class="tit clearfix">
+              一标六识
+            </div>
+            <ul class="shiyou clearfix">
+              <li>
+                <div class="t_name">实有人口</div>
+                <div class="num">131231</div>
+              </li>
+              <li>
+                <div class="t_name">实有房屋</div>
+                <div class="num">131231</div>
+              </li>
+              <li>
+                <div class="t_name">实有单位</div>
+                <div class="num">131231</div>
+              </li>
+              <li>
+                <div class="t_name">实有警情事件</div>
+                <div class="num">131231</div>
+              </li>
+              <li>
+                <div class="t_name">实有安防设施</div>
+                <div class="num">131231</div>
+              </li>
+              <li>
+                <div class="t_name">实有力量和装备</div>
+                <div class="num">131231</div>
+              </li>
+            </ul>
+          </div>
+          <div class="bg-video">
+            <video width="100%" height="270px" loop autoplay>
+              <source
+                src="http://static.hellorf.com/v180108152716/hellorf/video/images/HomepageReel_062515.orig.mp4"
+              />
+              你当前的浏览器不支持视频
+            </video>
+          </div>
+          <ul class="clearfix img-items">
+            <li class="fl">
+              <img src="img/01.png" alt="" />
+            </li>
+            <li class="fl">
+              <img src="img/02.png" alt="" />
+            </li>
+            <li class="fl">
+              <img src="img/03.png" alt="" />
+            </li>
+            <li class="fl">
+              <img src="img/04.png" alt="" />
+            </li>
+          </ul>
+        </div>
+        <!--中间-->
+        <div class="map fl">
+          <div id="mapDiv" style="width:100%; height:594px;"></div>
+          <!--  tupian  -->
+          <!-- Swiper -->
+          <div class="swiper-box">
+            <div class="swiper-container myswiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <img src="img/peope.jpg" alt="" />
+                </div>
+                <div class="swiper-slide"><img src="img/r0.jpg" alt="" /></div>
+                <div class="swiper-slide"><img src="img/r1.jpg" alt="" /></div>
+                <div class="swiper-slide"><img src="img/r2.jpg" alt="" /></div>
+                <div class="swiper-slide"><img src="img/r3.jpg" alt="" /></div>
+                <div class="swiper-slide"><img src="img/r4.jpg" alt="" /></div>
+                <div class="swiper-slide"><img src="img/r5.jpg" alt="" /></div>
+                <div class="swiper-slide"><img src="img/r6.jpg" alt="" /></div>
+                <div class="swiper-slide"><img src="img/r7.jpg" alt="" /></div>
+                <div class="swiper-slide"><img src="img/r8.jpg" alt="" /></div>
+                <div class="swiper-slide"><img src="img/r9.jpg" alt="" /></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--右边-->
+        <div class="jiean fr">
+          <div class="tab clearfix">
+            <ul class="clearfix">
+              <li class="cur current">社区概况</li>
+              <li class="cur">人脸比对</li>
+              <li class="cur">车辆比对</li>
+            </ul>
+          </div>
+
+          <div class="jiean_cont " style="display:block">
+            <!--社区概况-->
+            <div class="jiean_cont_wriper" style="display: block;">
+              <div class="zdrq datas">
+                <div class="biao_content" id="ofwidth">
+                  <div class="zzt">
+                    <div class="tit">
+                      重点人群
+                    </div>
+                    <div id="point" style="width: 100%;height: 162px; ">
+                      <div class="page-content">
+                        <div class="one-item">
+                          <img src="img/1.png" />
+                          <span
+                            >狭长 <span class="big-number">9.8</span>公里
+                          </span>
+                        </div>
+                        <div class="one-item">
+                          <div class="item">
+                            <img src="img/2.png" />
+                            <span
+                              >民房
+                              <span class="big-number">179</span>栋、</span
+                            >
+                            <span
+                              >楼宇 <span class="big-number">3512</span>栋</span
+                            >
+                          </div>
+                        </div>
+                        <div class="one-item">
+                          <img src="img/3.png" />
+                          <span
+                            >居民小区 <span class="big-number">4</span>个
+                          </span>
+                        </div>
+                        <div class="one-item">
+                          <img src="img/4.png" />
+                          <span
+                            >居民 <span class="big-number">1284</span>户
+                            <span>
+                              <span class="big-number">16429</span>人</span
+                            >
+                          </span>
+                        </div>
+                        <div class="one-item">
+                          <img src="img/5.png" />
+                          <span
+                            >住宅楼 <span class="big-number">200</span>户
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <!--<div id="main1" style="width: 100%;height: 162px; "></div>-->
+                  </div>
+                </div>
+              </div>
+              <div class="bjtj datas">
+                <div class="tit clearfix">
+                  报警统计
+                </div>
+                <div class="tongji clearfix">
+                  <span class="fl">
+                    <img src="img/sbnum.png" />总上报数:26件</span
+                  >
+                  <span class="fr">
+                    <img src="img/chulinum.png" />已处理：6件</span
+                  >
+                </div>
+                <div class="bjtj_list">
+                  <li class="clearfix">
+                    <span class="dizhi fl">[胡川镇]</span>
+                    <span class="anjian fl">摄像头损坏</span>
+                    <span class="time fr">一个月前</span>
+                    <span class="chuli fr">已处理</span>
+                  </li>
+                  <li class="clearfix">
+                    <span class="dizhi fl">[胡川镇]</span>
+                    <span class="anjian fl">摄像头损坏</span>
+                    <span class="time fr">一个月前</span>
+                    <span class="chuli fr">已处理</span>
+                  </li>
+                  <li class="clearfix">
+                    <span class="dizhi fl">[胡川镇]</span>
+                    <span class="anjian fl">摄像头损坏</span>
+                    <span class="time fr">一个月前</span>
+                    <span class="chuli fr">已处理</span>
+                  </li>
+                  <li class="clearfix">
+                    <span class="dizhi fl">[胡川镇]</span>
+                    <span class="anjian fl">摄像头损坏</span>
+                    <span class="time fr">一个月前</span>
+                    <span class="chuli fr">已处理</span>
+                  </li>
+                </div>
+              </div>
+              <div class="gzdt datas">
+                <div class="tit clearfix">
+                  工作动态
+                </div>
+                <div class="gzdt_list">
+                  <div class="item clearfix">
+                    <div class="img fl">
+                      <img src="img/04.png" />
+                    </div>
+                    <div class="thum fr">
+                      <div class="title">
+                        市区交通路况良好
+                      </div>
+                      <div class="meta">
+                        2018-12-25 16:59:45
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item clearfix">
+                    <div class="img fl">
+                      <img src="img/head.jpg" />
+                    </div>
+                    <div class="thum fr">
+                      <div class="title">
+                        迎接全县精准扶贫验收工作退出
+                      </div>
+                      <div class="meta">
+                        2018-12-27 20:59:45
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--人脸识别-->
+          <div class="jiean_cont">
+            <div class="datas">
+              <div class="biao_content">
+                <div class="zzt">
+                  <div class="tit">
+                    重点人员统计
+                  </div>
+                  <div id="face" style="width: 100%;height: 170px;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="datas">
+              <div class="biao_content">
+                <div class="zzt">
+                  <div class="tit">
+                    七日抓拍量统计
+                  </div>
+                  <div
+                    id="zpltj"
+                    style="width: 100%;height: 186px; margin-top: -10px;"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div class="datas">
+              <div class="biao_content">
+                <div class="zzt">
+                  <div class="tit">
+                    抓拍统计
+                  </div>
+                  <div id="jrgk" style="width: 100%;height: 170px; ">
+                    <div class="title">
+                      处理总量:
+                      <span>1641512900</span>
+                    </div>
+                    <div class="num">
+                      <p>
+                        监控总天数:
+                        <span>237</span>
+                      </p>
+                      <p>
+                        服务总次数:
+                        <span>37004</span>
+                      </p>
+                    </div>
+                    <div
+                      id="jrgktj"
+                      style="width: 100%;height: 150px;margin: 0 auto; "
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 车辆 -->
+          <div class="jiean_cont">
+            <div class="datas">
+              <div class="biao_content">
+                <div class="zzt">
+                  <div class="tit">
+                    总体概况
+                  </div>
+                  <div id="car1" style="width: 100%;height: 170px; "></div>
+                </div>
+              </div>
+            </div>
+            <div class="datas">
+              <div class="biao_content">
+                <div class="zzt">
+                  <div class="tit">
+                    七日抓拍量统计
+                  </div>
+                  <div
+                    id="car2"
+                    style="width: 100%;height: 186px; margin-top: -10px;"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div class="datas">
+              <div class="biao_content">
+                <div class="zzt">
+                  <div class="tit">
+                    抓拍总量统计
+                  </div>
+                  <div id="car3" style="width: 100%;height: 170px; "></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--尾部-->
+
+    <script
+      src="js/jQuery-3.3.1.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+    <script
+      src="js/echarts.min.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+    <!--人脸比对-->
+    <script src="js/face.js" type="text/javascript" charset="utf-8"></script>
+    <!--七日抓拍量统计-->
+    <script src="js/zpltj.js" type="text/javascript" charset="utf-8"></script>
+    <!--今日概况统计-->
+    <script src="js/jrgktj.js" type="text/javascript" charset="utf-8"></script>
+    <!-- 车辆统计 -->
+    <script src="js/car1.js"></script>
+    <script src="js/car2.js"></script>
+    <script src="js/car3.js"></script>
+    <!-- 地图 -->
+    <script
+      type="text/javascript"
+      src="http://api.tianditu.gov.cn/api?v=4.0&tk=31eb3652b4b41e8289da060548ec6695"
+    ></script>
+    <script src="js/swiper.min.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        //点击导航切换页面
+        $("#nav li").click(function() {
+          $(this)
+            .addClass("active")
+            .siblings()
+            .removeClass("active"); //siblings()意思就是当前对象的同级元素
+          $("#container  .content")
+            .hide()
+            .eq($("#nav li").index(this))
+            .show();
+        });
+
+        $(".tab li").each(function(index, elem) {
+          $(this).click(function() {
+            //全清
+            $(".cur").removeClass("current");
+            $(".jiean_cont").hide();
+            //添加对应
+            $(this).addClass("current");
+            $(".jiean_cont")
+              .eq(index)
+              .show();
+          });
+        });
+      });
+      //  地图
+      var map;
+      var zoom = 12;
+      function onLoad() {
+        map = new T.Map("mapDiv");
+        map.centerAndZoom(new T.LngLat(105.72085, 34.58219), zoom);
+      }
+      //<!--轮播-->
+      var swiper = new Swiper(".myswiper", {
+        slidesPerView: 5,
+        spaceBetween: 24,
+        autoplay: true,
+
+        breakpoints: {
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 24
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 24
+          },
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 24
+          },
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 24
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

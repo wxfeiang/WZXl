@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>首页</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="all,follow" />
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" />
+    <!-- Font Awesome CSS-->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="tl-fonts/iconfont.css" />
+    <!-- Google fonts - Popppins for copy-->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Poppins:300,400,800"
+    />
+    <!-- orion icons-->
+    <link rel="stylesheet" href="css/orionicons.css" />
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet" />
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css" />
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.png?3" />
+    <!-- Tweaks for older IEs-->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script
+    ><![endif]-->
+    <style>
+      .ov-hiden {
+        overflow: hidden;
+      }
+      .ov-hiden img {
+        width: 100%;
+        height: 100%;
+        min-height: 50px;
+      }
+    </style>
+  </head>
+
+  <body onload="onLoad()">
+    <!-- navbar-->
+    <header class="header">
+      <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
+        <a href="#" class="sidebar-toggler text-gray-500 mr-4 mr-lg-5 lead">
+          <i class="fas fa-align-left"></i>
+        </a>
+        <h2 class="w-100 text-center text-primary  py-2">
+          天水互联网+智慧社区信息服务平台
+        </h2>
+      </nav>
+    </header>
+    <div class="d-flex align-items-stretch">
+      <div id="sidebar" class="sidebar py-3">
+        <ul class="sidebar-menu list-unstyled">
+          <li class="sidebar-list-item">
+            <a href="index.html" class="sidebar-link text-muted active">
+              <i class="icon iconfont mr-3 text-gray">&#xe65e;</i>
+              <span>首页</span>
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="face.html" class="sidebar-link text-muted ">
+              <i class="icon iconfont mr-3 text-gray">&#xe655;</i>
+              <span>人脸</span>
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="car.html" class="sidebar-link text-muted ">
+              <i class="icon iconfont mr-3 text-gray">&#xe60c;</i>
+              <span>车辆</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="page-holder w-100 d-flex flex-wrap">
+        <div class="container-fluid px-xl-5">
+          <section class="py-5">
+            <div class="row">
+              <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
+                <div
+                  class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between"
+                >
+                  <div class="flex-grow-1 d-flex align-items-center">
+                    <div class="dot mr-3 bg-violet"></div>
+                    <div class="text">
+                      <h6 class="mb-0">人口</h6>
+                      <span class="text-gray">16429</span>
+                    </div>
+                  </div>
+                  <div class="icon text-white bg-violet">
+                    <i class="icon iconfont "> &#xe630;</i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
+                <div
+                  class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between"
+                >
+                  <div class="flex-grow-1 d-flex align-items-center">
+                    <div class="dot mr-3 bg-green"></div>
+                    <div class="text">
+                      <h6 class="mb-0">户数</h6>
+                      <span class="text-gray">234</span>
+                    </div>
+                  </div>
+                  <div class="icon text-white bg-green">
+                    <i class="icon iconfont ">&#xe6ea;</i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
+                <div
+                  class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between"
+                >
+                  <div class="flex-grow-1 d-flex align-items-center">
+                    <div class="dot mr-3 bg-blue"></div>
+                    <div class="text">
+                      <h6 class="mb-0">房屋</h6>
+                      <span class="text-gray">342</span>
+                    </div>
+                  </div>
+                  <div class="icon text-white bg-blue">
+                    <i class="icon iconfont ">&#xe605;</i>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
+                <div
+                  class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between"
+                >
+                  <div class="flex-grow-1 d-flex align-items-center">
+                    <div class="dot mr-3 bg-red"></div>
+                    <div class="text">
+                      <h6 class="mb-0">小区</h6>
+                      <span class="text-gray">13</span>
+                    </div>
+                  </div>
+                  <div class="icon text-white bg-red">
+                    <i class="icon iconfont ">&#xe600;</i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <div class="row mb-4">
+              <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="card">
+                  <div class="card-header">
+                    <h2 class="h6 text-uppercase mb-0">一标六识</h2>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-holder">
+                      <div
+                        id="Chart1"
+                        style="height: 300px;"
+                        class="w-100"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="card">
+                  <div class="card-header">
+                    <h2 class="h6 text-uppercase mb-0">矛盾纠纷</h2>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-holder">
+                      <div
+                        id="Chart2"
+                        style="height: 300px;"
+                        class="w-100"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="card">
+                  <div class="card-header">
+                    <h2 class="h6 text-uppercase mb-0">社区动态</h2>
+                  </div>
+                  <div class="card-body">
+                    <div
+                      class="d-flex justify-content-between align-items-start align-items-sm-center mb-4 flex-column flex-sm-row"
+                    >
+                      <div class="left d-flex align-items-center">
+                        <div
+                          class="icon icon-lg shadow mr-3 text-gray ov-hiden"
+                        >
+                          <img src="img/new1.jpg" alt="" />
+                        </div>
+                        <div class="text">
+                          <h6 class="mb-0 d-flex align-items-center">
+                            <span
+                              >文明城区你我共建，垃圾分类随手践行——随手公益，扮美长风</span
+                            >
+                          </h6>
+                          <small class="text-gray">文明城区</small>
+                        </div>
+                      </div>
+                      <div class="right ml-5 ml-sm-0 pl-3 pl-sm-0 ">
+                        <h5 class="font-weight-normal ">2019-05-18</h5>
+                      </div>
+                    </div>
+                    <div
+                      class="d-flex justify-content-between align-items-start align-items-sm-center mb-4 flex-column flex-sm-row"
+                    >
+                      <div class="left d-flex align-items-center">
+                        <div
+                          class="icon icon-lg shadow mr-3 text-gray ov-hiden"
+                        >
+                          <img src="img/new2.jpg" alt="" />
+                        </div>
+                        <div class="text">
+                          <h6 class="mb-0 d-flex align-items-center">
+                            <span>旧住房成套改造项目签约率达到100%</span>
+                          </h6>
+                          <small class="text-gray">文明城区</small>
+                        </div>
+                      </div>
+                      <div class="right ml-5 ml-sm-0 pl-3 pl-sm-0 ">
+                        <h5 class="font-weight-normal ">2019-04-22</h5>
+                      </div>
+                    </div>
+                    <div
+                      class="d-flex justify-content-between align-items-start align-items-sm-center mb-4 flex-column flex-sm-row"
+                    >
+                      <div class="left d-flex align-items-center">
+                        <div
+                          class="icon icon-lg shadow mr-3 text-gray ov-hiden"
+                        >
+                          <img src="img/new3.jpg" alt="" />
+                        </div>
+                        <div class="text">
+                          <h6 class="mb-0 d-flex align-items-center">
+                            <span
+                              >“携手星宝
+                              春暖长风”——2019年世界自闭症关爱日活动</span
+                            >
+                            <span class="dot dot-sm ml-2 bg-violet"></span>
+                          </h6>
+                          <small class="text-gray">文明城区</small>
+                        </div>
+                      </div>
+                      <div class="right ml-5 ml-sm-0 pl-3 pl-sm-0 ">
+                        <h5 class="font-weight-normal ">2019-04-30</h5>
+                      </div>
+                    </div>
+                    <div
+                      class="d-flex justify-content-between align-items-start align-items-sm-center mb-4 flex-column flex-sm-row"
+                    >
+                      <div class="left d-flex align-items-center">
+                        <div
+                          class="icon icon-lg shadow mr-3 text-gray ov-hiden"
+                        >
+                          <img src="img/new4.jpg" alt="" />
+                        </div>
+                        <div class="text">
+                          <h6 class="mb-0 d-flex align-items-center">
+                            <span>街道开展安全生产大检查</span>
+                            <span class="dot dot-sm ml-2 bg-violet"></span>
+                          </h6>
+                          <small class="text-gray">文明城区</small>
+                        </div>
+                      </div>
+                      <div class="right ml-5 ml-sm-0 pl-3 pl-sm-0 ">
+                        <h5 class="font-weight-normal ">2019-03-24</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="card">
+                  <div class="card-header">
+                    <h2 class="h6 text-uppercase mb-0">社区地图</h2>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-holder">
+                      <video
+                        width="100%"
+                        height="286px"
+                        loop
+                        autoplay
+                        muted="true"
+                      >
+                        <source src="video/v2.mp4" />
+                        你当前的浏览器不支持视频
+                      </video>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-lg-12">
+                <div class="card mb-5 mb-lg-0">
+                  <div class="card-header">
+                    <h2 class="h6 mb-0 text-uppercase">社区地图</h2>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-holder">
+                      <div id="mapDiv" style="width:100%; height:420px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <!-- JavaScript files-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper.js/umd/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js"></script>
+    <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
+    <!-- 地图 -->
+    <script
+      type="text/javascript"
+      src="http://api.tianditu.gov.cn/api?v=4.0&tk=31eb3652b4b41e8289da060548ec6695"
+    ></script>
+    <script src="js/echarts.min.js"></script>
+    <script src="js/js.cookie.min.js"></script>
+    <script src="js/charts-home.js"></script>
+    <script src="js/front.js"></script>
+  </body>
+</html>
